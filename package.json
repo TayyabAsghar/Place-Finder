@@ -14,9 +14,9 @@
   "type": "module",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index",
+    "dev": "node --watch index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

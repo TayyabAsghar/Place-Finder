@@ -13,13 +13,11 @@ app.use(express.static('public'));
 app.use('/auth', authRouter);
 
 config();
-
-/* Mongoose Setup*/
-const PORT = 3001;
+const PORT = process.env.PORT || 8000;
 
 mongoose.connect(process.env.MONGO_URL, {
     dbName: process.env.DATABASE_NAME
 }).then(() => {
-    app.listen(PORT, () => console.log('Server is up and listing...'));
+    app.listen(PORT, () => console.log(`Server is up and listing on port ${PORT} ...`));
 }).catch(err => console.error(err));
 
