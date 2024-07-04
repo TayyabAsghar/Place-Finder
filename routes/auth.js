@@ -9,7 +9,6 @@ router.post("/signup", async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-        /* Check if user exists */
         const existingUser = await User.findOne({ email });
         if (existingUser) return res.status(409).json({ message: "User already exists!" });
 
@@ -17,7 +16,6 @@ router.post("/signup", async (req, res) => {
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        /* Create a new User */
         const newUser = new User({
             name,
             email,
@@ -35,17 +33,24 @@ router.post("/signup", async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        /* Check if user exists */
-        const user = await User.findOne({ email });
-        if (!user) return res.status(409).json({ message: "User doesn't exist!" });
+        const userData = await User.findOne({ email });
+        if (!userData) return res.status(409).json({ message: "User doesn't exist!" });
 
         /* Compare the password with the hashed password */
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, userData.password);
         if (!isMatch) return res.status(400).json({ message: "Invalid Credentials!" });
 
-        /* Generate JWT token */
-        const token = JWT.sign({ id: user._id }, process.env.JWT_SECRET);
-        delete user.password;
+        const token = JWT.sign({ id: userData._id }, process.env.JWT_SECRET);
+        const user = {
+            name: userData.name,
+            email: userData.email,
+            tripList: userData.tripList,
+            wishList: userData.wishList,
+            createdAt: userData.createdAt,
+            propertyList: userData.propertyList,
+            reservationList: userData.reservationList,
+            profileImagePath: userData.profileImagePath,
+        };
 
         res.status(200).json({ token, user });
     } catch (err) {
