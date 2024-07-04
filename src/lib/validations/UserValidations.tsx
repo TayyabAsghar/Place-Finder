@@ -15,3 +15,10 @@ export const SignUpValidations = z.object({
     message: 'Password doesn\'t match.',
     path: ['confirmPassword']
 });
+
+export const LogInValidations = z.object({
+    email: z.string().trim().toLowerCase()
+        .min(1, { message: 'Required field.' })
+        .email('Invalid email!'),
+    password: z.string().min(1, { message: 'Required field.' })
+});
