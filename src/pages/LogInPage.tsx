@@ -42,7 +42,7 @@ const LogInPage = () => {
     };
 
     return (
-        <div className="flex justify-center items-center h-full">
+        <div className="flex grow justify-center items-center">
             <div className="flex flex-col items-center gap-4 p-8 w-1/3">
                 <div className="flex flex-col items-center">
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -72,7 +72,7 @@ const LogInPage = () => {
                         helperText={errors.password?.message}
                     />
 
-                    <LoadingButton className="auth-from-control" sx={{ mt: 2 }} type="submit" variant="contained" loading={isSubmitting} title="LogIn">
+                    <LoadingButton className="auth-from-control" sx={{ mt: 2 }} type="submit" variant="contained" loading={isSubmitting} title="Log In">
                         Log In
                     </LoadingButton>
                 </form>

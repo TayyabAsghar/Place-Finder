@@ -34,7 +34,7 @@ const SignUpPage = () => {
     };
 
     return (
-        <div className="flex justify-center items-center h-full">
+        <div className="flex grow justify-center items-center">
             <div className="flex flex-col items-center gap-4 p-8 w-1/3">
                 <div className="flex flex-col items-center">
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -82,7 +82,7 @@ const SignUpPage = () => {
                         error={!!errors.confirmPassword}
                         helperText={errors.confirmPassword?.message}
                     />
-                    <LoadingButton className="auth-from-control" sx={{ mt: 2 }} type="submit" variant="contained" loading={isSubmitting} title="SignUp">
+                    <LoadingButton className="auth-from-control" sx={{ mt: 2 }} type="submit" variant="contained" loading={isSubmitting} title="Sign Up">
                         Sign Up
                     </LoadingButton>
                 </form>
