@@ -1,4 +1,5 @@
 import { z } from "zod";
+import useAxios from "../hooks/useAxios";
 import { LoadingButton } from "@mui/lab";
 import { SignUpForm } from "../lib/types";
 import { useForm } from "react-hook-form";
@@ -10,6 +11,7 @@ import { Avatar, TextField, Typography } from "@mui/material";
 import { SignUpValidations } from "../lib/validations/UserValidations";
 
 const SignUpPage = () => {
+    const customAxios = useAxios();
     const navigate = useNavigate();
     type SignUpFormType = z.infer<typeof SignUpValidations>;
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignUpFormType>({
@@ -24,13 +26,8 @@ const SignUpPage = () => {
                 password: data.password
             };
 
-            const response = await fetch("http://localhost:3001/auth/signup", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(signUpForm)
-            });
-
-            if (response.ok) navigate("/login");
+            await customAxios.post('http://localhost:3001/auth/signup', JSON.stringify(signUpForm), 'json');
+            navigate("/login");
         } catch (err) {
             console.error("Registration failed", err);
         }

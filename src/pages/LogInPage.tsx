@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { LoadingButton } from "@mui/lab";
+import useAxios from "../hooks/useAxios";
+import { LogInForm } from "../lib/types";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../lib/redux/state";
@@ -8,9 +10,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Avatar, TextField, Typography } from "@mui/material";
 import { LogInValidations } from "../lib/validations/UserValidations";
-import { LogInForm } from "../lib/types";
 
 const LogInPage = () => {
+    const customAxios = useAxios();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     type LogInFormType = z.infer<typeof LogInValidations>;
@@ -25,18 +27,12 @@ const LogInPage = () => {
                 password: data.password
             };
 
-            const response = await fetch("http://localhost:3001/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(logInForm)
-            });
+            const response = await customAxios.post('http://localhost:3001/auth/login', JSON.stringify(logInForm), 'json');
 
-            const loggedInUser = await response.json();
-
-            if (loggedInUser) {
+            if (response) {
                 dispatch(setLogin({
-                    user: loggedInUser.user,
-                    token: loggedInUser.token
+                    user: response.data.user,
+                    token: response.data.token
                 }));
                 navigate("/");
             }

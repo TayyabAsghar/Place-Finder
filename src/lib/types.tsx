@@ -1,3 +1,5 @@
+export type HttpOptions = 'form' | 'json';
+
 export type SignUpForm = {
     name: string,
     email: string,
