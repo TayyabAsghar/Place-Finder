@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <div className="flex flex-col w-screens h-screen">
+    <div className="flex flex-col min-h-screen">
       <BrowserRouter>
         <NavBar />
         <Routes>

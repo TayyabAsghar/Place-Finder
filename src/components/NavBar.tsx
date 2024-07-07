@@ -47,15 +47,15 @@ const NavBar = () => {
             <SearchBar search={search} setSearch={setSearch}></SearchBar>
 
             <div className="flex items-center gap-5">
-                <Link className="text-blue-500 font-bold hover:text-blue-700" to={user ? "/create-listing" : "/login"}>
+                <Link className="text-blue-400 font-bold hover:text-blue-800" to={user ? "/create-listing" : "/login"}>
                     Become A Host
                 </Link>
 
-                <button className="flex items-center p-2 border border-gray-400 rounded-[30px] gap-3 h-12"
+                <button className="flex items-center p-2 border border-gray-400 rounded-[30px] gap-3 h-12 hover:shadow-xl"
                     id="basic-button" aria-controls={menuOpen ? 'basic-menu' : undefined}
                     aria-haspopup="true" aria-expanded={menuOpen ? 'true' : undefined}
                     onClick={e => setDropdownEl(e.currentTarget)} >
-                    <MenuOutlined />
+                    <MenuOutlined className="text-gray-400" />
                     {user ? user.profileImagePath ?
                         <Avatar src={`http://localhost:3001/${user.profileImagePath.replace("public", "")}`} sx={{ bgcolor: 'primary.main' }}
                             alt="profile photo" >

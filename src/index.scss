@@ -14,3 +14,9 @@
 .auth-from-control {
   @apply w-11/12;
 }
+
+.parent:hover {
+  .child{
+    @apply w-4/5 h-4/5;
+  }
+}
