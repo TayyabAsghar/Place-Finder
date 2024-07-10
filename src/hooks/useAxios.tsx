@@ -15,13 +15,12 @@ const useAxios = () => {
                 axiosInstance.defaults.headers.common['Content-Type'] = 'application/json';
                 break;
             case 'form':
-                axiosInstance.defaults.headers.common['Content-Type'] = 'application/json';
+                axiosInstance.defaults.headers.common['Content-Type'] = 'multipart/form-data';
                 break;
         }
     };
 
     const setHeaders = (option: HttpOptions | HttpOptions[]) => {
-        console.log(axiosInstance.defaults.headers.common);
         if (Array.isArray(option)) option.forEach(opt => setDefaultHeaders(opt));
         else setDefaultHeaders(option);
     };

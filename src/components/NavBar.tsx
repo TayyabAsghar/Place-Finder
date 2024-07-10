@@ -1,12 +1,12 @@
 import { useState } from "react";
 import SearchBar from "./SearchBar";
-import { Avatar, Menu, MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import { UserState } from "../lib/types";
 import { getInitials } from "../lib/utils";
 import { setLogout } from "../lib/redux/state";
-import { Person, MenuOutlined } from "@mui/icons-material";
+import { Avatar, Menu, MenuItem } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
+import { Person, MenuOutlined } from "@mui/icons-material";
 
 const NavBar = () => {
     const dispatch = useDispatch();
@@ -51,11 +51,11 @@ const NavBar = () => {
                     Become A Host
                 </Link>
 
-                <button className="flex items-center p-2 border border-gray-400 rounded-[30px] gap-3 h-12 hover:shadow-xl"
+                <button className="flex items-center p-2 border border-gray-300 rounded-[30px] gap-3 h-12 hover:shadow-xl"
                     id="basic-button" aria-controls={menuOpen ? 'basic-menu' : undefined}
                     aria-haspopup="true" aria-expanded={menuOpen ? 'true' : undefined}
                     onClick={e => setDropdownEl(e.currentTarget)} >
-                    <MenuOutlined className="text-gray-400" />
+                    <MenuOutlined className="text-gray-300" />
                     {user ? user.profileImagePath ?
                         <Avatar src={`http://localhost:3001/${user.profileImagePath.replace("public", "")}`} sx={{ bgcolor: 'primary.main' }}
                             alt="profile photo" >

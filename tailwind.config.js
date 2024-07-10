@@ -11,6 +11,10 @@ module.exports = {
       },
       backgroundPosition: {
         'center-top': "center top"
+      },
+      colors: {},
+      screens: {
+        xs: "400px"
       }
     }
   },
