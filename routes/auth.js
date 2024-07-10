@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
-import { Router } from "express";
 import JWT from "jsonwebtoken";
-import User from "../models/user.js";
+import { Router } from "express";
+import User from "../models/User.js";
 
 const router = Router();
 
@@ -42,6 +42,7 @@ router.post("/signup", async (req, res) => {
 
         const token = JWT.sign({ id: userData._id }, process.env.JWT_SECRET);
         const user = {
+            _id: userData.id,
             name: userData.name,
             email: userData.email,
             tripList: userData.tripList,
@@ -49,13 +50,13 @@ router.post("/signup", async (req, res) => {
             createdAt: userData.createdAt,
             propertyList: userData.propertyList,
             reservationList: userData.reservationList,
-            profileImagePath: userData.profileImagePath,
+            profileImagePath: userData.profileImagePath
         };
 
         res.status(200).json({ token, user });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ message: err.message });
     }
 });
 

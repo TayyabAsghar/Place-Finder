@@ -3,6 +3,7 @@ import express from "express";
 import { config } from "dotenv";
 import mongoose from "mongoose";
 import authRouter from "./routes/auth.js";
+import listingRouter from "./routes/listing.js";
 
 const app = express();
 app.use(cors());
@@ -11,6 +12,7 @@ app.use(express.static('public'));
 
 /* Routes */
 app.use('/auth', authRouter);
+app.use('/listing', listingRouter);
 
 config();
 const PORT = process.env.PORT || 8000;

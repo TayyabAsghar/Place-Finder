@@ -3,36 +3,36 @@ import { Schema, model } from "mongoose";
 const UserSchema = new Schema({
     name: {
         type: String,
-        required: true,
+        required: true
     },
     email: {
         type: String,
         required: true,
-        unique: true,
+        unique: true
     },
     password: {
         type: String,
-        required: true,
+        required: true
     },
     profileImagePath: {
         type: String,
-        default: "",
+        default: ""
     },
     tripList: {
         type: Array,
-        default: [],
+        default: []
     },
     wishList: {
         type: Array,
-        default: [],
+        default: []
     },
     propertyList: {
         type: Array,
-        default: [],
+        default: []
     },
     reservationList: {
         type: Array,
-        default: [],
+        default: []
     }
 }, {
     timestamps: true
