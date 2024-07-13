@@ -2,8 +2,9 @@ import { UserState } from "../types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: UserState = {
+    token: '',
     user: null,
-    token: ''
+    listings: []
 };
 
 export const userSlice = createSlice({
@@ -15,11 +16,14 @@ export const userSlice = createSlice({
             state.token = action.payload.token;
         },
         setLogout: (state) => {
-            state.user = null;
             state.token = '';
+            state.user = null;
+        },
+        setListings: (state, action: PayloadAction<UserState>) => {
+            state.listings = action.payload.listings;
         }
     }
 });
 
-export const { setLogin, setLogout } = userSlice.actions;
+export const { setLogin, setLogout, setListings } = userSlice.actions;
 export default userSlice.reducer;

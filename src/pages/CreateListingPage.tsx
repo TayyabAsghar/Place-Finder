@@ -118,14 +118,14 @@ const CreateListing = () => {
             listingForm.append("price", formData.price.toString());
             formData.listingPhotos.forEach(photo => listingForm.append("listingPhotos", photo));
 
-            await customAxios.post("http://localhost:3001/listing/create", listingForm, "form");
+            await customAxios.post("listing/create", listingForm, "form");
             navigate("/");
         } catch (err) {
             console.error("Publish Listing failed", err);
         }
     };
     return (
-        <>
+        <div>
             <div className="px-14 py-10 pb-28">
                 <h1>Publish Your Place</h1>
                 <form className="flex flex-col items-center" onSubmit={handleSubmit(handleFormSubmit)}>
@@ -398,7 +398,7 @@ const CreateListing = () => {
             </div>
 
             <Footer />
-        </>
+        </div>
     );
 };
 

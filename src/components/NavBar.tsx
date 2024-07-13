@@ -79,7 +79,7 @@ const NavBar = () => {
     };
 
     return (
-        <nav className="flex justify-between items-center px-10 py-3 border-b sticky top-0 bg-background">
+        <nav className="flex justify-between items-center px-10 py-3 border-b sticky top-0 bg-background z-50">
             <Link to="/" title="Place Finder">
                 <img src="/assets/logo.png" alt="logo" />
             </Link>

@@ -3,7 +3,7 @@ import { AllCategories } from "../data/categoriesData";
 
 const Categories = () => {
     return (
-        <div className="flex flex-col items-center text-center px-14 py-12">
+        <div className="flex flex-col items-center text-center px-14 py-12 w-full">
             <h1 className="font-extrabold mb-4 text-4xl">
                 Explore Top Categories
             </h1>
