@@ -1,11 +1,13 @@
-import Slide from "../components/Slide";
+import Footer from "../components/Footer";
 import Categories from "../components/Categories";
+import HeroSection from "../components/HeroSection";
 
 const HomePage = () => {
     return (
         <>
-            <Slide />
+            <HeroSection />
             <Categories />
+            <Footer />
         </>
     );
 };

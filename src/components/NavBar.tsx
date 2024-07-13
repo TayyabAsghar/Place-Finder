@@ -1,14 +1,19 @@
 import { useState } from "react";
 import SearchBar from "./SearchBar";
-import { Link } from "react-router-dom";
 import { UserState } from "../lib/types";
 import { getInitials } from "../lib/utils";
 import { setLogout } from "../lib/redux/state";
-import { Avatar, Menu, MenuItem } from "@mui/material";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
+import { BsFileEarmarkLock } from "react-icons/bs";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Person, MenuOutlined } from "@mui/icons-material";
+import { Avatar, Button, Menu, MenuItem } from "@mui/material";
+import { PiBuildingOfficeBold, PiListHeartBold } from "react-icons/pi";
+import { HiClipboardDocumentList, HiOutlineUserPlus } from "react-icons/hi2";
 
 const NavBar = () => {
+    const location = useLocation();
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const user = useSelector((state: UserState) => state.user);
@@ -20,53 +25,88 @@ const NavBar = () => {
 
         return (
             <Menu anchorEl={dropdownEl} open={menuOpen} onClose={() => setDropdownEl(null)}
-                aria-labelledby="'basic-button">
+                aria-labelledby="basic-button" >
                 {user ?
                     <div>
-                        <MenuItem><Link to={`/${user._id}/trips`}>Trip List</Link></MenuItem>
-                        <MenuItem><Link to={`/${user._id}/wishList`}>Wish List</Link></MenuItem>
-                        <MenuItem><Link to={`/${user._id}/properties`}>Property List</Link></MenuItem>
-                        <MenuItem><Link to={`/${user._id}/reservations`}>Reservation List</Link></MenuItem>
-                        <MenuItem><Link to="/login" onClick={() => dispatch(setLogout())}>Log Out</Link></MenuItem>
+                        <MenuItem>
+                            <Link to={`/${user._id}/trips`} className="profile-dropdown">
+                                <HiClipboardDocumentList />
+                                Trip List
+                            </Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link to={`/${user._id}/wishList`} className="profile-dropdown">
+                                <PiListHeartBold />
+                                Wish List
+                            </Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link to={`/${user._id}/properties`} className="profile-dropdown">
+                                <PiBuildingOfficeBold />
+                                Property List
+                            </Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link to={`/${user._id}/reservations`} className="profile-dropdown">
+                                <BsFileEarmarkLock />
+                                Reservation List
+                            </Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link to="/login" className="profile-dropdown" onClick={() => dispatch(setLogout())}>
+                                <FiLogOut />
+                                Log Out
+                            </Link>
+                        </MenuItem>
                     </div> :
                     <div>
-                        <MenuItem><Link to="/login">Log In</Link></MenuItem>
-                        <MenuItem><Link to="/register">Sign Up</Link></MenuItem>
+                        <MenuItem>
+                            <Link to="/login" className="profile-dropdown">
+                                <FiLogIn />
+                                Log In
+                            </Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link to="/register" className="profile-dropdown">
+                                <HiOutlineUserPlus />
+                                Sign Up
+                            </Link>
+                        </MenuItem>
                     </div>
                 }
             </Menu>
         );
-
     };
 
     return (
-        <nav className="flex justify-between items-center relative px-10 py-3">
+        <nav className="flex justify-between items-center px-10 py-3 border-b sticky top-0 bg-background">
             <Link to="/" title="Place Finder">
                 <img src="/assets/logo.png" alt="logo" />
             </Link>
-            <SearchBar search={search} setSearch={setSearch}></SearchBar>
+            {location.pathname !== "/login" && location.pathname !== "/signup" &&
+                <SearchBar search={search} setSearch={setSearch}></SearchBar>
+            }
 
             <div className="flex items-center gap-5">
-                <Link className="text-blue-400 font-bold hover:text-blue-800" to={user ? "/create-listing" : "/login"}>
-                    Become A Host
-                </Link>
+                {location.pathname !== "/create-listing" &&
+                    <Link className="text-accent font-bold hover:text-accent-600" to={user ? "/create-listing" : "/login"}>
+                        Become A Host
+                    </Link>
+                }
 
-                <button className="flex items-center p-2 border border-gray-300 rounded-[30px] gap-3 h-12 hover:shadow-xl"
-                    id="basic-button" aria-controls={menuOpen ? 'basic-menu' : undefined}
-                    aria-haspopup="true" aria-expanded={menuOpen ? 'true' : undefined}
-                    onClick={e => setDropdownEl(e.currentTarget)} >
-                    <MenuOutlined className="text-gray-300" />
+                <Button className="flex items-center p-2 border gap-3 h-12" sx={{ borderRadius: 28 }} variant="contained"
+                    id="basic-button" aria-haspopup="true" aria-controls={menuOpen ? 'basic-menu' : undefined}
+                    aria-expanded={menuOpen ? 'true' : undefined} onClick={e => setDropdownEl(e.currentTarget)}>
+                    <MenuOutlined />
                     {user ? user.profileImagePath ?
                         <Avatar src={`http://localhost:3001/${user.profileImagePath.replace("public", "")}`} sx={{ bgcolor: 'primary.main' }}
                             alt="profile photo" >
                             {getInitials(user.name)}
                         </Avatar> :
-                        <Avatar sx={{ bgcolor: 'primary.main' }} >
-                            {getInitials(user.name)}
-                        </Avatar> :
+                        <Avatar sx={{ bgcolor: 'background.default', color: 'text.primary' }} >{getInitials(user.name)}</Avatar> :
                         <Person />
                     }
-                </button>
+                </Button>
                 <DropDownMenu />
             </div>
         </nav >

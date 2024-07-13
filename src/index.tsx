@@ -1,9 +1,11 @@
-import './index.scss';
+import './index.css';
 import App from './App';
 import React from 'react';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
+import ThemeMUI from './lib/themes/ThemeMUI';
 import reportWebVitals from './reportWebVitals';
+import { ThemeProvider } from '@mui/material/styles';
 import { persistor, store } from './lib/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -13,11 +15,13 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
+    <ThemeProvider theme={ThemeMUI}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>
 );
 

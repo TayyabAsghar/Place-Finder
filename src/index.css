@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+@layer base{
+  :root {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  h1 {
+    @apply text-primary font-bold text-3xl;
+  }
+
+  h2 {
+    @apply text-secondary-400 font-bold text-2xl;
+  }
+}
+
+.auth-from-control {
+  @apply w-11/12;
+}
+
+.parent:hover {
+  .child {
+    @apply w-4/5 h-4/5;
+  }
+}
+
+.profile-dropdown {
+  @apply flex items-center gap-3;
+}
+
+.create-listing-heading {
+  @apply text-primary font-semibold text-xl mx-0 my-10 mb-5;
+}
+
+.create-listing-categories {
+  @apply flex flex-col justify-center items-center h-24 w-28 border rounded-md cursor-pointer transition duration-200 px-1 hover:border-foreground;
+}
+
+.create-listing-types {
+  @apply flex justify-between items-center w-[600px] px-8 h-28 py-4 border rounded-md cursor-pointer transition duration-200 hover:border-foreground;
+}
+
+.counter-buttons {
+  @apply flex items-center gap-7 px-2 py-1 w-fit h-fit border rounded-md;
+}
+
+.create-listing-facilities {
+  @apply flex flex-col justify-center items-center w-48 h-24 border rounded-md cursor-pointer transition duration-200 hover:border-foreground;
+}
+
+.create-listing-selected {
+  @apply border-2 border-primary text-primary bg-background;
+}
+
+.error-message {
+  @apply text-xs text-error mt-[3px] mx-3.5 leading-relaxed tracking-[0.03333em];
+}

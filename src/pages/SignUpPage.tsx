@@ -4,7 +4,7 @@ import { LoadingButton } from "@mui/lab";
 import { SignUpForm } from "../lib/types";
 import { useForm } from "react-hook-form";
 import { toTitleCase } from "../lib/utils";
-import { LockOutlined } from "@mui/icons-material";
+import { MdAppRegistration } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Avatar, TextField, Typography } from "@mui/material";
@@ -37,8 +37,8 @@ const SignUpPage = () => {
         <div className="flex grow justify-center items-center">
             <div className="flex flex-col items-center gap-4 p-8 w-1/3">
                 <div className="flex flex-col items-center">
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlined />
+                    <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+                        <MdAppRegistration />
                     </Avatar>
                     <Typography variant="h4">Sign Up</Typography>
                 </div>
@@ -86,7 +86,9 @@ const SignUpPage = () => {
                         Sign Up
                     </LoadingButton>
                 </form>
-                <Link to={"/login"} className="text-blue-600 hover:underline">Have an account? Log In</Link>
+                <Link to={"/login"} className="text-accent hover:underline hover:text-accent-600">
+                    Have an account? Log In
+                </Link>
             </div>
         </div>
     );

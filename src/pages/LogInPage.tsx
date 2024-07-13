@@ -45,7 +45,7 @@ const LogInPage = () => {
         <div className="flex grow justify-center items-center">
             <div className="flex flex-col items-center gap-4 p-8 w-1/3">
                 <div className="flex flex-col items-center">
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                         <LockOutlined />
                     </Avatar>
                     <Typography variant="h4">Log In</Typography>
@@ -76,7 +76,9 @@ const LogInPage = () => {
                         Log In
                     </LoadingButton>
                 </form>
-                <Link to={"/signup"} className="text-blue-600 hover:underline">Doesn't have an account? Sign Up</Link>
+                <Link to={"/signup"} className="text-accent hover:underline hover:text-accent-600">
+                    Doesn't have an account? Sign Up
+                </Link>
             </div>
         </div>
     );

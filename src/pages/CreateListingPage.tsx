@@ -126,17 +126,17 @@ const CreateListing = () => {
     };
     return (
         <>
-            <div className="bg-gray-100 px-14 py-10 pb-28">
-                <h1 className="text-blue-900">Publish Your Place</h1>
-                <form onSubmit={handleSubmit(handleFormSubmit)}>
-                    <div className="bg-white mt-10 rounded-[20px] px-10 py-7">
-                        <h2 className="text-blue-400">Step 1: Tell us about your place</h2>
+            <div className="px-14 py-10 pb-28">
+                <h1>Publish Your Place</h1>
+                <form className="flex flex-col items-center" onSubmit={handleSubmit(handleFormSubmit)}>
+                    <div className="bg-secondary-100 bg-opacity-25 mt-10 rounded-2xl px-10 py-7">
+                        <h2 className="text-accent" >Step 1: Tell us about your place</h2>
                         <hr className="mx-0 my-4 mb-6" />
                         <h3 className="create-listing-heading">Which of these categories best describes your place?</h3>
                         <div className="flex justify-center items-center flex-wrap gap-5 px-5 py-0" {...register("categories")}>
                             {AllCategories?.slice(1).map((item, index) => (
                                 <div className={`create-listing-categories ${getValues("categories")?.includes(item.label) ? "create-listing-selected" : ""}
-                                ${!!errors.categories ? "!border-red-600" : ""}`} key={index} onClick={() => selectCategory(item.label)}>
+                                ${!!errors.categories ? "!border-error" : ""}`} key={index} onClick={() => selectCategory(item.label)}>
                                     <div className="text-3xl">{item.icon}</div>
                                     <p className="font-semibold text-center">{item.label}</p>
                                 </div>
@@ -145,13 +145,13 @@ const CreateListing = () => {
                         {!!errors.categories && <div className="error-message">{errors.categories?.message}</div>}
 
                         <h3 className="create-listing-heading">What type of place will guests have?</h3>
-                        <div className="flex flex-col gap-5" {...register("type")}>
+                        <div className="flex justify-around gap-y-5 flex-wrap" {...register("type")}>
                             {Types?.map((item, index) => (
                                 <div className={`create-listing-types ${getValues("type") === item.name ? "create-listing-selected" : ""}
-                                ${!!errors.type ? "!border-red-600" : ""}`}
+                                ${!!errors.type ? "!border-error" : ""}`}
                                     key={index} onClick={() => selectType(item.name)}>
                                     <div className="max-w-[400px]">
-                                        <h4 className="mb-1">{item.name}</h4>
+                                        <h4 className="mb-1 font-semibold text-lg">{item.name}</h4>
                                         <p>{item.description}</p>
                                     </div>
                                     <div className="text-3xl">{item.icon}</div>
@@ -222,14 +222,14 @@ const CreateListing = () => {
 
                         <h3 className="create-listing-heading">Share some basics about your place</h3>
                         <div className="flex flex-wrap gap-10">
-                            <div className="flex items-center gap-7 px-2 py-1 w-fit h-fit border border-gray-300 rounded-md">
+                            <div className="counter-buttons">
                                 <p className="font-semibold">Guests</p>
                                 <div className="flex items-center gap-2 text-xl">
                                     <IconButton aria-label="remove guests" color="primary" disabled={getValues("guestCount") === 1}
                                         onClick={() => decrementCounter("guestCount")}>
                                         <RemoveCircleOutline />
                                     </IconButton>
-                                    <input className="max-w-6 focus-visible:outline-none" readOnly {...register("guestCount")} />
+                                    <input className="max-w-6 bg-transparent focus-visible:outline-none" readOnly {...register("guestCount")} />
                                     <IconButton aria-label="add guests" color="primary"
                                         onClick={() => incrementCounter("guestCount")}>
                                         <AddCircleOutline />
@@ -237,14 +237,14 @@ const CreateListing = () => {
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-7 px-2 py-1 w-fit h-fit border border-gray-300 rounded-md">
+                            <div className="counter-buttons">
                                 <p className="font-semibold">Bedrooms</p>
                                 <div className="flex items-center gap-2 text-xl">
                                     <IconButton aria-label="remove bedroom" color="primary" disabled={getValues("bedroomCount") === 1}
                                         onClick={() => decrementCounter("bedroomCount")}>
                                         <RemoveCircleOutline />
                                     </IconButton>
-                                    <input className="max-w-6 focus-visible:outline-none" readOnly {...register("bedroomCount")} />
+                                    <input className="max-w-6 bg-transparent focus-visible:outline-none" readOnly {...register("bedroomCount")} />
                                     <IconButton aria-label="add bedroom" color="primary"
                                         onClick={() => incrementCounter("bedroomCount")}>
                                         <AddCircleOutline />
@@ -252,14 +252,14 @@ const CreateListing = () => {
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-7 px-2 py-1 w-fit h-fit border border-gray-300 rounded-md">
+                            <div className="counter-buttons">
                                 <p className="font-semibold">Beds</p>
                                 <div className="flex items-center gap-2 text-xl">
                                     <IconButton aria-label="remove bed" color="primary" disabled={getValues("bedCount") === 1}
                                         onClick={() => decrementCounter("bedCount")}>
                                         <RemoveCircleOutline />
                                     </IconButton>
-                                    <input className="max-w-6 focus-visible:outline-none" readOnly {...register("bedCount")} />
+                                    <input className="max-w-6 bg-transparent focus-visible:outline-none" readOnly {...register("bedCount")} />
                                     <IconButton aria-label="add bed" color="primary"
                                         onClick={() => incrementCounter("bedCount")}>
                                         <AddCircleOutline />
@@ -267,14 +267,14 @@ const CreateListing = () => {
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-7 px-2 py-1 w-fit h-fit  border border-gray-300 rounded-md">
+                            <div className="counter-buttons">
                                 <p className="font-semibold">Bathrooms</p>
                                 <div className="flex items-center gap-2 text-xl">
                                     <IconButton aria-label="remove bathroom" color="primary" disabled={getValues("bathroomCount") === 1}
                                         onClick={() => decrementCounter("bathroomCount")}>
                                         <RemoveCircleOutline />
                                     </IconButton>
-                                    <input className="max-w-6 focus-visible:outline-none" readOnly {...register("bathroomCount")} />
+                                    <input className="max-w-6 bg-transparent focus-visible:outline-none" readOnly {...register("bathroomCount")} />
                                     <IconButton aria-label="add bathroom" color="primary"
                                         onClick={() => incrementCounter("bathroomCount")}>
                                         <AddCircleOutline />
@@ -284,14 +284,14 @@ const CreateListing = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white mt-10 rounded-[20px] px-10 py-7">
-                        <h2 className="text-blue-400">Step 2: Make your place stand out</h2>
+                    <div className="bg-secondary-100 bg-opacity-25 mt-10 rounded-2xl px-10 py-7">
+                        <h2>Step 2: Make your place stand out</h2>
                         <hr className="mx-0 my-4 mb-6" />
                         <h3 className="create-listing-heading">Tell guests what your place has to offer</h3>
                         <div className="flex flex-wrap gap-5">
                             {Facilities?.map((item, index) => (
                                 <div className={`create-listing-facilities ${getValues("amenities")?.includes(item.name) ? "create-listing-selected" : ""}
-                                ${!!errors.amenities ? "!border-red-600" : ""}`}
+                                ${!!errors.amenities ? "!border-error" : ""}`}
                                     key={index} onClick={() => selectAmenities(item.name)}>
                                     <div className="text-3xl">{item.icon}</div>
                                     <p className="font-semibold">{item.name}</p>
@@ -301,27 +301,28 @@ const CreateListing = () => {
                         {!!errors.amenities && <div className="error-message">{errors.amenities?.message}</div>}
 
                         <h3 className="create-listing-heading">Add some photos of your place</h3>
-                        <div className="flex flex-wrap gap-4">
+                        <div className="flex flex-col flex-wrap gap-4">
                             {photos.length >= 1 &&
-                                <>
+                                <div className="flex flex-wrap gap-4">
                                     {photos.map((photo, index) =>
                                         <div className="max-w-64 max-h-44 relative" key={index}>
                                             <img className="max-w-full max-h-full" alt="place"
                                                 src={URL.createObjectURL(photo)} />
-                                            <IconButton className="!absolute !p-0 top-0 right-0" type="button"
-                                                onClick={() => handleRemovePhoto(index)}>
-                                                <BiTrash />
-                                            </IconButton>
+                                            <div className="absolute top-0 right-0 bg-accent-100">
+                                                <IconButton className="!p-0 !text-primary hover:!text-error" type="button"
+                                                    onClick={() => handleRemovePhoto(index)}>
+                                                    <BiTrash />
+                                                </IconButton>
+                                            </div>
                                         </div>
                                     )}
-                                </>
+                                </div>
                             }
                             <div {...register("listingPhotos")}>
                                 <input id="image" type="file" style={{ display: "none" }} onChange={handleUploadPhotos}
                                     accept={AcceptedImageTypes.join(" ")} multiple />
-                                <label htmlFor="image"
-                                    className={`flex flex-col gap-3 w-72 h-44 items-center px-12 py-8 rounded-md border border-dashed border-gray-300 cursor-pointer
-                                    ${!!errors.listingPhotos ? "border-red-600" : ""}`}>
+                                <label className={`flex flex-col gap-3 w-72 h-44 items-center px-12 py-8 rounded-md border border-dashed cursor-pointer hover:border-foreground
+                                    ${!!errors.listingPhotos ? "border-error hover:border-error" : ""}`} htmlFor="image">
                                     <IoIosImages className="text-6xl" />
                                     <p className="font-semibold text-center">Upload from your device</p>
                                 </label>
@@ -389,8 +390,9 @@ const CreateListing = () => {
                         </div>
                     </div>
 
-                    <LoadingButton sx={{ mt: 2 }} type="submit" variant="contained" loading={isSubmitting} title="Create Listing">
-                        CREATE LISTING
+                    <LoadingButton className="w-1/2 !mt-16"
+                        sx={{ mt: 2 }} type="submit" variant="contained" loading={isSubmitting} title="Create Listing">
+                        Create Your Listing
                     </LoadingButton>
                 </form>
             </div>

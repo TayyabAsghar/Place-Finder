@@ -11,12 +11,14 @@ const App = () => {
     <div className="flex flex-col min-h-screen">
       <BrowserRouter>
         <NavBar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LogInPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/create-listing" element={<CreateListing />} />
-        </Routes>
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LogInPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/create-listing" element={<CreateListing />} />
+          </Routes>
+        </main>
       </BrowserRouter>
     </div>
   );
