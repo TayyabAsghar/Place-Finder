@@ -18,9 +18,9 @@ router.get("/", async (req, res) => {
         const qCategory = req.query.category;
 
         if (qCategory)
-            listings = await Listing.find({ category: qCategory }).populate("creator");
+            listings = await Listing.find({ category: qCategory }).populate("creatorId");
         else
-            listings = await Listing.find().populate("creator");
+            listings = await Listing.find().populate("creatorId");
 
         res.status(200).json(listings);
     } catch (err) {
@@ -29,53 +29,13 @@ router.get("/", async (req, res) => {
     }
 }).post("/create", upload.array("listingPhotos"), async (req, res) => {
     try {
-        const {
-            creatorId,
-            categories,
-            type,
-            streetAddress,
-            aptSuite,
-            city,
-            province,
-            country,
-            guestCount,
-            bedroomCount,
-            bedCount,
-            bathroomCount,
-            amenities,
-            title,
-            description,
-            highlight,
-            highlightDesc,
-            price
-        } = req.body;
-
         const listingPhotos = req.files;
+        const creatorId = new Types.ObjectId(String(req.body.creatorId));
 
         if (!listingPhotos) return res.status(400).send("No files uploaded.");
 
         const listingPhotoPaths = listingPhotos.map(file => file.path);
-        const newListing = new Listing({
-            creatorId,
-            categories,
-            type,
-            streetAddress,
-            aptSuite,
-            city,
-            province,
-            country,
-            guestCount,
-            bedroomCount,
-            bedCount,
-            bathroomCount,
-            amenities,
-            listingPhotoPaths,
-            title,
-            description,
-            highlight,
-            highlightDesc,
-            price
-        });
+        const newListing = new Listing({ creatorId, listingPhotoPaths, ...req.body });
 
         await newListing.save();
 

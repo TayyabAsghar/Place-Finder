@@ -1,9 +1,10 @@
 import { Schema, model } from "mongoose";
 
 const ListingSchema = new Schema({
-    creator: {
+    creatorId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
+        required: true
     },
     categories: {
         type: Array,
