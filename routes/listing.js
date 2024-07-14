@@ -1,6 +1,7 @@
 import multer from "multer";
 import { Router } from "express";
 import { Types } from "mongoose";
+import User from "../models/User.js";
 import Listing from "../models/Listing.js";
 
 /* Configuration Multer for File Upload */
@@ -16,11 +17,16 @@ router.get("/", async (req, res) => {
     try {
         let listings;
         const qCategory = req.query.category;
+        const populateParams = {
+            path: 'creator',
+            model: User,
+            select: '_id name profileImagePath email'
+        };
 
         if (qCategory)
-            listings = await Listing.find({ category: qCategory }).populate("creatorId");
+            listings = await Listing.find({ category: qCategory }).populate(populateParams);
         else
-            listings = await Listing.find().populate("creatorId");
+            listings = await Listing.find().populate(populateParams);
 
         res.status(200).json(listings);
     } catch (err) {
@@ -30,12 +36,12 @@ router.get("/", async (req, res) => {
 }).post("/create", upload.array("listingPhotos"), async (req, res) => {
     try {
         const listingPhotos = req.files;
-        const creatorId = new Types.ObjectId(String(req.body.creatorId));
+        const creator = new Types.ObjectId(String(req.body.creatorId));
 
         if (!listingPhotos) return res.status(400).send("No files uploaded.");
 
         const listingPhotoPaths = listingPhotos.map(file => file.path);
-        const newListing = new Listing({ creatorId, listingPhotoPaths, ...req.body });
+        const newListing = new Listing({ creator, listingPhotoPaths, ...req.body });
 
         await newListing.save();
 
@@ -43,6 +49,20 @@ router.get("/", async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(409).json({ message: "Failed to create Listing", error: err.message });
+    }
+}).get("/:listingId", async (req, res) => {
+    try {
+        const { listingId } = req.params;
+        const listing = await Listing.findById(listingId)
+            .populate({
+                path: 'creator',
+                model: User,
+                select: '_id name profileImagePath email'
+            });
+        res.status(200).json(listing);
+    } catch (err) {
+        console.error(err);
+        res.status(409).json({ message: "Listing doesn't exist", error: err.message });
     }
 });
 
