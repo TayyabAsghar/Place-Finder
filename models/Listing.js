@@ -6,9 +6,8 @@ const ListingSchema = new Schema({
         ref: 'User',
         required: true
     },
-    categories: {
-        type: Array,
-        default: [],
+    category: {
+        type: String,
         required: true
     },
     type: {
