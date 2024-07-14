@@ -40,6 +40,10 @@ const useAxios = () => {
             if (options) setHeaders(options);
             return axiosInstance.post(url, body);
         },
+        patch: (url: string, body?: any, options?: HttpOptions | HttpOptions[]) => {
+            if (options) setHeaders(options);
+            return axiosInstance.patch(url, body);
+        },
         put: (url: string, body: any, options?: HttpOptions | HttpOptions[]) => {
             if (options) setHeaders(options);
             return axiosInstance.put(url, body);

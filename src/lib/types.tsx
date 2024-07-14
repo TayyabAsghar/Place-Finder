@@ -7,6 +7,15 @@ type CreatorInfo = {
     profileImagePath: string,
 };
 
+type Listing = {
+    _id: string;
+    city: string,
+    country: string,
+    province: string,
+    categories: string[],
+    listingPhotoPaths: string[];
+};
+
 export type HttpOptions = 'form' | 'json';
 
 export type SignUpForm = {
@@ -20,22 +29,35 @@ export type LogInForm = {
     password: string;
 };
 
+export type BookingForm = {
+    host: string,
+    endDate: Date,
+    startDate: Date,
+    listing: string,
+    customer: string,
+    totalPrice: number;
+};
+
+export type TripList = {
+    endDate: Date,
+    hostId: string,
+    startDate: Date,
+    listing: Listing,
+    totalPrice: number;
+};
+
 export type User = CreatorInfo & {
     createdAt: string,
-    tripList: string[],
     wishList: string[],
+    tripList: TripList[],
     propertyList: string[],
     reservationList: string[];
 };
 
-export type Listing = {
-    _id: string,
+export type ListingDetailsType = Listing & {
     type: string,
-    city: string,
     price: number,
     title: string,
-    country: string,
-    province: string,
     aptSuite: string,
     bedCount: number,
     highlight: string,
@@ -43,38 +65,34 @@ export type Listing = {
     amenities: string[],
     description: string,
     creator: CreatorInfo,
-    categories: string[],
     bedroomCount: number,
     streetAddress: string,
     bathroomCount: number,
-    highlightDesc: string,
-    listingPhotoPaths: string[];
+    highlightDesc: string;
 };
 
-export type ListingCardProps = {
+export type ListingCardProps = Omit<Listing, "_id"> & ({
     type: string,
-    city: string,
     price: number,
-    country: string,
-    booking: boolean,
-    province: string,
+    booking: false,
     listingId: string,
-    creator: CreatorInfo,
-    categories: string[],
-    listingPhotoPaths: string[];
-};
+    creator: CreatorInfo;
+} | {
+    booking: true,
+    endDate: Date,
+    startDate: Date,
+    creatorId: string,
+    listingId: string,
+    totalPrice: number;
+});
 
 export type SearchProps = {
     search: string,
     setSearch: Dispatch<SetStateAction<string>>;
 };
 
-export type CarouselProps = {
-    children: ReactNode;
-};
-
 export type UserState = {
     token?: string,
     user?: User | null,
-    listings?: Listing[];
+    listings?: ListingDetailsType[];
 };

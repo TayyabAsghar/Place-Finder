@@ -1,101 +1,59 @@
-import { useState } from "react";
 import useAxios from "../hooks/useAxios";
+import CustomCarousel from "./CustomCarousel";
 import { useNavigate } from "react-router-dom";
+import { setWishList } from "../lib/redux/state";
 import { useDispatch, useSelector } from "react-redux";
 import { ListingCardProps, UserState } from "../lib/types";
-import { ArrowBackIosNew, ArrowForwardIos } from "@mui/icons-material";
+import { Favorite } from "@mui/icons-material";
 
-const ListingCard = ({ city, type, price, listingId, booking, country, province, creator, categories, listingPhotoPaths }: ListingCardProps) => {
+const ListingCard = (props: ListingCardProps) => {
     const navigate = useNavigate();
     const customAxios = useAxios();
     const dispatch = useDispatch();
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const apiUrl = process.env.REACT_APP_API_URL;
     const user = useSelector((state: UserState) => state.user);
     const wishList = user?.wishList || [];
-    // const isLiked = wishList?.find(item => item?._id === listingId);
-    const goToNextSlide = () => setCurrentIndex(prevIndex => (prevIndex + 1) % listingPhotoPaths.length);
-    const goToPrevSlide = () => setCurrentIndex(prevIndex => (prevIndex - 1 + listingPhotoPaths.length) % listingPhotoPaths.length);
-    console.log(creator);
+    // const isLiked = wishList?.find(item => item?._id === props.listingId);
 
     const patchWishList = async () => {
-        // if (user?._id !== creator._id) {
-        //     const response = await fetch(`users/${user?._id}/${listingId}`,
-        //         {
-        //             method: "PATCH",
-        //             header: {
-        //                 "Content-Type": "application/json",
-        //             }
-        //         }
-        //     );
-        //     const data = await response.json();
-        //     dispatch(setWishList(data.wishList));
-        // } else { return; }
+        const response = await customAxios.patch(`users/${user?._id}/${props.listingId}`, null, 'json');
+        dispatch(setWishList(response.data));
     };
 
     return (
-        <div className="listing-card" onClick={() => navigate(`/properties/${listingId}`)}        >
-            <div className="slider-container">
-                <div className="slider" style={{ transform: `translateX(-${currentIndex * 100}%)` }}                >
-                    {listingPhotoPaths?.map((photo, index) => (
-                        <div key={index} className="slide">
-                            <img src={`http://localhost:3001/${photo?.replace("public", "")}`} alt={`photo ${index + 1}`} />
-                            <div className="prev-button"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    goToPrevSlide();
-                                }} >
-                                <ArrowBackIosNew sx={{ fontSize: "15px" }} />
-                            </div>
-                            <div
-                                className="next-button"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    goToNextSlide();
-                                }}
-                            >
-                                <ArrowForwardIos sx={{ fontSize: "15px" }} />
-                            </div>
+        <div className="cursor-pointer rounded-lg w-80 relative hover:shadow-lg" onClick={() => navigate(`/listing/${props.listingId}`)}>
+            <div>
+                <CustomCarousel indicators={false} autoPlay={false}>
+                    {props.listingPhotoPaths?.map((photo, index) => (
+                        <div className="flex items-center justify-center" key={index}>
+                            <img className="h-full w-full" src={`${apiUrl}${photo.replace("public", "")}`} alt="Listing photo" />
                         </div>
                     ))}
-                </div>
+                </CustomCarousel>
             </div>
+            <div className="text-lg">
+                {props.city}, {props.province}, {props.country}
+            </div>
+            <div>{props.categories}</div>
 
-            <h3>
-                {city}, {province}, {country}
-            </h3>
-            <p>{categories}</p>
-
-            {!booking ? (
+            {props.booking ?
                 <>
-                    <p>{type}</p>
-                    <p>
-                        <span>${price}</span> per night
-                    </p>
-                </>
-            ) : (
+                    <p>{props.startDate.toDateString()} - {props.endDate.toDateString()}</p>
+                    <p><span>${props.totalPrice}</span> total</p>
+                </> :
                 <>
-                    {/* <p>
-                        {startDate} - {endDate}
-                    </p> */}
-                    <p>
-                        {/* <span>${totalPrice}</span> total */}
-                    </p>
+                    <p>{props.type}</p>
+                    <p><span>${props.price}</span> per night</p>
                 </>
-            )}
+            }
 
-            <button className="favorite"
-                onClick={(e) => {
-                    e.stopPropagation();
-                    patchWishList();
-                }}
-                disabled={!user} >
-                {/* {isLiked ? (
-                    <Favorite sx={{ color: "red" }} />
-                ) : (
-                    <Favorite sx={{ color: "white" }} />
-                )} */}
-            </button>
+            {!!user &&
+                <button className="absolute right-5 top-5 cursor-pointer" onClick={() => patchWishList()} >
+                    {/* {isLiked ? <Favorite sx={{ color: "red" }} /> : <Favorite sx={{ color: "white" }} />} */}
+                </button>
+            }
         </div>
+
     );
 };
 

@@ -1,4 +1,4 @@
-const DataNotFound = () => {
+const DataNotFound = ({ message }: { message: string; }) => {
     return (
         <div className="flex flex-col gap-5 grow justify-center items-center">
             <div className="text-primary w-40 h-40">
@@ -15,7 +15,7 @@ const DataNotFound = () => {
                     <circle cx="433.63626" cy="105.17383" r="12.18187" fill="#fff" />
                 </svg>
             </div>
-            <h1>No Data Found</h1>
+            <h1>{message}</h1>
         </div>
     );
 };

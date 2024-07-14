@@ -10,20 +10,20 @@ import { differenceInDays } from "date-fns";
 import CustomCarousel from "./CustomCarousel";
 import { Avatar, Button } from "@mui/material";
 import "react-date-range/dist/theme/default.css";
-import { Listing, UserState } from "../lib/types";
 import { Facilities } from "../data/categoriesData";
 import { useNavigate, useParams } from "react-router-dom";
 import { DateRange, RangeKeyDict, Range } from "react-date-range";
+import { BookingForm, ListingDetailsType, UserState } from "../lib/types";
 
 const ListingDetails = () => {
     const navigate = useNavigate();
     const customAxios = useAxios();
     const { listingId } = useParams();
-    const apiUrl = process.env.REACT_APP_API_URL;
     const [dayCount, setDayCount] = useState(1);
+    const apiUrl = process.env.REACT_APP_API_URL;
     const [loading, setLoading] = useState(true);
-    const [listing, setListing] = useState<Listing | null>(null);
-    const customerId = useSelector((state: UserState) => state.user?._id);
+    const [listing, setListing] = useState<ListingDetailsType | null>(null);
+    const customerId = useSelector((state: UserState) => state.user?._id ?? "");
     const [dateRange, setDateRange] = useState<Range>({
         startDate: new Date(),
         endDate: new Date(),
@@ -51,17 +51,17 @@ const ListingDetails = () => {
 
     const handleSubmit = async () => {
         try {
-            const bookingForm = {
-                customerId,
-                listingId,
-                hostId: listing?.creator._id,
-                startDate: dateRange.startDate?.toDateString(),
-                endDate: dateRange.endDate?.toDateString(),
-                totalPrice: listing?.price ?? 0 * dayCount,
+            const bookingForm: BookingForm = {
+                customer: customerId,
+                listing: listingId ?? "",
+                host: listing?.creator._id ?? "",
+                endDate: dateRange.endDate ?? new Date(),
+                startDate: dateRange.startDate ?? new Date(),
+                totalPrice: listing?.price ?? 0 * dayCount
             };
 
             await customAxios.post("bookings/create", JSON.stringify(bookingForm), "json");
-            navigate(`/${customerId}/trips`);
+            navigate(`/user/trips`);
         } catch (err) {
             console.log("Submit Booking Failed.", err);
         }
@@ -78,8 +78,7 @@ const ListingDetails = () => {
                         <CustomCarousel>
                             {listing.listingPhotoPaths.map((item, index) =>
                                 <div className="flex items-center justify-center h-80" key={index}>
-                                    <img className="h-full"
-                                        src={`${apiUrl}${item.replace("public", "")}`} alt="Listing photo" />
+                                    <img className="h-full" src={`${apiUrl}${item.replace("public", "")}`} alt="Listing photo" />
                                 </div>
                             )}
                         </CustomCarousel>
@@ -148,7 +147,7 @@ const ListingDetails = () => {
                             </div>
                         </div>
                     </div> :
-                    <DataNotFound />
+                    <DataNotFound message="No Data Found" />
             }
             <Footer />
         </>
