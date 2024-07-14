@@ -45,7 +45,7 @@ const TripList = () => {
                                     totalPrice={totalPrice}
                                     country={listing.country}
                                     province={listing.province}
-                                    categories={listing.categories}
+                                    category={listing.category}
                                     listingPhotoPaths={listing.listingPhotoPaths}
                                 />
                             ))}

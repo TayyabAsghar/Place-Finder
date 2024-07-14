@@ -34,7 +34,7 @@ const ListingCard = (props: ListingCardProps) => {
             <div className="text-lg">
                 {props.city}, {props.province}, {props.country}
             </div>
-            <div>{props.categories}</div>
+            <div>{props.category}</div>
 
             {props.booking ?
                 <>

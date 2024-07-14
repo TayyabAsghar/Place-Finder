@@ -3,7 +3,7 @@ import { AcceptedImageTypes } from "../constants";
 
 export const CreateListingValidations = z.object({
     creatorId: z.string().trim().min(1, { message: 'Required field.' }),
-    categories: z.string().array().nonempty('Select at least 1 option.'),
+    category: z.string().trim().min(1, { message: 'Required field.' }),
     type: z.string().trim().min(1, { message: 'Required field.' }),
     streetAddress: z.string().trim().min(1, { message: 'Required field.' }),
     aptSuite: z.string().trim().min(1, { message: 'Required field.' }),

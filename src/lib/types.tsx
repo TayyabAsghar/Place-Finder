@@ -12,7 +12,7 @@ type Listing = {
     city: string,
     country: string,
     province: string,
-    categories: string[],
+    category: string,
     listingPhotoPaths: string[];
 };
 

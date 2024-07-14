@@ -43,19 +43,19 @@ const Listings = () => {
 
             {loading ? <Loader /> :
                 <div className="flex flex-wrap justify-center gap-1.5 pb-28 px-14">
-                    {listings?.map(({ _id, creator, listingPhotoPaths, city, province, country, categories, type, price }, index) =>
+                    {listings?.map((item, index) =>
                         <ListingCard
                             key={index}
-                            city={city}
-                            type={type}
-                            price={price}
-                            listingId={_id}
+                            city={item.city}
+                            type={item.type}
+                            price={item.price}
+                            listingId={item._id}
                             booking={false}
-                            country={country}
-                            creator={creator}
-                            province={province}
-                            categories={categories}
-                            listingPhotoPaths={listingPhotoPaths}
+                            country={item.country}
+                            creator={item.creator}
+                            province={item.province}
+                            category={item.category}
+                            listingPhotoPaths={item.listingPhotoPaths}
                         />
                     )}
                 </div>

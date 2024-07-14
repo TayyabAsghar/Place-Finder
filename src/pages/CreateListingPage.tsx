@@ -27,32 +27,21 @@ const CreateListing = () => {
     const { register, handleSubmit, getValues, setValue, trigger, formState: { errors, isSubmitting } } = useForm<CreateListingFormType>({
         resolver: zodResolver(CreateListingValidations),
         defaultValues: {
-            creatorId: creatorId,
-            categories: [],
             type: '',
+            price: 0,
+            bedCount: 1,
+            category: '',
+            amenities: [],
             guestCount: 1,
             bedroomCount: 1,
-            bedCount: 1,
             bathroomCount: 1,
-            amenities: [],
-            price: 0
+            creatorId: creatorId
         }
     });
 
-    const selectCategory = (category: string) => {
-        let currentCategories = getValues("categories");
-        const index = currentCategories.indexOf(category);
-
-        if (index > -1) currentCategories.splice(index, 1);
-        else currentCategories = [category, ...Array.from(currentCategories)];
-
-        setValue("categories", currentCategories);
-        trigger("categories");
-    };
-
-    const selectType = (type: string) => {
-        setValue("type", type);
-        trigger("type");
+    const setControlValue = (name: CreateListingFormKeysType, value: string) => {
+        setValue(name, value);
+        trigger(name);
     };
 
     const decrementCounter = (fieldName: CreateListingFormKeysType) => {
@@ -100,7 +89,7 @@ const CreateListing = () => {
             const listingForm = new FormData();
 
             listingForm.append("creatorId", formData.creatorId);
-            Array.from(formData.categories).forEach(category => listingForm.append("categories", category));
+            listingForm.append("category", formData.category);
             listingForm.append("type", formData.type);
             listingForm.append("streetAddress", toTitleCase(formData.streetAddress));
             listingForm.append("city", toTitleCase(formData.city));
@@ -133,24 +122,24 @@ const CreateListing = () => {
                     <div className="bg-secondary-100 bg-opacity-25 mt-10 rounded-2xl px-10 py-7">
                         <h2 className="text-accent" >Step 1: Tell us about your place</h2>
                         <hr className="mx-0 my-4 mb-6" />
-                        <h3 className="create-listing-heading">Which of these categories best describes your place?</h3>
-                        <div className="flex justify-center items-center flex-wrap gap-5 px-5 py-0" {...register("categories")}>
+                        <h3 className="create-listing-heading">Which of one these categories best describes your place?</h3>
+                        <div className="flex justify-center items-center flex-wrap gap-5 px-5 py-0" {...register("category")}>
                             {AllCategories?.slice(1).map((item, index) => (
-                                <div className={`create-listing-categories ${getValues("categories")?.includes(item.label) ? "create-listing-selected" : ""}
-                                ${!!errors.categories ? "!border-error" : ""}`} key={index} onClick={() => selectCategory(item.label)}>
+                                <div className={`create-listing-categories ${getValues("category") === item.label ? "create-listing-selected" : ""}
+                                ${!!errors.category ? "!border-error" : ""}`} key={index} onClick={() => setControlValue("category", item.label)}>
                                     <div className="text-3xl">{item.icon}</div>
                                     <p className="font-semibold text-center">{item.label}</p>
                                 </div>
                             ))}
                         </div>
-                        {!!errors.categories && <div className="error-message">{errors.categories?.message}</div>}
+                        {!!errors.category && <div className="error-message">{errors.category?.message}</div>}
 
                         <h3 className="create-listing-heading">What type of place will guests have?</h3>
                         <div className="flex justify-around gap-y-5 flex-wrap" {...register("type")}>
                             {Types?.map((item, index) => (
                                 <div className={`create-listing-types ${getValues("type") === item.name ? "create-listing-selected" : ""}
                                 ${!!errors.type ? "!border-error" : ""}`}
-                                    key={index} onClick={() => selectType(item.name)}>
+                                    key={index} onClick={() => setControlValue("type", item.name)}>
                                     <div className="max-w-[400px]">
                                         <h4 className="mb-1 font-semibold text-lg">{item.name}</h4>
                                         <p>{item.description}</p>
