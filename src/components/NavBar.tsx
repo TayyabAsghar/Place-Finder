@@ -16,6 +16,7 @@ const NavBar = () => {
     const location = useLocation();
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
+    const apiUrl = process.env.REACT_APP_API_URL;
     const user = useSelector((state: UserState) => state.user);
     const [dropdownEl, setDropdownEl] = useState<EventTarget & HTMLButtonElement | null>(null);
     const menuOpen = Boolean(dropdownEl);
@@ -99,10 +100,8 @@ const NavBar = () => {
                     aria-expanded={menuOpen ? 'true' : undefined} onClick={e => setDropdownEl(e.currentTarget)}>
                     <MenuOutlined />
                     {user ? user.profileImagePath ?
-                        <Avatar src={`http://localhost:3001/${user.profileImagePath.replace("public", "")}`} sx={{ bgcolor: 'primary.main' }}
-                            alt="profile photo" >
-                            {getInitials(user.name)}
-                        </Avatar> :
+                        <Avatar src={`${apiUrl}${user.profileImagePath.replace("public", "")}`} sx={{ bgcolor: 'primary.main' }}
+                            alt="profile photo" /> :
                         <Avatar sx={{ bgcolor: 'background.default', color: 'text.primary' }} >{getInitials(user.name)}</Avatar> :
                         <Person />
                     }

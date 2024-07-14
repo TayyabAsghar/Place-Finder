@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ListingCardProps, UserState } from "../lib/types";
 import { ArrowBackIosNew, ArrowForwardIos } from "@mui/icons-material";
 
-const ListingCard = ({ city, type, price, listingId, booking, country, province, creatorId, categories, listingPhotoPaths }: ListingCardProps) => {
+const ListingCard = ({ city, type, price, listingId, booking, country, province, creator, categories, listingPhotoPaths }: ListingCardProps) => {
     const navigate = useNavigate();
     const customAxios = useAxios();
     const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const ListingCard = ({ city, type, price, listingId, booking, country, province,
     // const isLiked = wishList?.find(item => item?._id === listingId);
     const goToNextSlide = () => setCurrentIndex(prevIndex => (prevIndex + 1) % listingPhotoPaths.length);
     const goToPrevSlide = () => setCurrentIndex(prevIndex => (prevIndex - 1 + listingPhotoPaths.length) % listingPhotoPaths.length);
-
+    console.log(creator);
 
     const patchWishList = async () => {
         // if (user?._id !== creator._id) {

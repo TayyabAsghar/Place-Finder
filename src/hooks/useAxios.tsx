@@ -5,7 +5,7 @@ import { HttpOptions } from "../lib/types";
 const useAxios = () => {
     const source = axios.CancelToken.source();
     const axiosInstance = axios.create({
-        baseURL: 'http://localhost:3001/',
+        baseURL: process.env.REACT_APP_API_URL,
         cancelToken: source.token
     });
 
@@ -36,13 +36,13 @@ const useAxios = () => {
             if (options) setHeaders(options);
             return axiosInstance.get(url);
         },
-        post: (url: string, data: any, options?: HttpOptions | HttpOptions[]) => {
+        post: (url: string, body: any, options?: HttpOptions | HttpOptions[]) => {
             if (options) setHeaders(options);
-            return axiosInstance.post(url, data);
+            return axiosInstance.post(url, body);
         },
-        put: (url: string, data: any, options?: HttpOptions | HttpOptions[]) => {
+        put: (url: string, body: any, options?: HttpOptions | HttpOptions[]) => {
             if (options) setHeaders(options);
-            return axiosInstance.put(url, data);
+            return axiosInstance.put(url, body);
         },
         delete: (url: string, options?: HttpOptions | HttpOptions[]) => {
             if (options) setHeaders(options);

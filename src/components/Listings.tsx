@@ -1,8 +1,8 @@
+import Loader from "./Loader";
 import ListingCard from "./ListingCard";
 import useAxios from "../hooks/useAxios";
 import { UserState } from "../lib/types";
 import { useEffect, useState } from "react";
-import { CircularProgress } from "@mui/material";
 import { setListings } from "../lib/redux/state";
 import { useDispatch, useSelector } from "react-redux";
 import { AllCategories } from "../data/categoriesData";
@@ -41,12 +41,9 @@ const Listings = () => {
                 ))}
             </div>
 
-            {loading ?
-                <div className="flex items-center h-screen">
-                    <CircularProgress thickness={4} size={48} />
-                </div> :
+            {loading ? <Loader /> :
                 <div className="flex flex-wrap justify-center gap-1.5 pb-28 px-14">
-                    {listings?.map(({ _id, creatorId, listingPhotoPaths, city, province, country, categories, type, price }, index) =>
+                    {listings?.map(({ _id, creator, listingPhotoPaths, city, province, country, categories, type, price }, index) =>
                         <ListingCard
                             key={index}
                             city={city}
@@ -55,8 +52,8 @@ const Listings = () => {
                             listingId={_id}
                             booking={false}
                             country={country}
+                            creator={creator}
                             province={province}
-                            creatorId={creatorId}
                             categories={categories}
                             listingPhotoPaths={listingPhotoPaths}
                         />

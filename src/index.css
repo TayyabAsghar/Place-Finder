@@ -43,7 +43,7 @@
 }
 
 .create-listing-heading {
-  @apply text-primary font-semibold text-xl mx-0 my-10 mb-5;
+  @apply font-semibold text-xl mx-0 my-10 mb-5;
 }
 
 .create-listing-categories {

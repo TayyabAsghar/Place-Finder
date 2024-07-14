@@ -1,4 +1,11 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
+
+type CreatorInfo = {
+    _id: string,
+    name: string,
+    email: string,
+    profileImagePath: string,
+};
 
 export type HttpOptions = 'form' | 'json';
 
@@ -13,16 +20,11 @@ export type LogInForm = {
     password: string;
 };
 
-
-export type User = {
-    _id: string,
-    name: string,
-    email: string,
+export type User = CreatorInfo & {
     createdAt: string,
     tripList: string[],
     wishList: string[],
     propertyList: string[],
-    profileImagePath: string,
     reservationList: string[];
 };
 
@@ -36,11 +38,11 @@ export type Listing = {
     province: string,
     aptSuite: string,
     bedCount: number,
-    creatorId: string,
     highlight: string,
     guestCount: number,
     amenities: string[],
     description: string,
+    creator: CreatorInfo,
     categories: string[],
     bedroomCount: number,
     streetAddress: string,
@@ -57,7 +59,7 @@ export type ListingCardProps = {
     booking: boolean,
     province: string,
     listingId: string,
-    creatorId: string,
+    creator: CreatorInfo,
     categories: string[],
     listingPhotoPaths: string[];
 };
@@ -65,6 +67,10 @@ export type ListingCardProps = {
 export type SearchProps = {
     search: string,
     setSearch: Dispatch<SetStateAction<string>>;
+};
+
+export type CarouselProps = {
+    children: ReactNode;
 };
 
 export type UserState = {
