@@ -64,6 +64,15 @@ router.get("/", async (req, res) => {
         console.error(err);
         res.status(409).json({ message: "Listing doesn't exist", error: err.message });
     }
+}).get("/:userId/reservations", async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const reservations = await Booking.find({ host: userId }).populate("customerId hostId listingId");
+        res.status(202).json(reservations);
+    } catch (err) {
+        console.error(err);
+        res.status(404).json({ message: "Can not find reservations!", error: err.message });
+    }
 });
 
 export default router;
