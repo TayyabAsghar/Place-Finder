@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { ListingSchema } from "./Listing.js";
 
 const BookingSchema = new Schema({
     customer: {
@@ -12,8 +13,7 @@ const BookingSchema = new Schema({
         required: true
     },
     listing: {
-        type: Schema.Types.ObjectId,
-        ref: "Listing",
+        type: ListingSchema,
         required: true
     },
     startDate: {

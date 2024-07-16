@@ -34,6 +34,7 @@ router.post("/signup", async (req, res) => {
         const { email, password } = req.body;
 
         const userData = await User.findOne({ email });
+
         if (!userData) return res.status(409).json({ message: "User doesn't exist!" });
 
         /* Compare the password with the hashed password */
