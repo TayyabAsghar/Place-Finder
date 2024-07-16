@@ -64,14 +64,27 @@ router.get("/", async (req, res) => {
         console.error(err);
         res.status(409).json({ message: "Listing doesn't exist", error: err.message });
     }
-}).get("/:userId/reservations", async (req, res) => {
+}).get("/search/:search", async (req, res) => {
+    const { search } = req.params;
+
     try {
-        const { userId } = req.params;
-        const reservations = await Booking.find({ host: userId }).populate("customerId hostId listingId");
-        res.status(202).json(reservations);
+        let listings = [];
+
+        if (search.toLowerCase() === "all") listings = await Listing.find().populate("creator");
+        else {
+            listings = await Listing.find({
+                $or: [{
+                    category: { $regex: search, $options: "i" }
+                }, {
+                    title: { $regex: search, $options: "i" }
+                }]
+            }).populate("creator");
+        }
+
+        res.status(200).json(listings);
     } catch (err) {
         console.error(err);
-        res.status(404).json({ message: "Can not find reservations!", error: err.message });
+        res.status(404).json({ message: "Fail to fetch listings", error: err.message });
     }
 });
 
