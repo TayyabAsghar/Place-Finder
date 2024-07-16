@@ -39,6 +39,7 @@ export type BookingForm = {
 };
 
 export type TripList = {
+    _id: string,
     endDate: Date,
     hostId: string,
     startDate: Date,
@@ -46,9 +47,15 @@ export type TripList = {
     totalPrice: number;
 };
 
+export type WishList = Listing & {
+    type: string,
+    price: number,
+    listingId: string,
+};
+
 export type User = CreatorInfo & {
     createdAt: string,
-    wishList: string[],
+    wishList: WishList[],
     tripList: TripList[],
     propertyList: string[],
     reservationList: string[];
@@ -75,14 +82,12 @@ export type ListingCardProps = Omit<Listing, "_id"> & ({
     type: string,
     price: number,
     booking: false,
-    listingId: string,
-    creator: CreatorInfo;
+    listingId: string;
 } | {
     booking: true,
     endDate: Date,
+    tripId: string,
     startDate: Date,
-    creatorId: string,
-    listingId: string,
     totalPrice: number;
 });
 

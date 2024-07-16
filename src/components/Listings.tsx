@@ -46,13 +46,12 @@ const Listings = () => {
                     {listings?.map((item, index) =>
                         <ListingCard
                             key={index}
+                            booking={false}
                             city={item.city}
                             type={item.type}
                             price={item.price}
                             listingId={item._id}
-                            booking={false}
                             country={item.country}
-                            creator={item.creator}
                             province={item.province}
                             category={item.category}
                             listingPhotoPaths={item.listingPhotoPaths}

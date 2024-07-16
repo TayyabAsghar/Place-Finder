@@ -29,6 +29,7 @@ const ListingDetails = () => {
         endDate: new Date(),
         key: "selection"
     });
+
     const handleSelect = (ranges: RangeKeyDict) => {
         const endDate = ranges['selection']?.endDate ?? new Date().getDate();
         const startDate = ranges['selection']?.startDate ?? new Date().getDate();
@@ -47,8 +48,6 @@ const ListingDetails = () => {
         }
     };
 
-    useEffect(() => { getListingDetails(); }, []);
-
     const handleSubmit = async () => {
         try {
             const bookingForm: BookingForm = {
@@ -60,12 +59,14 @@ const ListingDetails = () => {
                 totalPrice: listing?.price ?? 0 * dayCount
             };
 
-            await customAxios.post("bookings/create", JSON.stringify(bookingForm), "json");
-            navigate(`/user/trips`);
+            await customAxios.post("booking/create", JSON.stringify(bookingForm), "json");
+            navigate('/user/trips');
         } catch (err) {
             console.log("Submit Booking Failed.", err);
         }
     };
+
+    useEffect(() => { getListingDetails(); }, []);
 
     return (
         <>

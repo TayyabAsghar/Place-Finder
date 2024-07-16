@@ -30,7 +30,7 @@ const NavBar = () => {
                 {user ?
                     <div>
                         <MenuItem>
-                            <Link to={`/${user._id}/trips`} className="profile-dropdown">
+                            <Link to="/user/trips" className="profile-dropdown">
                                 <HiClipboardDocumentList />
                                 Trip List
                             </Link>
