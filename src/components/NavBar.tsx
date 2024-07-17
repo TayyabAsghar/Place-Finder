@@ -36,19 +36,19 @@ const NavBar = () => {
                             </Link>
                         </MenuItem>
                         <MenuItem>
-                            <Link to={`/${user._id}/wishList`} className="profile-dropdown">
+                            <Link to="/user/wishList" className="profile-dropdown">
                                 <PiListHeartBold />
                                 Wish List
                             </Link>
                         </MenuItem>
                         <MenuItem>
-                            <Link to={`/${user._id}/properties`} className="profile-dropdown">
+                            <Link to="/user/properties" className="profile-dropdown">
                                 <PiBuildingOfficeBold />
                                 Property List
                             </Link>
                         </MenuItem>
                         <MenuItem>
-                            <Link to={`/${user._id}/reservations`} className="profile-dropdown">
+                            <Link to="/user/reservations" className="profile-dropdown">
                                 <BsFileEarmarkLock />
                                 Reservation List
                             </Link>
@@ -80,9 +80,9 @@ const NavBar = () => {
     };
 
     return (
-        <nav className="flex justify-between items-center px-10 py-3 border-b sticky top-0 bg-background z-50">
+        <nav className="flex justify-between items-center px-10 py-3 h-[72px] border-b sticky top-0 bg-background z-50">
             <Link to="/" title="Place Finder">
-                <img src="/assets/logo.png" alt="logo" />
+                <img className="w-16 h-16" src="/assets/images/logo/logo192.png" alt="Logo" />
             </Link>
             {location.pathname !== "/login" && location.pathname !== "/signup" &&
                 <SearchBar search={search} setSearch={setSearch}></SearchBar>
