@@ -29,13 +29,12 @@ const LogInPage = () => {
 
             const response = await customAxios.post('auth/login', JSON.stringify(logInForm), 'json');
 
-            if (response) {
-                dispatch(setLogin({
+            dispatch(
+                setLogin({
                     user: response.data.user,
                     token: response.data.token
                 }));
-                navigate("/");
-            }
+            navigate("/");
         } catch (err) {
             console.error("Login failed", err);
         }

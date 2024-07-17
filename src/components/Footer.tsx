@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
-        <div className="flex justify-between items-center gap-12 px-16 py-3 w-full bg-accent-50 bg-opacity-50">
+        <div className="flex justify-between items-center gap-12 px-16 py-3 w-full bg-secondary-100 bg-opacity-25">
             <Link to='/'>
                 <img className="max-w-36 max-h-36" src="/assets/images/logo/logo192.png" alt="Logo" />
             </Link>

@@ -1,16 +1,16 @@
 import useAxios from "../hooks/useAxios";
-import { TripList, UserState } from "../lib/types";
 import Loader from "../components/Loader";
 import Footer from "../components/Footer";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import ListingCard from "../components/ListingCard";
+import { TripListType, UserState } from "../lib/types";
 
 const ReservationList = () => {
     const customAxios = useAxios();
     const [loading, setLoading] = useState(true);
     const userId = useSelector((state: UserState) => state.user?._id);
-    const [reservationList, setReservationList] = useState<TripList[]>([]);
+    const [reservationList, setReservationList] = useState<TripListType[]>([]);
 
     const getReservationList = async () => {
         try {

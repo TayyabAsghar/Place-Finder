@@ -3,14 +3,14 @@ import Loader from "../components/Loader";
 import Footer from "../components/Footer";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { TripList, UserState } from "../lib/types";
 import ListingCard from "../components/ListingCard";
+import { TripListType, UserState } from "../lib/types";
 
 const PropertyListPage = () => {
     const customAxios = useAxios();
     const [loading, setLoading] = useState(true);
-    const [propertyList, setPropertyList] = useState<TripList[]>([]);
     const userId = useSelector((state: UserState) => state.user?._id);
+    const [propertyList, setPropertyList] = useState<TripListType[]>([]);
 
     const getPropertyList = async () => {
         try {

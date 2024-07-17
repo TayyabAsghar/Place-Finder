@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 type CreatorInfo = {
     _id: string,
@@ -38,7 +38,7 @@ export type BookingForm = {
     totalPrice: number;
 };
 
-export type TripList = {
+export type TripListType = {
     _id: string,
     endDate: Date,
     hostId: string,
@@ -55,10 +55,7 @@ export type WishList = Listing & {
 
 export type User = CreatorInfo & {
     createdAt: string,
-    wishList: WishList[],
-    tripList: TripList[],
-    propertyList: string[],
-    reservationList: string[];
+    wishList: WishList[];
 };
 
 export type ListingDetailsType = Listing & {
@@ -90,6 +87,11 @@ export type ListingCardProps = Omit<Listing, "_id"> & ({
     startDate: Date,
     totalPrice: number;
 });
+
+export type LikeButtonProps = {
+    listingId: string,
+    className?: string | undefined;
+};
 
 export type SearchProps = {
     search: string,

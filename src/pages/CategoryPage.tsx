@@ -1,7 +1,7 @@
-import { TripList } from "../lib/types";
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
 import Footer from "../components/Footer";
+import { TripListType } from "../lib/types";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ListingCard from "../components/ListingCard";
@@ -10,7 +10,7 @@ const CategoryPage = () => {
     const customAxios = useAxios();
     const { category } = useParams();
     const [loading, setLoading] = useState(true);
-    const [listings, setListings] = useState<TripList[]>([]);
+    const [listings, setListings] = useState<TripListType[]>([]);
 
     const getFeedListings = async () => {
         try {

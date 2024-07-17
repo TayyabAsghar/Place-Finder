@@ -1,4 +1,5 @@
 import Loader from "./Loader";
+import LikeButton from "./LikeButton";
 import useAxios from "../hooks/useAxios";
 import DataNotFound from "./DataNotFound";
 import "react-date-range/dist/styles.css";
@@ -73,13 +74,14 @@ const ListingDetails = () => {
             {loading ? <Loader /> :
                 listing ?
                     <div className="px-14 py-10 pb-20 w-full">
-                        <div className="flex justify-between items-center mb-10">
+                        <div className="flex justify-between items-start gap-10 mb-10">
                             <h1>{listing.title}</h1>
+                            <LikeButton className="w-10 h-10" listingId={listing._id} />
                         </div>
                         <CustomCarousel>
                             {listing.listingPhotoPaths.map((item, index) =>
-                                <div className="flex items-center justify-center h-80" key={index}>
-                                    <img className="h-full" src={`${apiUrl}${item.replace("public", "")}`} alt="Listing photo" />
+                                <div className="flex items-center justify-center h-[75vh]" key={index}>
+                                    <img className="h-full w-full" src={`${apiUrl}${item.replace("public", "")}`} alt="Listing photo" />
                                 </div>
                             )}
                         </CustomCarousel>

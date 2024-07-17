@@ -1,8 +1,8 @@
-import { TripList } from "../lib/types";
 import useAxios from "../hooks/useAxios";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 import { useEffect, useState } from "react";
+import { TripListType } from "../lib/types";
 import { useParams } from "react-router-dom";
 import ListingCard from "../components/ListingCard";
 
@@ -10,7 +10,7 @@ const SearchPage = () => {
     const customAxios = useAxios();
     const { search } = useParams();
     const [loading, setLoading] = useState(true);
-    const [listings, setListings] = useState<TripList[]>([]);
+    const [listings, setListings] = useState<TripListType[]>([]);
 
     const getSearchListings = async () => {
         try {
