@@ -3,8 +3,8 @@ import express from "express";
 import { config } from "dotenv";
 import mongoose from "mongoose";
 import authRouter from "./routes/auth.js";
-import tripRouter from "./routes/trip.js";
 import userRouter from "./routes/user.js";
+import bookingRouter from "./routes/booking.js";
 import listingRouter from "./routes/listing.js";
 
 const app = express();
@@ -14,8 +14,8 @@ app.use(express.static('public'));
 
 /* Routes */
 app.use('/auth', authRouter);
-app.use('/trip', tripRouter);
 app.use('/users', userRouter);
+app.use('/booking', bookingRouter);
 app.use('/listing', listingRouter);
 
 config();

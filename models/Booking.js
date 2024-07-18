@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import { ListingSchema } from "./Listing.js";
 
-const TripSchema = new Schema({
+const BookingSchema = new Schema({
     customer: {
         type: Schema.Types.ObjectId,
         ref: "User",
@@ -36,5 +36,5 @@ const TripSchema = new Schema({
     timestamps: true
 });
 
-const Trip = model("Trip", TripSchema);
-export default Trip;
+const Booking = model("Booking", BookingSchema);
+export default Booking;
