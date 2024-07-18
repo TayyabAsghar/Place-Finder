@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import ThemeMUI from './lib/themes/ThemeMUI';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { persistor, store } from './lib/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -18,7 +19,9 @@ root.render(
     <ThemeProvider theme={ThemeMUI}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </PersistGate>
       </Provider>
     </ThemeProvider>

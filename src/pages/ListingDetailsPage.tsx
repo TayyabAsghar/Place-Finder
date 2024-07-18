@@ -1,5 +1,4 @@
 import useAxios from "../hooks/useAxios";
-import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -27,13 +26,9 @@ const ListingDetailsPage = () => {
     useEffect(() => { getListingDetails(); }, []);
 
     return (
-        <>
-            {loading ? <Loader /> :
-                listing ? <ListingDetails {...listing} booking={true} /> :
-                    <DataNotFound message="No Data Found" />
-            }
-            <Footer />
-        </>
+        loading ? <Loader /> :
+            listing ? <ListingDetails {...listing} booking={true} /> :
+                <DataNotFound message="No Data Found" />
     );
 };
 

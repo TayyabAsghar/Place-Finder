@@ -5,7 +5,6 @@ import { UserState } from "../lib/types";
 import useAxios from "../hooks/useAxios";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import Footer from "../components/Footer";
 import { toTitleCase } from "../lib/utils";
 import { IoIosImages } from "react-icons/io";
 import { ChangeEvent, useState } from "react";
@@ -386,8 +385,6 @@ const CreateListing = () => {
                     </LoadingButton>
                 </form>
             </div>
-
-            <Footer />
         </div>
     );
 };

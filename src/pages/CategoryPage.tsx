@@ -1,6 +1,5 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
-import Footer from "../components/Footer";
 import { TripListType } from "../lib/types";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -59,7 +58,6 @@ const CategoryPage = () => {
                     )
                 )} */}
             </div>
-            <Footer />
         </>
     );
 };

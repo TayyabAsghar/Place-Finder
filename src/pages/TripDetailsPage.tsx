@@ -1,5 +1,4 @@
 import useAxios from "../hooks/useAxios";
-import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 import { TripDetails } from "../lib/types";
 import { useEffect, useState } from "react";
@@ -27,18 +26,14 @@ const TripDetailsPage = () => {
     useEffect(() => { getListingDetails(); }, []);
 
     return (
-        <>
-            {loading ? <Loader /> :
-                trip ? <ListingDetails {...trip.listing}
-                    booking={false}
-                    days={trip.days}
-                    endDate={trip.endDate}
-                    startDate={trip.startDate}
-                    totalPrice={trip.totalPrice} /> :
-                    <DataNotFound message="No Data Found" />
-            }
-            <Footer />
-        </>
+        loading ? <Loader /> :
+            trip ? <ListingDetails {...trip.listing}
+                booking={false}
+                days={trip.days}
+                endDate={trip.endDate}
+                startDate={trip.startDate}
+                totalPrice={trip.totalPrice} /> :
+                <DataNotFound message="No Data Found" />
     );
 };
 

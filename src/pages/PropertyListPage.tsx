@@ -1,6 +1,5 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
-import Footer from "../components/Footer";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import ListingCard from "../components/ListingCard";
@@ -58,8 +57,6 @@ const PropertyListPage = () => {
                     )
                 )}
             </div> */}
-
-                <Footer />
             </>
     );
 };

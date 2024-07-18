@@ -1,4 +1,3 @@
-import Footer from "../components/Footer";
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
 import { useSelector } from "react-redux";
@@ -27,33 +26,30 @@ const TripListPage = () => {
     useEffect(() => { getTripList(); }, []);
 
     return (
-        <>
-            <div className="flex grow flex-col gap-5 px-14 py-10 pb-20 w-full">
-                <h1>Your Trip List</h1>
-                {loading ? <Loader /> :
-                    tripList.length ?
-                        <div className="flex flex-wrap gap-10">
-                            {tripList.map((item, index) => (
-                                <ListingCard
-                                    key={index}
-                                    booking={true}
-                                    tripId={item._id}
-                                    endDate={item.endDate}
-                                    city={item.listing.city}
-                                    startDate={item.startDate}
-                                    totalPrice={item.totalPrice}
-                                    country={item.listing.country}
-                                    province={item.listing.province}
-                                    category={item.listing.category}
-                                    listingPhotoPaths={item.listing.listingPhotoPaths}
-                                />
-                            ))}
-                        </div> :
-                        <DataNotFound message="No Data Found" />
-                }
-            </div>
-            <Footer />
-        </>
+        <div className="flex grow flex-col gap-5 px-14 py-10 pb-20 w-full">
+            <h1>Your Trip List</h1>
+            {loading ? <Loader /> :
+                tripList.length ?
+                    <div className="flex flex-wrap gap-10">
+                        {tripList.map((item, index) => (
+                            <ListingCard
+                                key={index}
+                                booking={true}
+                                tripId={item._id}
+                                endDate={item.endDate}
+                                city={item.listing.city}
+                                startDate={item.startDate}
+                                totalPrice={item.totalPrice}
+                                country={item.listing.country}
+                                province={item.listing.province}
+                                category={item.listing.category}
+                                listingPhotoPaths={item.listing.listingPhotoPaths}
+                            />
+                        ))}
+                    </div> :
+                    <DataNotFound message="No Data Found" />
+            }
+        </div>
     );
 };
 

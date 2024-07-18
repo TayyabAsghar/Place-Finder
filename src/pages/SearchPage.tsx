@@ -1,5 +1,4 @@
 import useAxios from "../hooks/useAxios";
-import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 import { useEffect, useState } from "react";
 import { TripListType } from "../lib/types";
@@ -57,7 +56,6 @@ const SearchPage = () => {
                     )
                 )} */}
             </div>
-            <Footer />
         </>
     );
 };

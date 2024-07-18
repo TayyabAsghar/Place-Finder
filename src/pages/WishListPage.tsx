@@ -1,7 +1,6 @@
 import "../styles/List.scss";
 import { UserState } from "../lib/types";
 import { useSelector } from "react-redux";
-import Footer from "../components/Footer";
 import ListingCard from "../components/ListingCard";
 
 const WishList = () => {
@@ -26,7 +25,6 @@ const WishList = () => {
                     />
                 ))}
             </div>
-            <Footer />
         </>
     );
 };
