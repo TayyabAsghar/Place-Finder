@@ -3,9 +3,9 @@ import express from "express";
 import { config } from "dotenv";
 import mongoose from "mongoose";
 import authRouter from "./routes/auth.js";
+import tripRouter from "./routes/trip.js";
 import userRouter from "./routes/user.js";
 import listingRouter from "./routes/listing.js";
-import bookingRouter from "./routes/booking.js";
 
 const app = express();
 app.use(cors());
@@ -14,9 +14,9 @@ app.use(express.static('public'));
 
 /* Routes */
 app.use('/auth', authRouter);
+app.use('/trip', tripRouter);
 app.use('/users', userRouter);
 app.use('/listing', listingRouter);
-app.use('/booking', bookingRouter);
 
 config();
 const PORT = process.env.PORT || 8000;

@@ -46,11 +46,7 @@ router.post("/signup", async (req, res) => {
             _id: userData.id,
             name: userData.name,
             email: userData.email,
-            tripList: userData.tripList,
-            wishList: userData.wishList,
             createdAt: userData.createdAt,
-            propertyList: userData.propertyList,
-            reservationList: userData.reservationList,
             profileImagePath: userData.profileImagePath
         };
 

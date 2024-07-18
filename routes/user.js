@@ -1,6 +1,6 @@
 import { Router } from "express";
 import User from "../models/User.js";
-import Booking from "../models/Booking.js";
+import Trip from "../models/Trip.js";
 import Listing from "../models/Listing.js";
 
 const router = Router();
@@ -8,11 +8,7 @@ const router = Router();
 router.get("/:userId/trips", async (req, res) => {
     try {
         const { userId } = req.params;
-        const trips = await Booking.find({ customer: userId }).populate({
-            path: 'host',
-            model: User,
-            select: '_id name profileImagePath email'
-        });
+        const trips = await Trip.find({ customer: userId });
 
         res.status(202).json(trips);
     } catch (err) {
@@ -39,24 +35,10 @@ router.get("/:userId/trips", async (req, res) => {
         console.error(err);
         res.status(404).json({ error: err.message });
     }
-}).get("/:userId/trips", async (req, res) => {
-    try {
-        const { userId } = req.params;
-        const trips = await Booking.find({ creator: userId }).populate({
-            path: 'creator',
-            model: User,
-            select: '_id name profileImagePath email'
-        });
-
-        res.status(202).json(trips);
-    } catch (err) {
-        console.error(err);
-        res.status(404).json({ message: "Can not find trips!", error: err.message });
-    }
 }).get("/:userId/reservations", async (req, res) => {
     try {
         const { userId } = req.params;
-        const reservations = await Booking.find({ host: userId }).populate("customerId hostId listingId");
+        const reservations = await Trip.find({ host: userId }).populate("customerId hostId listingId");
         res.status(202).json(reservations);
     } catch (err) {
         console.error(err);

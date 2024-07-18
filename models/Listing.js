@@ -50,11 +50,10 @@ export const ListingSchema = new Schema({
         type: Number,
         required: true
     },
-    amenities: {
-        type: Array,
-        default: [],
+    amenities: [{
+        type: String,
         required: true
-    },
+    }],
     listingPhotoPaths: [{
         type: String,
         required: true
