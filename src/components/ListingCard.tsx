@@ -1,4 +1,5 @@
 import LikeButton from "./LikeButton";
+import { parseDate } from "../lib/utils";
 import CustomCarousel from "./CustomCarousel";
 import { useNavigate } from "react-router-dom";
 import { ListingCardProps } from "../lib/types";
@@ -6,15 +7,16 @@ import { ListingCardProps } from "../lib/types";
 const ListingCard = (props: ListingCardProps) => {
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
-    const openDetails = () => navigate(props.booking ? `users/trips/${props.tripId}` : `/listing/${props.listingId}`);
+    const openDetails = () => navigate(props.booking ? `/user/trips/${props.tripId}` : `/listing/${props.listingId}`);
 
     return (
-        <div className="flex flex-col cursor-pointer rounded-lg w-80 relative hover:shadow-lg" onClick={openDetails}>
+        <div className="flex flex-col cursor-pointer rounded-lg w-[326px] relative bg-secondary-100 bg-opacity-50 hover:shadow-lg"
+            onClick={openDetails}>
             <div>
-                <CustomCarousel indicators={false} autoPlay={false}>
+                <CustomCarousel indicators={false}>
                     {props.listingPhotoPaths?.map((photo, index) => (
                         <div className="flex h-64 items-center justify-center" key={index}>
-                            <img className="h-full w-full rounded-t-lg" src={`${apiUrl}${photo.replace("public", "")}`} alt="Listing photo" />
+                            <img className="h-full w-full rounded-t-lg" src={`${apiUrl}${photo.replace("public", "")}`} alt="Property" />
                         </div>
                     ))}
                 </CustomCarousel>
@@ -27,15 +29,19 @@ const ListingCard = (props: ListingCardProps) => {
                 <div>
                     {props.booking ?
                         <>
-                            {/* <p>{props.startDate} - {props.endDate}</p> */}
+                            <p>{parseDate(props.startDate)}
+                                {props.startDate !== props.endDate &&
+                                    <span> - {parseDate(props.endDate)}</span>
+                                }
+                            </p>
                             <p>
-                                <span className="font-semibold">${props.totalPrice}</span> total
+                                <span className="font-extrabold">${props.totalPrice}</span> total
                             </p>
                         </> :
                         <>
                             <p>{props.type}</p>
                             <p>
-                                <span className="text-xl font-bold">${props.price}</span> per night
+                                <span className="font-extrabold">${props.price}</span> per night
                             </p>
                         </>
                     }

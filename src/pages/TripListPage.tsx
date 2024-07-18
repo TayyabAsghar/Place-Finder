@@ -1,18 +1,17 @@
-import Footer from "./Footer";
+import Footer from "../components/Footer";
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
-import DataNotFound from "./DataNotFound";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import ListingCard from "../components/ListingCard";
+import DataNotFound from "../components/DataNotFound";
 import { TripListType, UserState } from "../lib/types";
-import { useDispatch, useSelector } from "react-redux";
 
-const TripList = () => {
+const TripListPage = () => {
     const customAxios = useAxios();
-    const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
-    const [tripList, setTripList] = useState<TripListType[]>([]);
     const user = useSelector((state: UserState) => state?.user);
+    const [tripList, setTripList] = useState<TripListType[]>([]);
 
     const getTripList = async () => {
         try {
@@ -29,16 +28,16 @@ const TripList = () => {
 
     return (
         <>
-            {loading ? <Loader /> :
-                tripList.length ?
-                    <div className="px-14 py-10 pb-20 w-full">
-                        <h1>Your Trip List</h1>
-                        <div className="">
+            <div className="flex grow flex-col gap-5 px-14 py-10 pb-20 w-full">
+                <h1>Your Trip List</h1>
+                {loading ? <Loader /> :
+                    tripList.length ?
+                        <div className="flex flex-wrap gap-10">
                             {tripList.map((item, index) => (
                                 <ListingCard
                                     key={index}
-                                    tripId={item._id}
                                     booking={true}
+                                    tripId={item._id}
                                     endDate={item.endDate}
                                     city={item.listing.city}
                                     startDate={item.startDate}
@@ -49,13 +48,13 @@ const TripList = () => {
                                     listingPhotoPaths={item.listing.listingPhotoPaths}
                                 />
                             ))}
-                        </div>
-                    </div> :
-                    <DataNotFound message="No Data Found" />
-            }
+                        </div> :
+                        <DataNotFound message="No Data Found" />
+                }
+            </div>
             <Footer />
         </>
     );
 };
 
-export default TripList;
+export default TripListPage;

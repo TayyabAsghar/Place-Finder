@@ -30,6 +30,7 @@ export type LogInForm = {
 };
 
 export type BookingForm = {
+    days: number,
     host: string,
     endDate: Date,
     startDate: Date,
@@ -73,6 +74,40 @@ export type ListingDetailsType = Listing & {
     streetAddress: string,
     bathroomCount: number,
     highlightDesc: string;
+};
+
+export type TripDetails = {
+    days: number,
+    endDate: Date,
+    startDate: Date,
+    customer: string,
+    createdAt: string,
+    totalPrice: number,
+    listing: ListingDetailsType;
+};
+
+export type ListingDetailsProps = ListingDetailsType & ({
+    booking: true;
+} | {
+    days: number,
+    booking: false,
+    endDate: Date,
+    startDate: Date,
+    totalPrice: number;
+});
+
+export type BookingProps = {
+    booking: true,
+    price: number,
+    listingId: string,
+    creatorId: string;
+} | {
+    days: number,
+    endDate: Date,
+    price: number,
+    booking: false,
+    startDate: Date,
+    totalPrice: number,
 };
 
 export type ListingCardProps = Omit<Listing, "_id"> & ({
