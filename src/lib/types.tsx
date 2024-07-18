@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, MouseEventHandler, SetStateAction } from "react";
 
 type CreatorInfo = {
     _id: string,
@@ -42,10 +42,18 @@ export type BookingForm = {
 export type TripListType = {
     _id: string,
     endDate: Date,
-    hostId: string,
     startDate: Date,
     listing: Listing,
     totalPrice: number;
+};
+
+export type ReservationListType = {
+    _id: string,
+    endDate: Date,
+    startDate: Date,
+    listing: Listing,
+    totalPrice: number,
+    customer: CreatorInfo;
 };
 
 export type WishList = Listing & {
@@ -86,6 +94,16 @@ export type TripDetails = {
     listing: ListingDetailsType;
 };
 
+export type ReservationDetails = {
+    days: number,
+    endDate: Date,
+    startDate: Date,
+    createdAt: string,
+    totalPrice: number,
+    customer: CreatorInfo,
+    listing: ListingDetailsType;
+};
+
 export type ListingDetailsProps = ListingDetailsType & ({
     booking: true;
 } | {
@@ -113,14 +131,16 @@ export type BookingProps = {
 export type ListingCardProps = Omit<Listing, "_id"> & ({
     type: string,
     price: number,
-    booking: false,
-    listingId: string;
-} | {
     booking: true,
+    listingId: string,
+    onClick: MouseEventHandler<HTMLDivElement>;
+} | {
+    booking: false,
     endDate: Date,
     tripId: string,
     startDate: Date,
-    totalPrice: number;
+    totalPrice: number,
+    onClick: MouseEventHandler<HTMLDivElement>;
 });
 
 export type LikeButtonProps = {

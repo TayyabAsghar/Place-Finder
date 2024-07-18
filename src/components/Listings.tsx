@@ -3,11 +3,13 @@ import ListingCard from "./ListingCard";
 import useAxios from "../hooks/useAxios";
 import { UserState } from "../lib/types";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { setListings } from "../lib/redux/state";
 import { useDispatch, useSelector } from "react-redux";
 import { AllCategories } from "../data/categoriesData";
 
 const Listings = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const customAxios = useAxios();
     const [loading, setLoading] = useState(true);
@@ -46,7 +48,7 @@ const Listings = () => {
                     {listings?.map((item, index) =>
                         <ListingCard
                             key={index}
-                            booking={false}
+                            booking={true}
                             city={item.city}
                             type={item.type}
                             price={item.price}
@@ -55,6 +57,7 @@ const Listings = () => {
                             province={item.province}
                             category={item.category}
                             listingPhotoPaths={item.listingPhotoPaths}
+                            onClick={() => navigate(`/listing/${item._id}`)}
                         />
                     )}
                 </div>

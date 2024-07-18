@@ -42,7 +42,7 @@ const Booking = (props: BookingProps) => {
                         startDate: dateRange.startDate ?? new Date()
                     };
 
-                    await customAxios.post("trip/create", JSON.stringify(bookingForm), "json");
+                    await customAxios.post("booking/create", JSON.stringify(bookingForm), "json");
                     navigate('/user/trips');
                 } catch (err) {
                     console.log("Submit Booking Failed.", err);
@@ -51,16 +51,15 @@ const Booking = (props: BookingProps) => {
 
             return (
                 <Button className="w-full mt-7" variant="contained" type="submit" onClick={handleSubmit}>
-                    Booking
+                    Book the Trip
                 </Button>
             );
         }
     };
 
-
     return (
         <div>
-            <h2 className="text-foreground">How long do you want to stay?</h2>
+            <h2 className="text-foreground">{props.booking ? "How long do you want to stay?" : "How long is the stay?"}</h2>
             <div className="flex flex-col gap-5 mt-7">
                 {props.booking ? <DateRange rangeColors={["#6D9E8D"]} ranges={[dateRange]} onChange={handleSelect} /> :
                     <DateRange rangeColors={["#6D9E8D"]} ranges={[dateRange]} onChange={() => { }}

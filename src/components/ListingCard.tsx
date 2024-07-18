@@ -1,17 +1,14 @@
 import LikeButton from "./LikeButton";
 import { parseDate } from "../lib/utils";
 import CustomCarousel from "./CustomCarousel";
-import { useNavigate } from "react-router-dom";
 import { ListingCardProps } from "../lib/types";
 
 const ListingCard = (props: ListingCardProps) => {
-    const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
-    const openDetails = () => navigate(props.booking ? `/user/trips/${props.tripId}` : `/listing/${props.listingId}`);
 
     return (
         <div className="flex flex-col cursor-pointer rounded-lg w-[326px] relative bg-secondary-100 bg-opacity-50 hover:shadow-lg"
-            onClick={openDetails}>
+            onClick={props.onClick}>
             <div>
                 <CustomCarousel indicators={false}>
                     {props.listingPhotoPaths?.map((photo, index) => (
@@ -29,6 +26,12 @@ const ListingCard = (props: ListingCardProps) => {
                 <div>
                     {props.booking ?
                         <>
+                            <p>{props.type}</p>
+                            <p>
+                                <span className="font-extrabold">${props.price}</span> per night
+                            </p>
+                        </> :
+                        <>
                             <p>{parseDate(props.startDate)}
                                 {props.startDate !== props.endDate &&
                                     <span> - {parseDate(props.endDate)}</span>
@@ -37,17 +40,11 @@ const ListingCard = (props: ListingCardProps) => {
                             <p>
                                 <span className="font-extrabold">${props.totalPrice}</span> total
                             </p>
-                        </> :
-                        <>
-                            <p>{props.type}</p>
-                            <p>
-                                <span className="font-extrabold">${props.price}</span> per night
-                            </p>
                         </>
                     }
                 </div>
 
-                {!props.booking &&
+                {props.booking &&
                     <LikeButton className="absolute z-10 right-4 top-4 px-0.5 pb-0.5" listingId={props.listingId} />
                 }
             </div>

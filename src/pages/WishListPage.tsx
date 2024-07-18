@@ -13,7 +13,7 @@ const WishList = () => {
                 {wishList?.map((item, index) => (
                     <ListingCard
                         key={index}
-                        booking={false}
+                        booking={true}
                         city={item.city}
                         type={item.type}
                         price={item.price}
@@ -22,6 +22,7 @@ const WishList = () => {
                         province={item.province}
                         category={item.category}
                         listingPhotoPaths={item.listingPhotoPaths}
+                        onClick={() => { }}
                     />
                 ))}
             </div>

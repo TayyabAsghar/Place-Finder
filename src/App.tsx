@@ -8,6 +8,8 @@ import TripDetailsPage from "./pages/TripDetailsPage";
 import CreateListing from "./pages/CreateListingPage";
 import ListingDetailsPage from "./pages/ListingDetailsPage";
 import { Routes, Route, useLocation } from "react-router-dom";
+import ReservationListPage from "./pages/ReservationListPage";
+import ReservationDetailsPage from "./pages/ReservationDetailsPage";
 
 const App = () => {
   const location = useLocation();
@@ -25,6 +27,8 @@ const App = () => {
           <Route path="/create-listing" element={<CreateListing />} />
           <Route path="/user/trips/:tripId" element={<TripDetailsPage />} />
           <Route path="/listing/:listingId" element={<ListingDetailsPage />} />
+          <Route path="/user/reservations" element={<ReservationListPage />} />
+          <Route path="/user/reservations/:resId" element={<ReservationDetailsPage />} />
         </Routes>
       </main>
       {!hideFooter.includes(location.pathname) && <Footer />}

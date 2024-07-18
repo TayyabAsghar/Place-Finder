@@ -2,11 +2,13 @@ import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ListingCard from "../components/ListingCard";
 import DataNotFound from "../components/DataNotFound";
 import { TripListType, UserState } from "../lib/types";
 
 const TripListPage = () => {
+    const navigate = useNavigate();
     const customAxios = useAxios();
     const [loading, setLoading] = useState(true);
     const user = useSelector((state: UserState) => state?.user);
@@ -34,7 +36,7 @@ const TripListPage = () => {
                         {tripList.map((item, index) => (
                             <ListingCard
                                 key={index}
-                                booking={true}
+                                booking={false}
                                 tripId={item._id}
                                 endDate={item.endDate}
                                 city={item.listing.city}
@@ -44,6 +46,7 @@ const TripListPage = () => {
                                 province={item.listing.province}
                                 category={item.listing.category}
                                 listingPhotoPaths={item.listing.listingPhotoPaths}
+                                onClick={() => navigate(`/user/trips/${item._id}`)}
                             />
                         ))}
                     </div> :

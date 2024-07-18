@@ -1,21 +1,21 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
-import { TripDetails } from "../lib/types";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { ReservationDetails } from "../lib/types";
 import DataNotFound from "../components/DataNotFound";
 import ListingDetails from "../components/ListingDetails";
 
-const TripDetailsPage = () => {
+const ReservationDetailsPage = () => {
+    const { resId } = useParams();
     const customAxios = useAxios();
-    const { tripId } = useParams();
     const [loading, setLoading] = useState(true);
-    const [trip, setTrip] = useState<TripDetails | null>(null);
+    const [reservation, setReservation] = useState<ReservationDetails | null>(null);
 
     const getListingDetails = async () => {
         try {
-            const response = await customAxios.get(`booking/trips/${tripId}`);
-            setTrip(response.data);
+            const response = await customAxios.get(`booking/reservations/${resId}`);
+            setReservation(response.data);
         } catch (err) {
             console.log("Fetch Listing Details Failed", err);
         } finally {
@@ -27,14 +27,15 @@ const TripDetailsPage = () => {
 
     return (
         loading ? <Loader /> :
-            trip ? <ListingDetails {...trip.listing}
+            reservation ? <ListingDetails {...reservation.listing}
                 booking={false}
-                days={trip.days}
-                endDate={trip.endDate}
-                startDate={trip.startDate}
-                totalPrice={trip.totalPrice} /> :
+                days={reservation.days}
+                endDate={reservation.endDate}
+                creator={reservation.customer}
+                startDate={reservation.startDate}
+                totalPrice={reservation.totalPrice} /> :
                 <DataNotFound message="No Data Found" />
     );
 };
 
-export default TripDetailsPage;
+export default ReservationDetailsPage;

@@ -2,10 +2,13 @@ import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ListingCard from "../components/ListingCard";
+import DataNotFound from "../components/DataNotFound";
 import { TripListType, UserState } from "../lib/types";
 
-const ReservationList = () => {
+const ReservationListPage = () => {
+    const navigate = useNavigate();
     const customAxios = useAxios();
     const [loading, setLoading] = useState(true);
     const userId = useSelector((state: UserState) => state.user?._id);
@@ -25,29 +28,32 @@ const ReservationList = () => {
     useEffect(() => { getReservationList(); }, []);
 
     return (
-        loading ?
-            <Loader /> :
-            <>
-                <h1 className="title-list">Your Reservation List</h1>
-                {/* <div className="list">
-                {reservationList?.map(({ listingId, hostId, startDate, endDate, totalPrice, booking = true }) => (
-                    <ListingCard
-                        listingId={listingId._id}
-                        creator={hostId._id}
-                        listingPhotoPaths={listingId.listingPhotoPaths}
-                        city={listingId.city}
-                        province={listingId.province}
-                        country={listingId.country}
-                        category={listingId.category}
-                        startDate={startDate}
-                        endDate={endDate}
-                        totalPrice={totalPrice}
-                        booking={booking}
-                    />
-                ))}
-            </div> */}
-            </>
+        <div className="flex grow flex-col gap-5 px-14 py-10 pb-20 w-full">
+            <h1 className="title-list">Your Reservation List</h1>
+            {loading ? <Loader /> :
+                reservationList.length ?
+                    <div className="flex flex-wrap gap-10">
+                        {reservationList.map((item, index) => (
+                            <ListingCard
+                                key={index}
+                                booking={false}
+                                tripId={item._id}
+                                endDate={item.endDate}
+                                city={item.listing.city}
+                                startDate={item.startDate}
+                                totalPrice={item.totalPrice}
+                                country={item.listing.country}
+                                province={item.listing.province}
+                                category={item.listing.category}
+                                listingPhotoPaths={item.listing.listingPhotoPaths}
+                                onClick={() => navigate(`/user/reservations/${item._id}`)}
+                            />
+                        ))}
+                    </div> :
+                    <DataNotFound message="No Data Found" />
+            }
+        </div >
     );
 };
 
-export default ReservationList;
+export default ReservationListPage;
