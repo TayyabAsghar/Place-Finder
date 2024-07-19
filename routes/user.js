@@ -38,6 +38,15 @@ router.get("/:userId/trips", async (req, res) => {
         console.error(err);
         res.status(404).json({ message: "Can not find reservations!", error: err.message });
     }
+}).get("/:userId/properties", async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const properties = await Listing.find({ creator: userId });
+        res.status(202).json(properties);
+    } catch (err) {
+        console.error(err);
+        res.status(404).json({ message: "Can not find reservations!", error: err.message });
+    }
 }).patch("/:userId/:listingId", async (req, res) => {
     try {
         let isLiked = false;
