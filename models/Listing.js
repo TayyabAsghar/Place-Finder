@@ -1,11 +1,15 @@
 import { Schema, model } from "mongoose";
 
-export const ListingSchema = new Schema({
+const ListingSchema = new Schema({
     creator: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
+    likedBy: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     category: {
         type: String,
         required: true

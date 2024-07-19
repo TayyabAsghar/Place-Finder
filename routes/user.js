@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { Router } from "express";
 import User from "../models/User.js";
 import Booking from "../models/Booking.js";
@@ -28,22 +29,34 @@ router.get("/:userId/trips", async (req, res) => {
         console.error(err);
         res.status(404).json({ message: "Can not find reservations!", error: err.message });
     }
+}).get("/:userId/wishes", async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const wishList = await Listing.find({ likedBy: { $in: [new Types.ObjectId(userId)] } });
+        res.status(202).json(wishList);
+    } catch (err) {
+        console.error(err);
+        res.status(404).json({ message: "Can not find reservations!", error: err.message });
+    }
 }).patch("/:userId/:listingId", async (req, res) => {
     try {
+        let isLiked = false;
         const { userId, listingId } = req.params;
-        const user = await User.findById(userId);
-        const favoriteListing = user.wishList.find(item => item.toString() === listingId);
+        const list = await Listing.findById(listingId);
         let message = "Listing is removed from wish list";
+        const index = list.likedBy.indexOf(new Types.ObjectId(userId));
 
-        if (favoriteListing)
-            user.wishList = user.wishList.filter(item => item.toString() !== listingId);
+        if (index > -1) list.likedBy.splice(index, 1);
         else {
-            user.wishList.push(listingId);
+            isLiked = true;
+            list.likedBy.push(userId);
             message = "Listing is added to wish list";
         }
 
-        await user.save().populate({ path: 'wishList', model: Listing });
-        res.status(200).json({ message: message, wishList: user.wishList });
+        await list.save();
+        list.isLiked = isLiked;
+
+        res.status(200).json({ message: message, list: list });
     } catch (err) {
         console.error(err);
         res.status(404).json({ error: err.message });

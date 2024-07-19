@@ -17,22 +17,6 @@ const UserSchema = new Schema({
     profileImagePath: {
         type: String,
         default: ""
-    },
-    tripList: {
-        type: Array,
-        default: []
-    },
-    wishList: {
-        type: Array,
-        default: []
-    },
-    propertyList: {
-        type: Array,
-        default: []
-    },
-    reservationList: {
-        type: Array,
-        default: []
     }
 }, {
     timestamps: true
