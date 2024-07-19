@@ -49,7 +49,6 @@ router.get("/:userId/trips", async (req, res) => {
     }
 }).patch("/:userId/:listingId", async (req, res) => {
     try {
-        let isLiked = false;
         const { userId, listingId } = req.params;
         const list = await Listing.findById(listingId);
         let message = "Listing is removed from wish list";
@@ -57,14 +56,11 @@ router.get("/:userId/trips", async (req, res) => {
 
         if (index > -1) list.likedBy.splice(index, 1);
         else {
-            isLiked = true;
             list.likedBy.push(userId);
             message = "Listing is added to wish list";
         }
 
         await list.save();
-        list.isLiked = isLiked;
-
         res.status(200).json({ message: message, list: list });
     } catch (err) {
         console.error(err);

@@ -15,20 +15,18 @@ const upload = multer({ storage });
 
 router.get("/", async (req, res) => {
     try {
-        let listings;
+        let listings = [];
         const qCategory = req.query.category;
-        const populateParams = {
-            path: 'creator',
-            model: User,
-            select: '_id name profileImagePath email'
-        };
 
-        if (qCategory)
-            listings = await Listing.find({ category: qCategory }).populate(populateParams);
-        else
-            listings = await Listing.find().populate(populateParams);
+        if (!qCategory) res.status(200).json(listings);
+        else {
+            if (qCategory?.toLowerCase() === 'all')
+                listings = await Listing.find();
+            else
+                listings = await Listing.find({ category: { $regex: new RegExp(qCategory, 'i') } });
 
-        res.status(200).json(listings);
+            res.status(200).json(listings);
+        }
     } catch (err) {
         console.error(err);
         res.status(404).json({ message: "Fail to fetch listings", error: err.message });
