@@ -309,7 +309,7 @@ const CreateListing = () => {
                             }
                             <div {...register("listingPhotos")}>
                                 <input id="image" type="file" style={{ display: "none" }} onChange={handleUploadPhotos}
-                                    accept={AcceptedImageTypes.join(" ")} multiple />
+                                    accept={AcceptedImageTypes.join(",")} multiple />
                                 <label className={`flex flex-col gap-3 w-72 h-44 items-center px-12 py-8 rounded-md border border-dashed cursor-pointer hover:border-foreground
                                     ${!!errors.listingPhotos ? "border-error hover:border-error" : ""}`} htmlFor="image">
                                     <IoIosImages className="text-6xl" />

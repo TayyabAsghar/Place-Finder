@@ -36,7 +36,7 @@ const NavBar = () => {
                             </Link>
                         </MenuItem>
                         <MenuItem>
-                            <Link to="/user/wishList" className="profile-dropdown">
+                            <Link to="/user/wish" className="profile-dropdown">
                                 <PiListHeartBold />
                                 Wish List
                             </Link>

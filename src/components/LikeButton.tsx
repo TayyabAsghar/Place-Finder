@@ -1,4 +1,6 @@
+import { Tooltip } from "@mui/material";
 import useAxios from "../hooks/useAxios";
+import { MouseEvent as RME } from "react";
 import { Favorite } from "@mui/icons-material";
 import { setWishList } from "../lib/redux/state";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,16 +15,19 @@ const LikeButton = (props: LikeButtonProps) => {
 
     if (!user) return <></>;
 
-    const patchWishList = async () => {
-        const response = await customAxios.patch(`users/${user?._id}/${props.listingId}`, null, 'json');
+    const patchWishList = async (e: RME<HTMLButtonElement, MouseEvent>) => {
+        e.stopPropagation();
+        const response = await customAxios.patch(`users/${user?._id}/${props.listingId}`, undefined, 'json');
         dispatch(setWishList(response.data));
     };
 
     return (
-        <button className={`cursor-pointer ${props.className}`} onClick={() => patchWishList()} >
-            {isLiked ? <Favorite className="stroke-accent text-accent" /> :
-                <Favorite className="stroke-accent text-transparent" />}
-        </button>
+        <Tooltip title="Add to Wish List">
+            <button className={`cursor-pointer ${props.className}`} onClick={e => patchWishList(e)}>
+                {isLiked ? <Favorite className="stroke-accent text-accent" /> :
+                    <Favorite className="stroke-accent text-transparent" />}
+            </button>
+        </Tooltip>
     );
 };
 

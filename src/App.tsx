@@ -3,8 +3,10 @@ import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
 import LogInPage from "./pages/LogInPage";
 import SignUpPage from "./pages/SignUpPage";
+import WishListPage from "./pages/WishListPage";
 import TripListPage from "./pages/TripListPage";
 import TripDetailsPage from "./pages/TripDetailsPage";
+import WishDetailsPage from "./pages/WishDetailsPage";
 import CreateListing from "./pages/CreateListingPage";
 import ListingDetailsPage from "./pages/ListingDetailsPage";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -23,8 +25,10 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LogInPage />} />
           <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/user/wish" element={<WishListPage />} />
           <Route path="/user/trips" element={<TripListPage />} />
           <Route path="/create-listing" element={<CreateListing />} />
+          <Route path="/user/wish/:wishId" element={<WishDetailsPage />} />
           <Route path="/user/trips/:tripId" element={<TripDetailsPage />} />
           <Route path="/listing/:listingId" element={<ListingDetailsPage />} />
           <Route path="/user/reservations" element={<ReservationListPage />} />
