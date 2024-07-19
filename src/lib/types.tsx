@@ -63,8 +63,7 @@ export type WishList = Listing & {
 };
 
 export type User = CreatorInfo & {
-    createdAt: string,
-    wishList: WishList[];
+    createdAt: string;
 };
 
 export type ListingDetailsType = Listing & {
@@ -82,6 +81,10 @@ export type ListingDetailsType = Listing & {
     streetAddress: string,
     bathroomCount: number,
     highlightDesc: string;
+};
+
+export type WishListDetails = ListingDetailsType & {
+    isLiked: boolean;
 };
 
 export type TripDetails = {
@@ -148,13 +151,8 @@ export type LikeButtonProps = {
     className?: string | undefined;
 };
 
-export type SearchProps = {
-    search: string,
-    setSearch: Dispatch<SetStateAction<string>>;
-};
-
 export type UserState = {
     token?: string,
     user?: User | null,
-    listings?: ListingDetailsType[];
+    wishList?: ListingDetailsType[];
 };

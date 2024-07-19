@@ -1,20 +1,25 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
 import { useEffect, useState } from "react";
-import { TripListType } from "../lib/types";
-import { useParams } from "react-router-dom";
+import { ListingDetailsType } from "../lib/types";
 import ListingCard from "../components/ListingCard";
+import DataNotFound from "../components/DataNotFound";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const SearchPage = () => {
+    const navigate = useNavigate();
     const customAxios = useAxios();
-    const { search } = useParams();
+    const [URLSearchParams] = useSearchParams();
     const [loading, setLoading] = useState(true);
-    const [listings, setListings] = useState<TripListType[]>([]);
+    const searchQuery = URLSearchParams.get('query');
+    const [listings, setListings] = useState<ListingDetailsType[]>([]);
 
     const getSearchListings = async () => {
         try {
-            const response = await customAxios.get(`properties/search/${search?.toLowerCase()}`);
-            setListings(response.data);
+            if (searchQuery) {
+                const response = await customAxios.get(`listing/search/${searchQuery.toLowerCase()}`);
+                setListings(response.data);
+            } else setListings([]);
         } catch (err) {
             console.log("Fetch Search List failed!", err);
         } finally {
@@ -22,41 +27,33 @@ const SearchPage = () => {
         }
     };
 
-    useEffect(() => { getSearchListings(); }, [search]);
+    useEffect(() => { getSearchListings(); }, [searchQuery]);
 
-    return loading ? <Loader /> : (
-        <>
-            <h1 className="title-list">{search}</h1>
-            <div className="list">
-                {/* {listings?.map(
-                    ({
-                        _id,
-                        creator,
-                        listingPhotoPaths,
-                        city,
-                        province,
-                        country,
-                        category,
-                        type,
-                        price,
-                        booking = false,
-                    }) => (
-                        <ListingCard
-                            listingId={_id}
-                            creator={creator}
-                            listingPhotoPaths={listingPhotoPaths}
-                            city={city}
-                            province={province}
-                            country={country}
-                            category={category}
-                            type={type}
-                            price={price}
-                            booking={booking}
-                        />
-                    )
-                )} */}
-            </div>
-        </>
+    return (
+        <div className="flex grow flex-col gap-5 px-14 py-10 pb-20 w-full">
+            <h1 className="w-4/5 text-ellipsis overflow-hidden" >{searchQuery}</h1>
+            {loading ? <Loader /> :
+                listings.length ?
+                    <div className="flex flex-wrap gap-10">
+                        {listings.map((item, index) => (
+                            <ListingCard
+                                key={index}
+                                booking={true}
+                                city={item.city}
+                                type={item.type}
+                                price={item.price}
+                                listingId={item._id}
+                                country={item.country}
+                                province={item.province}
+                                category={item.category}
+                                listingPhotoPaths={item.listingPhotoPaths}
+                                onClick={() => navigate(`/listing/${item._id}`)}
+                            />
+                        ))}
+                    </div> :
+                    <DataNotFound message="No Search Results" />
+            }
+        </div>
     );
 };
 

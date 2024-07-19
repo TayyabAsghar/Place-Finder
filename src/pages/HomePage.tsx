@@ -1,4 +1,3 @@
-import Listings from "../components/Listings";
 import Categories from "../components/Categories";
 import HeroSection from "../components/HeroSection";
 
@@ -7,7 +6,6 @@ const HomePage = () => {
         <>
             <HeroSection />
             <Categories />
-            <Listings />
         </>
     );
 };

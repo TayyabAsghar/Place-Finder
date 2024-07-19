@@ -15,7 +15,8 @@ const AssetsPath = "assets/images/categories";
 
 export const AllCategories = [{
     label: "All",
-    icon: <BiWorld />
+    icon: <BiWorld />,
+    img: `${AssetsPath}/world.jpg`
 }, {
     label: "Beachfront",
     icon: <TbBeach />,
@@ -92,6 +93,8 @@ export const AllCategories = [{
     img: `${AssetsPath}/lux.jpg`,
     description: "This property is brand new and luxurious!"
 }];
+
+export const AllCategoriesNames = AllCategories.map(category => category.label.toLowerCase());
 
 export const Types = [{
     name: "An entire place",

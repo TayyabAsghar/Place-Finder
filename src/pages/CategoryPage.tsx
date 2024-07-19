@@ -1,64 +1,62 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
-import { TripListType } from "../lib/types";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { toTitleCase } from "../lib/utils";
+import { useEffect, useState } from "react";
+import { ListingDetailsType, } from "../lib/types";
 import ListingCard from "../components/ListingCard";
+import DataNotFound from "../components/DataNotFound";
+import { useNavigate, useParams } from "react-router-dom";
+import { AllCategoriesNames } from "../data/categoriesData";
 
 const CategoryPage = () => {
+    const navigate = useNavigate();
     const customAxios = useAxios();
     const { category } = useParams();
     const [loading, setLoading] = useState(true);
-    const [listings, setListings] = useState<TripListType[]>([]);
+    const [categoryList, setCategoryList] = useState<ListingDetailsType[]>([]);
 
-    const getFeedListings = async () => {
+    const getWishList = async () => {
         try {
-            const response = await customAxios.get(`properties?category=${category}`);
-            setListings(response.data);
+            if (category) {
+                const response = await customAxios.get(`listing?category=${category.toLowerCase()}`);
+                setCategoryList(response.data);
+            }
         } catch (err) {
-            console.log("Fetch Listings Failed", err);
+            console.error("Fetch Trip List failed!", err);
         } finally {
             setLoading(false);
         }
     };
 
-    useEffect(() => { getFeedListings(); }, [category]);
+    useEffect(() => { getWishList(); }, []);
 
-    return loading ? (
-        <Loader />
-    ) : (
-        <>
-            <h1 className="title-list">{category} listings</h1>
-            <div className="list">
-                {/* {listings?.map(
-                    ({
-                        _id,
-                        creator,
-                        listingPhotoPaths,
-                        city,
-                        province,
-                        country,
-                        category,
-                        type,
-                        price,
-                        booking = false,
-                    }) => (
-                        <ListingCard
-                            listingId={_id}
-                            creator={creator}
-                            listingPhotoPaths={listingPhotoPaths}
-                            city={city}
-                            province={province}
-                            country={country}
-                            category={category}
-                            type={type}
-                            price={price}
-                            booking={booking}
-                        />
-                    )
-                )} */}
-            </div>
-        </>
+    return (
+        <div className="flex grow flex-col gap-5 px-14 py-10 pb-20 w-full">
+            {!!category && AllCategoriesNames.includes(category.toLowerCase()) &&
+                <h1>{toTitleCase(category)} Listings</h1>
+            }
+            {loading ? <Loader /> :
+                categoryList.length ?
+                    <div className="flex flex-wrap gap-10">
+                        {categoryList.map((item, index) => (
+                            <ListingCard
+                                key={index}
+                                booking={true}
+                                city={item.city}
+                                type={item.type}
+                                price={item.price}
+                                listingId={item._id}
+                                country={item.country}
+                                province={item.province}
+                                category={item.category}
+                                listingPhotoPaths={item.listingPhotoPaths}
+                                onClick={() => navigate(`/listing/${item._id}`)}
+                            />
+                        ))}
+                    </div> :
+                    <DataNotFound message="No Data Found" />
+            }
+        </div>
     );
 };
 

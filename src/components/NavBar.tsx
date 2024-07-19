@@ -15,7 +15,6 @@ import { HiClipboardDocumentList, HiOutlineUserPlus } from "react-icons/hi2";
 const NavBar = () => {
     const location = useLocation();
     const dispatch = useDispatch();
-    const [search, setSearch] = useState('');
     const apiUrl = process.env.REACT_APP_API_URL;
     const user = useSelector((state: UserState) => state.user);
     const [dropdownEl, setDropdownEl] = useState<EventTarget & HTMLButtonElement | null>(null);
@@ -85,7 +84,7 @@ const NavBar = () => {
                 <img className="w-16 h-16" src="/assets/images/logo/logo192.png" alt="Logo" />
             </Link>
             {location.pathname !== "/login" && location.pathname !== "/signup" &&
-                <SearchBar search={search} setSearch={setSearch}></SearchBar>
+                <SearchBar />
             }
 
             <div className="flex items-center gap-5">

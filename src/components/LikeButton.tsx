@@ -9,20 +9,20 @@ import { LikeButtonProps, UserState } from "../lib/types";
 const LikeButton = (props: LikeButtonProps) => {
     const customAxios = useAxios();
     const dispatch = useDispatch();
-    const user = useSelector((state: UserState) => state.user);
-    const wishList = user?.wishList || [];
+    const state = useSelector((state: UserState) => state);
+    const wishList = state?.wishList || [];
     const isLiked = wishList?.find(item => item?._id === props.listingId);
 
-    if (!user) return <></>;
+    if (!state.user) return <></>;
 
     const patchWishList = async (e: RME<HTMLButtonElement, MouseEvent>) => {
         e.stopPropagation();
-        const response = await customAxios.patch(`users/${user?._id}/${props.listingId}`, undefined, 'json');
+        const response = await customAxios.patch(`users/${state.user?._id}/${props.listingId}`, undefined, 'json');
         dispatch(setWishList(response.data));
     };
 
     return (
-        <Tooltip title="Add to Wish List">
+        <Tooltip title={`${isLiked ? "Remove from" : "Add to"} Wish List`}>
             <button className={`cursor-pointer ${props.className}`} onClick={e => patchWishList(e)}>
                 {isLiked ? <Favorite className="stroke-accent text-accent" /> :
                     <Favorite className="stroke-accent text-transparent" />}
