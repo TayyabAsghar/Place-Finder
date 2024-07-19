@@ -107,8 +107,8 @@ const CreateListing = () => {
             listingForm.append("price", formData.price.toString());
             formData.listingPhotos.forEach(photo => listingForm.append("listingPhotos", photo));
 
-            await customAxios.post("listing/create", listingForm, "form");
-            navigate("/");
+            const response = await customAxios.post("listing/create", listingForm, "form");
+            navigate(`/listing/${response.data._id}`);
         } catch (err) {
             console.error("Publish Listing failed", err);
         }

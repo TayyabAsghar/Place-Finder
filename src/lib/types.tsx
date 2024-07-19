@@ -1,4 +1,4 @@
-import { Dispatch, MouseEventHandler, SetStateAction } from "react";
+import { MouseEventHandler } from "react";
 
 type CreatorInfo = {
     _id: string,
@@ -63,7 +63,8 @@ export type WishList = Listing & {
 };
 
 export type User = CreatorInfo & {
-    createdAt: string;
+    createdAt: string,
+    wishList: string[];
 };
 
 export type ListingDetailsType = Listing & {
@@ -81,10 +82,6 @@ export type ListingDetailsType = Listing & {
     streetAddress: string,
     bathroomCount: number,
     highlightDesc: string;
-};
-
-export type WishListDetails = ListingDetailsType & {
-    isLiked: boolean;
 };
 
 export type TripDetails = {
@@ -153,6 +150,5 @@ export type LikeButtonProps = {
 
 export type UserState = {
     token?: string,
-    user?: User | null,
-    wishList?: ListingDetailsType[];
+    user?: User | null;
 };

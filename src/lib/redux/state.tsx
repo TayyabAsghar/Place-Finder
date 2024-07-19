@@ -1,10 +1,9 @@
-import { ListingDetailsType, TripListType, UserState, WishList } from "../types";
+import { UserState } from "../types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: UserState = {
     token: '',
-    user: null,
-    wishList: []
+    user: null
 };
 
 export const userSlice = createSlice({
@@ -19,8 +18,8 @@ export const userSlice = createSlice({
             state.token = '';
             state.user = null;
         },
-        setWishList: (state, action: PayloadAction<ListingDetailsType[]>) => {
-            state.wishList = action.payload;
+        setWishList: (state, action: PayloadAction<string[]>) => {
+            if (state.user) state.user.wishList = action.payload;
         }
     }
 });
