@@ -12,6 +12,8 @@ import ListingDetailsPage from "./pages/ListingDetailsPage";
 import { Routes, Route, useLocation } from "react-router-dom";
 import ReservationListPage from "./pages/ReservationListPage";
 import ReservationDetailsPage from "./pages/ReservationDetailsPage";
+import PropertyListPage from "./pages/PropertyListPage";
+import PropertyDetailsPage from "./pages/PropertyDetailsPage";
 
 const App = () => {
   const location = useLocation();
@@ -28,10 +30,12 @@ const App = () => {
           <Route path="/user/wish" element={<WishListPage />} />
           <Route path="/user/trips" element={<TripListPage />} />
           <Route path="/create-listing" element={<CreateListing />} />
+          <Route path="/user/properties" element={<PropertyListPage />} />
           <Route path="/user/wish/:wishId" element={<WishDetailsPage />} />
           <Route path="/user/trips/:tripId" element={<TripDetailsPage />} />
           <Route path="/listing/:listingId" element={<ListingDetailsPage />} />
           <Route path="/user/reservations" element={<ReservationListPage />} />
+          <Route path="/user/properties/:propId" element={<PropertyDetailsPage />} />
           <Route path="/user/reservations/:resId" element={<ReservationDetailsPage />} />
         </Routes>
       </main>
