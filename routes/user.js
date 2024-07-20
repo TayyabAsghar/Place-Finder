@@ -19,11 +19,7 @@ router.get("/:userId/trips", async (req, res) => {
 }).get("/:userId/reservations", async (req, res) => {
     try {
         const { userId } = req.params;
-        const reservations = await Booking.find({ host: userId }).populate({
-            path: 'customer',
-            model: User,
-            select: '_id name profileImagePath email'
-        });
+        const reservations = await Booking.find({ host: userId });
         res.status(202).json(reservations);
     } catch (err) {
         console.error(err);
@@ -32,8 +28,9 @@ router.get("/:userId/trips", async (req, res) => {
 }).get("/:userId/wishes", async (req, res) => {
     try {
         const { userId } = req.params;
-        const wishList = await Listing.find({ likedBy: { $in: [new Types.ObjectId(userId)] } });
-        res.status(202).json(wishList);
+        const user = await User.findById(userId).populate("wishList");
+        const wishListIds = user.wishList.map(item => item._id);
+        res.status(202).json({ wishListIds, wishList: user.wishList });
     } catch (err) {
         console.error(err);
         res.status(404).json({ message: "Can not find reservations!", error: err.message });
@@ -50,21 +47,22 @@ router.get("/:userId/trips", async (req, res) => {
 }).patch("/:userId/:listingId", async (req, res) => {
     try {
         const { userId, listingId } = req.params;
-        const list = await Listing.findById(listingId);
+        const user = await User.findById(userId);
         let message = "Listing is removed from wish list";
-        const index = list.likedBy.indexOf(new Types.ObjectId(userId));
+        const listingObjectId = new Types.ObjectId(listingId);
+        const userIndex = user.wishList.indexOf(listingObjectId);
 
-        if (index > -1) list.likedBy.splice(index, 1);
+        if (userIndex > -1) user.wishList.splice(userIndex, 1);
         else {
-            list.likedBy.push(userId);
+            user.wishList.push(listingObjectId);
             message = "Listing is added to wish list";
         }
 
-        await list.save();
-        res.status(200).json({ message: message, list: list });
+        await user.save();
+        res.status(200).json({ message: message, list: user.wishList });
     } catch (err) {
         console.error(err);
-        res.status(404).json({ error: err.message });
+        res.status(500).json({ message: err.message });
     }
 });
 

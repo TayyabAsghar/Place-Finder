@@ -6,10 +6,6 @@ const ListingSchema = new Schema({
         ref: 'User',
         required: true
     },
-    likedBy: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }],
     category: {
         type: String,
         required: true

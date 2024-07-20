@@ -18,71 +18,63 @@ router.get("/", async (req, res) => {
         let listings = [];
         const qCategory = req.query.category;
 
-        if (!qCategory) res.status(200).json(listings);
-        else {
-            if (qCategory?.toLowerCase() === 'all')
-                listings = await Listing.find();
-            else
-                listings = await Listing.find({ category: { $regex: new RegExp(qCategory, 'i') } });
+        if (!qCategory) return res.status(200).json(listings);
 
-            res.status(200).json(listings);
-        }
+        if (qCategory?.toLowerCase() === 'all')
+            listings = await Listing.find();
+        else
+            listings = await Listing.find({ category: { $regex: new RegExp(qCategory, 'i') } });
+
+        res.status(200).json(listings);
     } catch (err) {
         console.error(err);
-        res.status(404).json({ message: "Fail to fetch listings", error: err.message });
+        res.status(500).json({ message: err.message });
     }
 }).post("/create", upload.array("listingPhotos"), async (req, res) => {
     try {
         const listingPhotos = req.files;
         const creator = new Types.ObjectId(String(req.body.creatorId));
 
-        if (!listingPhotos) return res.status(400).send("No files uploaded.");
+        if (!listingPhotos) return res.status(400).json({ message: "No files uploaded." });
 
         const listingPhotoPaths = listingPhotos.map(file => file.path);
         const newListing = new Listing({ creator, listingPhotoPaths, ...req.body });
-
         await newListing.save();
 
         res.status(200).json(newListing);
     } catch (err) {
         console.error(err);
-        res.status(409).json({ message: "Failed to create Listing", error: err.message });
+        res.status(500).json({ message: err.message });
     }
 }).get("/:listingId", async (req, res) => {
     try {
         const { listingId } = req.params;
-        const listing = await Listing.findById(listingId)
-            .populate({
-                path: 'creator',
-                model: User,
-                select: '_id name profileImagePath email'
-            });
+        const listing = await Listing.findById(listingId).populate({
+            path: 'creator',
+            model: User,
+            select: '_id name profileImagePath email'
+        });
+
+        if (!listingPhotos) return res.status(404).json({ message: "No Listing found with such id." });
         res.status(200).json(listing);
     } catch (err) {
         console.error(err);
-        res.status(409).json({ message: "Listing doesn't exist", error: err.message });
+        res.status(500).json({ message: err.message });
     }
 }).get("/search/:search", async (req, res) => {
-    const { search } = req.params;
-
     try {
-        let listings = [];
-
-        if (search.toLowerCase() === "all") listings = await Listing.find().populate("creator");
-        else {
-            listings = await Listing.find({
-                $or: [{
-                    category: { $regex: search, $options: "i" }
-                }, {
-                    title: { $regex: search, $options: "i" }
-                }]
-            }).populate("creator");
-        }
+        const { search } = req.params;
+        const listings = await Listing.find({
+            $or: [
+                { category: { $regex: search, $options: "i" } },
+                { title: { $regex: search, $options: "i" } }
+            ]
+        });
 
         res.status(200).json(listings);
     } catch (err) {
         console.error(err);
-        res.status(404).json({ message: "Fail to fetch listings", error: err.message });
+        res.status(500).json({ message: err.message });
     }
 });
 

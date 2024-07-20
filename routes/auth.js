@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import JWT from "jsonwebtoken";
 import { Router } from "express";
 import User from "../models/User.js";
+import { hashPassword } from "../libs/utils.js";
 
 const router = Router();
 
@@ -13,8 +14,7 @@ router.post("/signup", async (req, res) => {
         if (existingUser) return res.status(409).json({ message: "User already exists!" });
 
         /* Hash the password */
-        const salt = await bcrypt.genSalt();
-        const hashedPassword = await bcrypt.hash(password, salt);
+        const hashedPassword = await hashPassword(password);
 
         const newUser = new User({
             name,
@@ -24,7 +24,7 @@ router.post("/signup", async (req, res) => {
 
         await newUser.save();
 
-        res.status(200).json({ message: "User registered successfully!", user: newUser });
+        res.status(201).json({ message: "User registered successfully!", user: newUser });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: err.message });
@@ -35,17 +35,18 @@ router.post("/signup", async (req, res) => {
 
         const userData = await User.findOne({ email });
 
-        if (!userData) return res.status(409).json({ message: "User doesn't exist!" });
+        if (!userData) return res.status(404).json({ message: "User doesn't exist!" });
 
         /* Compare the password with the hashed password */
         const isMatch = await bcrypt.compare(password, userData.password);
-        if (!isMatch) return res.status(400).json({ message: "Invalid Credentials!" });
+        if (!isMatch) return res.status(401).json({ message: "Invalid Credentials!" });
 
         const token = JWT.sign({ id: userData._id }, process.env.JWT_SECRET);
         const user = {
             _id: userData.id,
             name: userData.name,
             email: userData.email,
+            wishList: userData.wishList,
             createdAt: userData.createdAt,
             profileImagePath: userData.profileImagePath
         };

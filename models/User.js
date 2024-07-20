@@ -17,7 +17,12 @@ const UserSchema = new Schema({
     profileImagePath: {
         type: String,
         default: ""
-    }
+    },
+    wishList: [{
+        default: [],
+        ref: "Listing",
+        type: Schema.Types.ObjectId
+    }]
 }, {
     timestamps: true
 });
