@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const BookingSchema = new Schema({
+const TripSchema = new Schema({
     customer: {
         type: Schema.Types.ObjectId,
         ref: "User",
@@ -11,17 +11,22 @@ const BookingSchema = new Schema({
         ref: "User",
         required: true
     },
+    placeDetails: {
+        type: Schema.Types.ObjectId,
+        ref: "PlaceDetails",
+        required: true
+    },
     listing: {
         type: Schema.Types.ObjectId,
         ref: "Listing",
         required: true
     },
     startDate: {
-        type: String,
+        type: Date,
         required: true
     },
     endDate: {
-        type: String,
+        type: Date,
         required: true
     },
     days: {
@@ -36,5 +41,5 @@ const BookingSchema = new Schema({
     timestamps: true
 });
 
-const Booking = model("Booking", BookingSchema);
-export default Booking;
+const Trip = model("Trip", TripSchema);
+export default Trip;

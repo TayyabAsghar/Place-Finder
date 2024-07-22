@@ -3,11 +3,12 @@ import { Schema, model } from "mongoose";
 const ListingSchema = new Schema({
     creator: {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: "User",
         required: true
     },
-    category: {
-        type: String,
+    placeDetails: {
+        type: Schema.Types.ObjectId,
+        ref: "PlaceDetails",
         required: true
     },
     type: {
@@ -19,18 +20,6 @@ const ListingSchema = new Schema({
         required: true
     },
     aptSuite: {
-        type: String,
-        required: true
-    },
-    city: {
-        type: String,
-        required: true
-    },
-    province: {
-        type: String,
-        required: true
-    },
-    country: {
         type: String,
         required: true
     },
@@ -54,14 +43,6 @@ const ListingSchema = new Schema({
         type: String,
         required: true
     }],
-    listingPhotoPaths: [{
-        type: String,
-        required: true
-    }],
-    title: {
-        type: String,
-        required: true
-    },
     description: {
         type: String,
         required: true
