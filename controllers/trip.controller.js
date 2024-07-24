@@ -14,7 +14,7 @@ export const createTrip = asyncHandler(async (req, res) => {
 
     if (!placeDetails) throw new ApiError(404, "Listing not found.");
 
-    const booking = new Trip.create({ customer, listing, host, endDate, startDate, totalPrice, days, placeDetails: placeDetails._id });
+    const booking = await Trip.create({ customer, listing, host, endDate, startDate, totalPrice, days, placeDetails: placeDetails._id });
 
     if (!booking) throw new ApiError(500, "Something went wrong while creating the trip.");
 

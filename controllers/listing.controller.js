@@ -40,7 +40,7 @@ export const createList = asyncHandler(async (req, res) => {
 
     if (!placeDetails) throw new ApiError(500, "Error while creating Listing Details.");
 
-    const newListing = new Listing.create({
+    const newListing = await Listing.create({
         creator, type, streetAddress, aptSuite, guestCount, bedroomCount, bedCount, bathroomCount, description,
         highlight, highlightDesc, price, placeDetails: placeDetails._id
     });

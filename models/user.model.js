@@ -44,15 +44,15 @@ UserSchema.methods.generateAccessToken = function () {
     return JWT.sign({
         _id: this._id,
         email: this.email
-    }, process.env.JWT_ACCESS_TOKEN, {
-        expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+    }, process.env.JWT_ACCESS_TOKEN_SECRET, {
+        expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRY
     });
 };
 
 UserSchema.methods.generateRefreshToken = function () {
     return JWT.sign({ _id: this._id },
-        process.env.JWT_REFRESH_TOKEN, {
-        expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+        process.env.JWT_REFRESH_TOKEN_SECRET, {
+        expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRY
     });
 };
 

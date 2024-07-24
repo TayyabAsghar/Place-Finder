@@ -10,11 +10,14 @@ import listingRouter from "./routes/listing.routes.js";
 
 config();
 const app = express();
-app.use(cors());
-app.use(express.json());
 app.use(cookieParser());
-app.use(express.static('public'));
+app.use(express.static("public"));
+app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+    credentials: true,
+    origin: process.env.CLIENT_BASE_URL
+}));
 
 /* Routes */
 app.use('/auth', authRouter);
