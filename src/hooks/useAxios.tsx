@@ -1,21 +1,29 @@
-import axios from "axios";
 import { useEffect } from "react";
-import { HttpOptions } from "../lib/types";
+import axios, { AxiosError } from "axios";
+import { useSelector } from "react-redux";
+import useRefreshToken from "./useRefreshToken";
+import { AxiosProps, HttpOptions, UserState } from "../lib/types";
 
-const useAxios = () => {
+const useAxios = (props?: AxiosProps) => {
+    const refresh = useRefreshToken();
     const source = axios.CancelToken.source();
+    const token = useSelector((state: UserState) => state.token);
     const axiosInstance = axios.create({
+        cancelToken: source.token,
         baseURL: process.env.REACT_APP_API_URL,
-        cancelToken: source.token
+        headers: { Authorization: `Bearer ${token}` }
     });
 
     const setDefaultHeaders = (option: HttpOptions) => {
         switch (option) {
             case 'json':
-                axiosInstance.defaults.headers.common['Content-Type'] = 'application/json';
+                axiosInstance.defaults.headers.common["Content-Type"] = "application/json";
                 break;
             case 'form':
-                axiosInstance.defaults.headers.common['Content-Type'] = 'multipart/form-data';
+                axiosInstance.defaults.headers.common["Content-Type"] = "multipart/form-data";
+                break;
+            case 'skip-authorization':
+                delete axios.defaults.headers.common["Authorization"];
                 break;
         }
     };
@@ -25,18 +33,32 @@ const useAxios = () => {
         else setDefaultHeaders(option);
     };
 
-    useEffect(() => {
-        const source = axios.CancelToken.source();
+    axiosInstance.interceptors.response.use(
+        response => response,
+        async (err: AxiosError) => {
+            if (err.code === "ERR_NETWORK") return Promise.reject(err);
+            const originalRequest = err.config;
 
-        return () => source.cancel("Component unmounted: Request cancelled.");
-    }, []);
+            if (err.response?.status === 401 && originalRequest && !originalRequest.headers['Retry']) {
+                originalRequest.headers['Retry'] = true;
+                await refresh();
+                originalRequest.headers["Authorization"] = `Bearer ${token}`;
+                return axiosInstance(originalRequest);
+            }
+            return Promise.reject(err);
+        });
+
+    useEffect(() => {
+        if (!props?.continueCallOnUnmount)
+            return () => source.cancel("Component unmounted: Request cancelled.");
+    }, [source]);
 
     return {
         get: (url: string, options?: HttpOptions | HttpOptions[]) => {
             if (options) setHeaders(options);
             return axiosInstance.get(url);
         },
-        post: (url: string, body: any, options?: HttpOptions | HttpOptions[]) => {
+        post: (url: string, body?: any, options?: HttpOptions | HttpOptions[]) => {
             if (options) setHeaders(options);
             return axiosInstance.post(url, body);
         },
@@ -44,7 +66,7 @@ const useAxios = () => {
             if (options) setHeaders(options);
             return axiosInstance.patch(url, body);
         },
-        put: (url: string, body: any, options?: HttpOptions | HttpOptions[]) => {
+        put: (url: string, body?: any, options?: HttpOptions | HttpOptions[]) => {
             if (options) setHeaders(options);
             return axiosInstance.put(url, body);
         },

@@ -18,11 +18,14 @@ export const userSlice = createSlice({
             state.token = '';
             state.user = null;
         },
+        setToken: (state, action: PayloadAction<string>) => {
+            state.token = action.payload;
+        },
         setWishList: (state, action: PayloadAction<string[]>) => {
             if (state.user) state.user.wishList = action.payload;
         }
     }
 });
 
-export const { setLogin, setLogout, setWishList } = userSlice.actions;
+export const { setLogin, setLogout, setToken, setWishList } = userSlice.actions;
 export default userSlice.reducer;

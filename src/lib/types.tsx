@@ -4,7 +4,7 @@ type CreatorInfo = {
     _id: string,
     name: string,
     email: string,
-    profileImagePath: string,
+    avatar: string;
 };
 
 type Listing = {
@@ -16,7 +16,7 @@ type Listing = {
     listingPhotoPaths: string[];
 };
 
-export type HttpOptions = 'form' | 'json';
+export type HttpOptions = "form" | "json" | "skip-authorization";
 
 export type SignUpForm = {
     name: string,
@@ -151,4 +151,8 @@ export type LikeButtonProps = {
 export type UserState = {
     token?: string,
     user?: User | null;
+};
+
+export type AxiosProps = {
+    continueCallOnUnmount?: boolean;
 };

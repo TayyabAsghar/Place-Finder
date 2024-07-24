@@ -27,12 +27,12 @@ const LogInPage = () => {
                 password: data.password
             };
 
-            const response = await customAxios.post('auth/login', JSON.stringify(logInForm), 'json');
+            const response = await customAxios.post('/auth/login', JSON.stringify(logInForm), ["json", "skip-authorization"]);
 
             dispatch(
                 setLogin({
                     user: response.data.user,
-                    token: response.data.token
+                    token: response.data.accessToken
                 }));
             navigate("/");
         } catch (err) {

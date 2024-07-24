@@ -26,7 +26,7 @@ const SignUpPage = () => {
                 password: data.password
             };
 
-            await customAxios.post('auth/signup', JSON.stringify(signUpForm), 'json');
+            await customAxios.post('/auth/signup', JSON.stringify(signUpForm), ["json", "skip-authorization"]);
             navigate("/login");
         } catch (err) {
             console.error("Registration failed", err);

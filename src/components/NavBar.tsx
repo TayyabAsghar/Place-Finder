@@ -1,12 +1,12 @@
+import LogOut from "./LogOut";
 import { useState } from "react";
 import SearchBar from "./SearchBar";
+import { FiLogIn } from "react-icons/fi";
 import { UserState } from "../lib/types";
+import { useSelector } from "react-redux";
 import { getInitials } from "../lib/utils";
-import { setLogout } from "../lib/redux/state";
-import { FiLogIn, FiLogOut } from "react-icons/fi";
 import { BsFileEarmarkLock } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { Person, MenuOutlined } from "@mui/icons-material";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { PiBuildingOfficeBold, PiListHeartBold } from "react-icons/pi";
@@ -14,7 +14,6 @@ import { HiClipboardDocumentList, HiOutlineUserPlus } from "react-icons/hi2";
 
 const NavBar = () => {
     const location = useLocation();
-    const dispatch = useDispatch();
     const apiUrl = process.env.REACT_APP_API_URL;
     const user = useSelector((state: UserState) => state.user);
     const [dropdownEl, setDropdownEl] = useState<EventTarget & HTMLButtonElement | null>(null);
@@ -52,12 +51,7 @@ const NavBar = () => {
                                 Reservation List
                             </Link>
                         </MenuItem>
-                        <MenuItem>
-                            <Link to="/login" className="profile-dropdown" onClick={() => dispatch(setLogout())}>
-                                <FiLogOut />
-                                Log Out
-                            </Link>
-                        </MenuItem>
+                        <MenuItem> <LogOut /> </MenuItem>
                     </div> :
                     <div>
                         <MenuItem>
@@ -98,8 +92,8 @@ const NavBar = () => {
                     id="basic-button" aria-haspopup="true" aria-controls={menuOpen ? 'basic-menu' : undefined}
                     aria-expanded={menuOpen ? 'true' : undefined} onClick={e => setDropdownEl(e.currentTarget)}>
                     <MenuOutlined />
-                    {user ? user.profileImagePath ?
-                        <Avatar src={`${apiUrl}${user.profileImagePath.replace("public", "")}`} sx={{ bgcolor: 'primary.main' }}
+                    {user ? user.avatar ?
+                        <Avatar src={`${apiUrl}${user.avatar.replace("public", "")}`} sx={{ bgcolor: 'primary.main' }}
                             alt="profile photo" /> :
                         <Avatar sx={{ bgcolor: 'background.default', color: 'text.primary' }} >{getInitials(user.name)}</Avatar> :
                         <Person />
