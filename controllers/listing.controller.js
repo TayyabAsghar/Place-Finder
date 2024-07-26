@@ -1,8 +1,10 @@
 import { Types } from "mongoose";
 import ApiError from "../libs/apiError.js";
+import User from "../models/user.model.js";
 import Listing from "../models/listing.model.js";
 import asyncHandler from "../libs/asyncHandler.js";
 import PlaceDetails from "../models/placeDetails.model.js";
+import { getListingDetailsByID } from "./listing-details.controller.js";
 
 export const getCategoryList = asyncHandler(async (req, res) => {
     let listings = [];
@@ -36,13 +38,13 @@ export const createList = asyncHandler(async (req, res) => {
     const listingPhotoPaths = listingPhotos.map(file => file.path);
     const creator = new Types.ObjectId(String(creatorId));
 
-    const placeDetails = await PlaceDetails.create({ category, city, province, country, listingPhotoPaths, title });
+    const placeDetails = await PlaceDetails.create({ category, city, province, country, listingPhotoPaths });
 
     if (!placeDetails) throw new ApiError(500, "Error while creating Listing Details.");
 
     const newListing = await Listing.create({
         creator, type, streetAddress, aptSuite, guestCount, bedroomCount, bedCount, bathroomCount, description,
-        highlight, highlightDesc, price, placeDetails: placeDetails._id
+        highlight, title, highlightDesc, price, amenities, placeDetails: placeDetails._id
     });
 
     if (!newListing) throw new ApiError(500, "Error while creating Listing.");
@@ -55,14 +57,7 @@ export const getListingDetails = asyncHandler(async (req, res) => {
 
     if (!listingId) throw new ApiError(400, "Some fields are missing.");
 
-    const listing = await Listing.findById(listingId).populate([{
-        path: 'creator',
-        model: User,
-        select: '_id name avatar email'
-    }, {
-        path: "placeDetails",
-        model: PlaceDetails
-    }]);
+    const listing = await getListingDetailsByID(listingId);
 
     if (!listing) throw new ApiError(404, "Listing doesn't exits.");
 

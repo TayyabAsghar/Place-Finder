@@ -11,6 +11,10 @@ const ListingSchema = new Schema({
         ref: "PlaceDetails",
         required: true
     },
+    title: {
+        type: String,
+        required: true
+    },
     type: {
         type: String,
         required: true

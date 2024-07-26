@@ -22,7 +22,7 @@ app.use(cors({
 /* Routes */
 app.use('/auth', authRouter);
 app.use('/trip', tripRouter);
-app.use('/users', userRouter);
+app.use('/user', userRouter);
 app.use('/listing', listingRouter);
 
 const PORT = process.env.PORT || 4000;

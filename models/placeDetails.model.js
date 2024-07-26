@@ -20,11 +20,7 @@ const PlaceDetailsSchema = new Schema({
     listingPhotoPaths: [{
         type: String,
         required: true
-    }],
-    title: {
-        type: String,
-        required: true
-    }
+    }]
 }, {
     timestamps: true
 });

@@ -5,9 +5,10 @@ import Trip from "../models/trip.model.js";
 import Listing from "../models/listing.model.js";
 import asyncHandler from "../libs/asyncHandler.js";
 import PlaceDetails from "../models/placeDetails.model.js";
+import { getListingDetailsByID, getListingDetailsByCreatorID } from "./listing-details.controller.js";
 
 export const getUserTripList = asyncHandler(async (req, res) => {
-    const { userId } = req.params;
+    const userId = req.user._id;
 
     if (!userId) throw new ApiError(400, "User id is missing.");
 
@@ -20,7 +21,7 @@ export const getUserTripList = asyncHandler(async (req, res) => {
 });
 
 export const getUserResList = asyncHandler(async (req, res) => {
-    const { userId } = req.params;
+    const userId = req.user._id;
 
     if (!userId) throw new ApiError(400, "User id is missing.");
 
@@ -33,7 +34,7 @@ export const getUserResList = asyncHandler(async (req, res) => {
 });
 
 export const getUserWishList = asyncHandler(async (req, res) => {
-    const { userId } = req.params;
+    const userId = req.user._id;
 
     if (!userId) throw new ApiError(400, "User id is missing.");
 
@@ -50,7 +51,7 @@ export const getUserWishList = asyncHandler(async (req, res) => {
 });
 
 export const getUserPropList = asyncHandler(async (req, res) => {
-    const { userId } = req.params;
+    const userId = req.user._id;
 
     if (!userId) throw new ApiError(400, "User id is missing.");
 
@@ -63,7 +64,8 @@ export const getUserPropList = asyncHandler(async (req, res) => {
 });
 
 export const updateUserWishList = asyncHandler(async (req, res) => {
-    const { userId, listingId } = req.params;
+    const userId = req.user._id;
+    const { listingId } = req.params;
     let message = "Listing is removed from wish list";
 
     if (!(userId && listingId)) throw new ApiError(400, "Some fields are missing.");
@@ -83,4 +85,80 @@ export const updateUserWishList = asyncHandler(async (req, res) => {
 
     await user.save();
     res.status(200).json({ message: message, list: user.wishList });
+});
+
+export const getUserWishDetails = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+    const { listingId } = req.params;
+
+    if (!(userId && listingId)) throw new ApiError(400, "Some fields are missing.");
+
+    const user = await User.findOne({ _id: userId, wishList: { $in: [listingId] } });
+
+    if (!user) throw new ApiError(404, "WishList doesn't have such list.");
+
+    const listing = await getListingDetailsByID(listingId);
+
+    if (!listing) throw new ApiError(404, "Listing doesn't exits.");
+
+    res.status(200).json(listing);
+});
+
+export const getUserPropDetails = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+    const { listingId } = req.params;
+
+    if (!(userId && listingId)) throw new ApiError(400, "Some fields are missing.");
+
+    const listing = await getListingDetailsByCreatorID(listingId, userId);
+
+    if (!listing) throw new ApiError(404, "Listing doesn't exits.");
+
+    res.status(200).json(listing);
+});
+
+export const getUserResDetails = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+    const { resId } = req.params;
+
+    if (!(userId && resId)) throw new ApiError(400, "Some fields are missing.");
+
+    const reservation = await Trip.findOne({ _id: resId, host: userId }).populate({
+        path: "listing",
+        populate: [{
+            path: "creator",
+            model: User,
+            select: "_id name avatar email"
+        }, {
+            path: "placeDetails",
+            model: PlaceDetails
+        }]
+    });
+
+    if (!reservation) throw new ApiError(404, "Listing doesn't exits.");
+
+    res.status(200).json(reservation);
+});
+
+export const getUserTripDetails = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+    const { tripId } = req.params;
+
+    if (!(userId && tripId)) throw new ApiError(400, "Some fields are missing.");
+
+    const trip = await Trip.findOne({ _id: tripId, customer: userId }).populate({
+        path: "listing",
+        populate: [{
+            path: "creator",
+            model: User,
+            select: "_id name avatar email"
+        }, {
+            path: "placeDetails",
+            model: PlaceDetails
+        }]
+    });
+
+    if (!trip) throw new ApiError(404, "Listing doesn't exits.");
+
+    res.status(200).json(trip);
 });
