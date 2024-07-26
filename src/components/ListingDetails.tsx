@@ -2,10 +2,10 @@ import Booking from "./Booking";
 import LikeButton from "./LikeButton";
 import { getInitials } from "../lib/utils";
 import CustomCarousel from "./CustomCarousel";
-import { Avatar, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ListingDetailsProps } from "../lib/types";
 import { Facilities } from "../data/categoriesData";
+import { Avatar, Button, Tooltip } from "@mui/material";
 
 const ListingDetails = (props: ListingDetailsProps) => {
     const navigate = useNavigate();
@@ -20,14 +20,14 @@ const ListingDetails = (props: ListingDetailsProps) => {
                 }
             </div>
             <CustomCarousel>
-                {props.listingPhotoPaths.map((item, index) =>
+                {props.placeDetails.listingPhotoPaths.map((item, index) =>
                     <div className="flex items-center justify-center h-[70vh]" key={index}>
                         <img className="h-full w-full" src={`${apiUrl}${item.replace("public", "")}`} alt="Listing photo" />
                     </div>
                 )}
             </CustomCarousel>
             <h2 className="my-6 text-foreground">
-                {props.type} in {props.city}, {props.province}, {props.country}
+                {props.type} in {props.placeDetails.city}, {props.placeDetails.province}, {props.placeDetails.country}
             </h2>
             <p className="text-lg mb-6">
                 {props.guestCount} Guest(s) - {props.bedroomCount} Bedroom(s) - {props.bedCount} Bed(s) - {props.bathroomCount} Bathroom(s)
@@ -35,23 +35,25 @@ const ListingDetails = (props: ListingDetailsProps) => {
             <hr className="border-t-2" />
 
             <div className="flex gap-5 items-center my-5">
-                {props.creator.profileImagePath ?
-                    <Avatar className="!h-14 !w-14" src={`${apiUrl}${props.creator.profileImagePath.replace("public", "")}`}
-                        sx={{ bgcolor: 'primary.main' }} alt="profile photo" /> :
-                    <Avatar className="!h-14 !w-14" sx={{ bgcolor: 'primary.main', color: 'text.primary' }} >
-                        {getInitials(props.creator.name)}
-                    </Avatar>
-                }
+                <Tooltip title={props.creator.name}>
+                    {props.creator.avatar ?
+                        <Avatar className="!h-14 !w-14" src={`${apiUrl}${props.creator.avatar.replace("public", "")}`}
+                            sx={{ bgcolor: 'primary.main' }} alt="profile photo" /> :
+                        <Avatar className="!h-14 !w-14" sx={{ bgcolor: 'primary.main', color: 'text.primary' }} >
+                            {getInitials(props.creator.name)}
+                        </Avatar>
+                    }
+                </Tooltip>
                 <h3 className="text-xl font-bold">{props.creator.name}</h3>
             </div>
             <hr className="border-t-2" />
 
             <h3 className="text-xl font-bold my-5">Description</h3>
-            <p className="mb-5">{props.description}</p>
+            <p className="mb-5 whitespace-pre-wrap">{props.description}</p>
             <hr className="border-t-2" />
 
             <h3 className="text-xl font-bold my-5">{props.highlight}</h3>
-            <p className="mb-5">{props.highlightDesc}</p>
+            <p className="mb-5 whitespace-pre-wrap">{props.highlightDesc}</p>
             <hr className="border-t-2" />
 
             <div className="flex justify-between gap-4 flex-wrap mt-5">

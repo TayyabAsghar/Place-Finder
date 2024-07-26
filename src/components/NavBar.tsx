@@ -24,28 +24,28 @@ const NavBar = () => {
 
         return (
             <Menu anchorEl={dropdownEl} open={menuOpen} onClose={() => setDropdownEl(null)}
-                aria-labelledby="basic-button" >
+                aria-labelledby="basic-button" disableScrollLock>
                 {user ?
                     <div>
-                        <MenuItem>
+                        <MenuItem selected={location.pathname === "/user/trips"}>
                             <Link to="/user/trips" className="profile-dropdown">
                                 <HiClipboardDocumentList />
                                 Trip List
                             </Link>
                         </MenuItem>
-                        <MenuItem>
-                            <Link to="/user/wish" className="profile-dropdown">
+                        <MenuItem selected={location.pathname === "/user/wishes"}>
+                            <Link to="/user/wishes" className="profile-dropdown">
                                 <PiListHeartBold />
                                 Wish List
                             </Link>
                         </MenuItem>
-                        <MenuItem>
+                        <MenuItem selected={location.pathname === "/user/properties"}>
                             <Link to="/user/properties" className="profile-dropdown">
                                 <PiBuildingOfficeBold />
                                 Property List
                             </Link>
                         </MenuItem>
-                        <MenuItem>
+                        <MenuItem selected={location.pathname === "/user/reservations"}>
                             <Link to="/user/reservations" className="profile-dropdown">
                                 <BsFileEarmarkLock />
                                 Reservation List
@@ -54,14 +54,14 @@ const NavBar = () => {
                         <MenuItem> <LogOut /> </MenuItem>
                     </div> :
                     <div>
-                        <MenuItem>
+                        <MenuItem selected={location.pathname === "/login"}>
                             <Link to="/login" className="profile-dropdown">
                                 <FiLogIn />
                                 Log In
                             </Link>
                         </MenuItem>
-                        <MenuItem>
-                            <Link to="/register" className="profile-dropdown">
+                        <MenuItem selected={location.pathname === "/signup"}>
+                            <Link to="/signup" className="profile-dropdown">
                                 <HiOutlineUserPlus />
                                 Sign Up
                             </Link>

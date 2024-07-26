@@ -1,22 +1,20 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ListingDetailsType } from "../lib/types";
 import ListingCard from "../components/ListingCard";
 import DataNotFound from "../components/DataNotFound";
-import { ListingDetailsType, UserState } from "../lib/types";
 
 const PropertyListPage = () => {
     const navigate = useNavigate();
     const customAxios = useAxios();
     const [loading, setLoading] = useState(true);
-    const user = useSelector((state: UserState) => state?.user);
     const [wishList, setPropertyList] = useState<ListingDetailsType[]>([]);
 
     const getPropertyList = async () => {
         try {
-            const response = await customAxios.get(`users/${user?._id}/properties`);
+            const response = await customAxios.get(`/user/properties`);
             setPropertyList(response.data);
         } catch (err) {
             console.error("Fetch Trip List failed!", err);
@@ -33,21 +31,17 @@ const PropertyListPage = () => {
             {loading ? <Loader /> :
                 wishList.length ?
                     <div className="flex flex-wrap gap-10">
-                        {wishList.map((item, index) => (
+                        {wishList.map((item, index) =>
                             <ListingCard
                                 key={index}
                                 booking={true}
-                                city={item.city}
                                 type={item.type}
                                 price={item.price}
                                 listingId={item._id}
-                                country={item.country}
-                                province={item.province}
-                                category={item.category}
-                                listingPhotoPaths={item.listingPhotoPaths}
+                                placeDetails={item.placeDetails}
                                 onClick={() => navigate(`/user/properties/${item._id}`)}
                             />
-                        ))}
+                        )}
                     </div> :
                     <DataNotFound message="No Data Found" />
             }

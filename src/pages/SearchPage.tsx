@@ -17,11 +17,11 @@ const SearchPage = () => {
     const getSearchListings = async () => {
         try {
             if (searchQuery) {
-                const response = await customAxios.get(`listing/search/${searchQuery.toLowerCase()}`);
+                const response = await customAxios.get(`/listing/search/${searchQuery.toLowerCase()}`, "skip-authorization");
                 setListings(response.data);
             } else setListings([]);
         } catch (err) {
-            console.log("Fetch Search List failed!", err);
+            console.error("Fetch Search List failed!", err);
         } finally {
             setLoading(false);
         }
@@ -35,21 +35,17 @@ const SearchPage = () => {
             {loading ? <Loader /> :
                 listings.length ?
                     <div className="flex flex-wrap gap-10">
-                        {listings.map((item, index) => (
+                        {listings.map((item, index) =>
                             <ListingCard
                                 key={index}
                                 booking={true}
-                                city={item.city}
                                 type={item.type}
                                 price={item.price}
                                 listingId={item._id}
-                                country={item.country}
-                                province={item.province}
-                                category={item.category}
-                                listingPhotoPaths={item.listingPhotoPaths}
+                                placeDetails={item.placeDetails}
                                 onClick={() => navigate(`/listing/${item._id}`)}
                             />
-                        ))}
+                        )}
                     </div> :
                     <DataNotFound message="No Search Results" />
             }

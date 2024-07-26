@@ -15,10 +15,10 @@ const CategoryPage = () => {
     const [loading, setLoading] = useState(true);
     const [categoryList, setCategoryList] = useState<ListingDetailsType[]>([]);
 
-    const getWishList = async () => {
+    const getCategoryList = async () => {
         try {
             if (category) {
-                const response = await customAxios.get(`listing?category=${category.toLowerCase()}`);
+                const response = await customAxios.get(`/listing?category=${category.toLowerCase()}`, "skip-authorization");
                 setCategoryList(response.data);
             }
         } catch (err) {
@@ -28,7 +28,7 @@ const CategoryPage = () => {
         }
     };
 
-    useEffect(() => { getWishList(); }, []);
+    useEffect(() => { getCategoryList(); }, []);
 
     return (
         <div className="flex grow flex-col gap-5 px-14 py-10 pb-20 w-full">
@@ -38,21 +38,17 @@ const CategoryPage = () => {
             {loading ? <Loader /> :
                 categoryList.length ?
                     <div className="flex flex-wrap gap-10">
-                        {categoryList.map((item, index) => (
+                        {categoryList.map((item, index) =>
                             <ListingCard
                                 key={index}
                                 booking={true}
-                                city={item.city}
                                 type={item.type}
                                 price={item.price}
                                 listingId={item._id}
-                                country={item.country}
-                                province={item.province}
-                                category={item.category}
-                                listingPhotoPaths={item.listingPhotoPaths}
+                                placeDetails={item.placeDetails}
                                 onClick={() => navigate(`/listing/${item._id}`)}
                             />
-                        ))}
+                        )}
                     </div> :
                     <DataNotFound message="No Data Found" />
             }

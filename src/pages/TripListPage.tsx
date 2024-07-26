@@ -1,22 +1,20 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
-import { useSelector } from "react-redux";
+import { TripListType } from "../lib/types";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListingCard from "../components/ListingCard";
 import DataNotFound from "../components/DataNotFound";
-import { TripListType, UserState } from "../lib/types";
 
 const TripListPage = () => {
     const navigate = useNavigate();
     const customAxios = useAxios();
     const [loading, setLoading] = useState(true);
-    const user = useSelector((state: UserState) => state?.user);
     const [tripList, setTripList] = useState<TripListType[]>([]);
 
     const getTripList = async () => {
         try {
-            const response = await customAxios.get(`users/${user?._id}/trips`);
+            const response = await customAxios.get(`/user/trips`);
             setTripList(response.data);
         } catch (err) {
             console.error("Fetch Trip List failed!", err);
@@ -33,22 +31,18 @@ const TripListPage = () => {
             {loading ? <Loader /> :
                 tripList.length ?
                     <div className="flex flex-wrap gap-10">
-                        {tripList.map((item, index) => (
+                        {tripList.map((item, index) =>
                             <ListingCard
                                 key={index}
                                 booking={false}
                                 tripId={item._id}
                                 endDate={item.endDate}
-                                city={item.listing.city}
                                 startDate={item.startDate}
                                 totalPrice={item.totalPrice}
-                                country={item.listing.country}
-                                province={item.listing.province}
-                                category={item.listing.category}
-                                listingPhotoPaths={item.listing.listingPhotoPaths}
+                                placeDetails={item.placeDetails}
                                 onClick={() => navigate(`/user/trips/${item._id}`)}
                             />
-                        ))}
+                        )}
                     </div> :
                     <DataNotFound message="No Data Found" />
             }

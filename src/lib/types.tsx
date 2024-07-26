@@ -7,13 +7,18 @@ type CreatorInfo = {
     avatar: string;
 };
 
-type Listing = {
-    _id: string;
+type PlaceDetails = {
+    _id: string,
     city: string,
     country: string,
-    province: string,
     category: string,
+    province: string,
     listingPhotoPaths: string[];
+};
+
+type Listing = {
+    _id: string,
+    placeDetails: PlaceDetails;
 };
 
 export type HttpOptions = "form" | "json" | "skip-authorization";
@@ -41,10 +46,11 @@ export type BookingForm = {
 
 export type TripListType = {
     _id: string,
+    days: number,
     endDate: Date,
     startDate: Date,
-    listing: Listing,
-    totalPrice: number;
+    totalPrice: number,
+    placeDetails: PlaceDetails;
 };
 
 export type ReservationListType = {
@@ -69,8 +75,8 @@ export type User = CreatorInfo & {
 
 export type ListingDetailsType = Listing & {
     type: string,
-    price: number,
     title: string,
+    price: number,
     aptSuite: string,
     bedCount: number,
     highlight: string,
@@ -108,8 +114,8 @@ export type ListingDetailsProps = ListingDetailsType & ({
     booking: true;
 } | {
     days: number,
-    booking: false,
     endDate: Date,
+    booking: false,
     startDate: Date,
     totalPrice: number;
 });

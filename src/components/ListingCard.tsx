@@ -10,7 +10,7 @@ const ListingCard = (props: ListingCardProps) => {
         <div className="flex flex-col cursor-pointer rounded-lg w-[326px] relative bg-secondary-100 bg-opacity-50 hover:shadow-lg"
             onClick={props.onClick}>
             <CustomCarousel indicators={false}>
-                {props.listingPhotoPaths?.map((photo, index) => (
+                {props.placeDetails.listingPhotoPaths?.map((photo, index) => (
                     <div className="flex h-64 items-center justify-center" key={index}>
                         <img className="h-full w-full rounded-t-lg" src={`${apiUrl}${photo.replace("public", "")}`} alt="Property" />
                     </div>
@@ -18,9 +18,9 @@ const ListingCard = (props: ListingCardProps) => {
             </CustomCarousel>
             <div className="flex flex-col text-lg p-4">
                 <div className="text-xl font-bold">
-                    {props.city}, {props.province}, {props.country}
+                    {props.placeDetails.city}, {props.placeDetails.province}, {props.placeDetails.country}
                 </div>
-                <div>{props.category}</div>
+                <div>{props.placeDetails.category}</div>
                 <div>
                     {props.booking ?
                         <>

@@ -14,10 +14,10 @@ const TripDetailsPage = () => {
 
     const getListingDetails = async () => {
         try {
-            const response = await customAxios.get(`booking/trips/${tripId}`);
+            const response = await customAxios.get(`/user/trips/${tripId}`);
             setTrip(response.data);
         } catch (err) {
-            console.log("Fetch Listing Details Failed", err);
+            console.error("Fetch Listing Details Failed", err);
         } finally {
             setLoading(false);
         }

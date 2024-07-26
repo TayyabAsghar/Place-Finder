@@ -14,10 +14,10 @@ const PropertyDetailsPage = () => {
 
     const getListingDetails = async () => {
         try {
-            const response = await customAxios.get(`listing/${propId}`);
+            const response = await customAxios.get(`/user/properties/${propId}`);
             setProperty(response.data);
         } catch (err) {
-            console.log("Fetch Listing Details Failed", err);
+            console.error("Fetch Listing Details Failed", err);
         } finally {
             setLoading(false);
         }

@@ -14,10 +14,10 @@ const ListingDetailsPage = () => {
 
     const getListingDetails = async () => {
         try {
-            const response = await customAxios.get(`listing/${listingId}`);
+            const response = await customAxios.get(`/listing/${listingId}`, "skip-authorization");
             setListing(response.data);
         } catch (err) {
-            console.log("Fetch Listing Details Failed", err);
+            console.error("Fetch Listing Details Failed", err);
         } finally {
             setLoading(false);
         }

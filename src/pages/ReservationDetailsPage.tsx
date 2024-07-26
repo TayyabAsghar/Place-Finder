@@ -14,10 +14,10 @@ const ReservationDetailsPage = () => {
 
     const getListingDetails = async () => {
         try {
-            const response = await customAxios.get(`booking/reservations/${resId}`);
+            const response = await customAxios.get(`/user/reservations/${resId}`);
             setReservation(response.data);
         } catch (err) {
-            console.log("Fetch Listing Details Failed", err);
+            console.error("Fetch Listing Details Failed", err);
         } finally {
             setLoading(false);
         }
@@ -31,7 +31,6 @@ const ReservationDetailsPage = () => {
                 booking={false}
                 days={reservation.days}
                 endDate={reservation.endDate}
-                creator={reservation.customer}
                 startDate={reservation.startDate}
                 totalPrice={reservation.totalPrice} /> :
                 <DataNotFound message="No Data Found" />

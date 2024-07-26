@@ -14,10 +14,10 @@ const WishDetailsPage = () => {
 
     const getListingDetails = async () => {
         try {
-            const response = await customAxios.get(`listing/${wishId}`);
+            const response = await customAxios.get(`/user/wishes/${wishId}`);
             setWishList(response.data);
         } catch (err) {
-            console.log("Fetch Listing Details Failed", err);
+            console.error("Fetch Listing Details Failed", err);
         } finally {
             setLoading(false);
         }

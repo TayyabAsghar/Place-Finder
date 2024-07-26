@@ -36,8 +36,10 @@ const useAxios = (props?: AxiosProps) => {
     axiosInstance.interceptors.response.use(
         response => response,
         async (err: AxiosError) => {
-            if (err.code === "ERR_NETWORK") return Promise.reject(err);
             const originalRequest = err.config;
+
+            if (err.code === "ERR_CANCELED") return;
+            if (err.code === "ERR_NETWORK") return Promise.reject(err);
 
             if (err.response?.status === 401 && originalRequest && !originalRequest.headers['Retry']) {
                 originalRequest.headers['Retry'] = true;
@@ -49,9 +51,9 @@ const useAxios = (props?: AxiosProps) => {
         });
 
     useEffect(() => {
-        if (!props?.continueCallOnUnmount)
-            return () => source.cancel("Component unmounted: Request cancelled.");
-    }, [source]);
+        if (!props?.continueCallOnUnmount && process.env.NODE_ENV === "production")
+            return () => source.cancel();
+    }, []);
 
     return {
         get: (url: string, options?: HttpOptions | HttpOptions[]) => {

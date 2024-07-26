@@ -31,7 +31,18 @@ const ThemeMUI = createTheme({
         },
         text: {
             primary: "#0C1210"
-        },
+        }
+    },
+    components: {
+        MuiMenuItem: {
+            styleOverrides: {
+                root: {
+                    "&.Mui-selected, &.Mui-selected:hover": {
+                        backgroundColor: "hsl(159, 20%, 60%)"
+                    }
+                }
+            }
+        }
     }
 });
 
