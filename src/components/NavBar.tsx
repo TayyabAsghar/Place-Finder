@@ -6,6 +6,7 @@ import { UserState } from "../lib/types";
 import { useSelector } from "react-redux";
 import { getInitials } from "../lib/utils";
 import { BsFileEarmarkLock } from "react-icons/bs";
+import { RiPlayListAddFill } from "react-icons/ri";
 import { Link, useLocation } from "react-router-dom";
 import { Person, MenuOutlined } from "@mui/icons-material";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
@@ -51,6 +52,12 @@ const NavBar = () => {
                                 Reservation List
                             </Link>
                         </MenuItem>
+                        <MenuItem selected={location.pathname === "/create-listing"}>
+                            <Link className="profile-dropdown" to={user ? "/create-listing" : "/login"}>
+                                <RiPlayListAddFill />
+                                Become A Host
+                            </Link>
+                        </MenuItem>
                         <MenuItem> <LogOut /> </MenuItem>
                     </div> :
                     <div>
@@ -73,9 +80,10 @@ const NavBar = () => {
     };
 
     return (
-        <nav className="flex justify-between items-center px-10 py-3 h-[72px] border-b sticky top-0 bg-background z-50">
+        <nav className="flex justify-between items-center px-10 py-3 h-[72px] border-b sticky top-0 bg-background z-50 max-ml:px-8 max-mm:px-5">
             <Link to="/" title="Place Finder">
-                <img className="w-16 h-16" src="/assets/images/logo/logo192.png" alt="Logo" />
+                <img className="w-16 h-16 max-ml:w-14 max-ml:h-14 max-mm:w-12 max-mm:h-12"
+                    src="/assets/images/logo/logo192.png" alt="Logo" />
             </Link>
             {location.pathname !== "/login" && location.pathname !== "/signup" &&
                 <SearchBar />
@@ -83,15 +91,18 @@ const NavBar = () => {
 
             <div className="flex items-center gap-5">
                 {location.pathname !== "/create-listing" &&
-                    <Link className="text-accent font-bold hover:text-accent-600" to={user ? "/create-listing" : "/login"}>
+                    <Link className="text-accent font-bold hover:text-accent-600 max-tab:hidden"
+                        to={user ? "/create-listing" : "/login"}>
                         Become A Host
                     </Link>
                 }
 
-                <Button className="flex items-center p-2 border gap-3 h-12" sx={{ borderRadius: 28 }} variant="contained"
+                <Button className="gap-3 h-12 max-ml:!min-w-0 max-ml:!p-0.5 max-ml:h-auto" sx={{ borderRadius: 28 }} variant="contained"
                     id="basic-button" aria-haspopup="true" aria-controls={menuOpen ? 'basic-menu' : undefined}
                     aria-expanded={menuOpen ? 'true' : undefined} onClick={e => setDropdownEl(e.currentTarget)}>
-                    <MenuOutlined />
+                    <div className="max-ml:hidden" >
+                        <MenuOutlined />
+                    </div>
                     {user ? user.avatar ?
                         <Avatar src={`${apiUrl}${user.avatar.replace("public", "")}`} sx={{ bgcolor: 'primary.main' }}
                             alt="profile photo" /> :

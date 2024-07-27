@@ -30,11 +30,11 @@ const WishListPage = () => {
     useEffect(() => { getWishList(); }, []);
 
     return (
-        <div className="flex grow flex-col gap-5 px-14 py-10 pb-20 w-full">
+        <div className="card-list-page">
             <h1>Your Wish List</h1>
             {loading ? <Loader /> :
                 wishListData?.length ?
-                    <div className="flex flex-wrap gap-10">
+                    <div className="card-container">
                         {wishListData.map((item, index) =>
                             <ListingCard
                                 key={index}

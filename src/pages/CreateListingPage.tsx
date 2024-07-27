@@ -114,12 +114,12 @@ const CreateListing = () => {
         }
     };
     return (
-        <div className="px-14 py-10 pb-20">
+        <div className="px-14 pt-10 pb-20 max-ml:pt-8 max-ml:pb-16 max-mm:py-4 max-mm:px-4 max-ms:px-2">
             <h1>Publish Your Place</h1>
             <form className="flex flex-col items-center" onSubmit={handleSubmit(handleFormSubmit)}>
-                <div className="bg-secondary-100 bg-opacity-25 mt-10 rounded-2xl px-10 py-7">
-                    <h2 className="text-accent" >Step 1: Tell us about your place</h2>
-                    <hr className="mx-0 my-4 mb-6" />
+                <div className="bg-secondary-100 bg-opacity-25 mt-10 rounded-2xl px-10 py-7 max-ml:mt-8 max-ml:px-6 max-ml:py-6 max-mm:px-2">
+                    <h2 className="text-accent">Step 1: Tell us about your place</h2>
+                    <hr className="mx-0 my-4" />
                     <h3 className="create-listing-heading">Which of one these categories best describes your place?</h3>
                     <div className="flex justify-center items-center flex-wrap gap-5 px-5 py-0" {...register("category")}>
                         {AllCategories?.slice(1).map((item, index) => (
@@ -138,7 +138,7 @@ const CreateListing = () => {
                             <div className={`create-listing-types ${getValues("type") === item.name ? "create-listing-selected" : ""}
                                 ${!!errors.type ? "!border-error" : ""}`}
                                 key={index} onClick={() => setControlValue("type", item.name)}>
-                                <div className="max-w-[400px]">
+                                <div className="max-w-[400px] flex flex-col max-ml:h-full max-ml:justify-evenly">
                                     <h4 className="mb-1 font-semibold text-lg">{item.name}</h4>
                                     <p>{item.description}</p>
                                 </div>
@@ -161,7 +161,7 @@ const CreateListing = () => {
                             helperText={errors.streetAddress?.message}
                         />
                     </div>
-                    <div className="max-w-[700px] grid grid-cols-2 gap-10">
+                    <div className="max-w-[700px] flex gap-x-10 max-ml:flex-wrap">
                         <TextField
                             className="w-full"
                             label="Apt, Suite, etc."
@@ -183,7 +183,7 @@ const CreateListing = () => {
                             helperText={errors.city?.message}
                         />
                     </div>
-                    <div className="max-w-[700px] grid grid-cols-2 gap-10">
+                    <div className="max-w-[700px] flex gap-x-10 max-ml:flex-wrap">
                         <TextField
                             className="w-full"
                             label="Province"
@@ -194,22 +194,20 @@ const CreateListing = () => {
                             error={!!errors.province}
                             helperText={errors.province?.message}
                         />
-                        <div className="location">
-                            <TextField
-                                className="w-full"
-                                label="Country"
-                                title="Country"
-                                type="text"
-                                margin="normal"
-                                {...register("country")}
-                                error={!!errors.country}
-                                helperText={errors.country?.message}
-                            />
-                        </div>
+                        <TextField
+                            className="w-full"
+                            label="Country"
+                            title="Country"
+                            type="text"
+                            margin="normal"
+                            {...register("country")}
+                            error={!!errors.country}
+                            helperText={errors.country?.message}
+                        />
                     </div>
 
                     <h3 className="create-listing-heading">Share some basics about your place</h3>
-                    <div className="flex flex-wrap gap-10">
+                    <div className="flex flex-wrap gap-x-10 gap-y-5 max-tab:justify-between">
                         <div className="counter-buttons">
                             <p className="font-semibold">Guests</p>
                             <div className="flex items-center gap-2 text-xl">
@@ -272,17 +270,17 @@ const CreateListing = () => {
                     </div>
                 </div>
 
-                <div className="bg-secondary-100 bg-opacity-25 mt-10 rounded-2xl px-10 py-7">
+                <div className="bg-secondary-100 bg-opacity-25 mt-10 rounded-2xl px-10 py-7 max-ml:mt-8 max-ml:px-6 max-ml:py-6 max-mm:px-2">
                     <h2>Step 2: Make your place stand out</h2>
-                    <hr className="mx-0 my-4 mb-6" />
+                    <hr className="mx-0 my-4" />
                     <h3 className="create-listing-heading">Tell guests what your place has to offer</h3>
-                    <div className="flex flex-wrap gap-5">
+                    <div className="flex justify-center flex-wrap gap-5">
                         {Facilities?.map((item, index) => (
                             <div className={`create-listing-facilities ${getValues("amenities")?.includes(item.name) ? "create-listing-selected" : ""}
                                 ${!!errors.amenities ? "!border-error" : ""}`}
                                 key={index} onClick={() => selectAmenities(item.name)}>
                                 <div className="text-3xl">{item.icon}</div>
-                                <p className="font-semibold">{item.name}</p>
+                                <p className="font-semibold max-ml:font-medium">{item.name}</p>
                             </div>
                         ))}
                     </div>
@@ -291,7 +289,7 @@ const CreateListing = () => {
                     <h3 className="create-listing-heading">Add some photos of your place</h3>
                     <div className="flex flex-col flex-wrap gap-4">
                         {photos.length >= 1 &&
-                            <div className="flex flex-wrap gap-4">
+                            <div className="flex flex-wrap gap-4 max-ml:justify-center">
                                 {photos.map((photo, index) =>
                                     <div className="max-w-64 max-h-44 relative" key={index}>
                                         <img className="max-w-full max-h-full" alt="place"
@@ -378,7 +376,7 @@ const CreateListing = () => {
                     </div>
                 </div>
 
-                <LoadingButton className="w-1/2 !mt-16"
+                <LoadingButton className="w-3/4 !mt-16 max-mm:!my-10"
                     sx={{ mt: 2 }} type="submit" variant="contained" loading={isSubmitting} title="Create Listing">
                     Create Your Listing
                 </LoadingButton>

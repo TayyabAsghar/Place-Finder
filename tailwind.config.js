@@ -5,6 +5,14 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}"
   ],
   theme: {
+    screens: {
+      ms: "360px",
+      mm: "400px",
+      ml: "580px",
+      tab: "780px",
+      lap: "1024px",
+      pc: "1440px"
+    },
     extend: {
       backgroundImage: {
         'slide-image': "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/public/assets/images/slide.jpg')"

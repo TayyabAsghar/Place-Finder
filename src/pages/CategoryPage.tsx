@@ -31,13 +31,13 @@ const CategoryPage = () => {
     useEffect(() => { getCategoryList(); }, []);
 
     return (
-        <div className="flex grow flex-col gap-5 px-14 py-10 pb-20 w-full">
+        <div className="card-list-page">
             {!!category && AllCategoriesNames.includes(category.toLowerCase()) &&
                 <h1>{toTitleCase(category)} Listings</h1>
             }
             {loading ? <Loader /> :
                 categoryList.length ?
-                    <div className="flex flex-wrap gap-10">
+                    <div className="card-container">
                         {categoryList.map((item, index) =>
                             <ListingCard
                                 key={index}

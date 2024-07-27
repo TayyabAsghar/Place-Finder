@@ -114,7 +114,7 @@ export const Facilities = [{
     name: "Bath tub",
     icon: <PiBathtubFill />
 }, {
-    name: "Personal care products",
+    name: "Hygiene products",
     icon: <FaPumpSoap />
 }, {
     name: "Outdoor shower",

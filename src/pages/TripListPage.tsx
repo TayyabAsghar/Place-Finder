@@ -26,11 +26,11 @@ const TripListPage = () => {
     useEffect(() => { getTripList(); }, []);
 
     return (
-        <div className="flex grow flex-col gap-5 px-14 py-10 pb-20 w-full">
+        <div className="card-list-page">
             <h1>Your Trip List</h1>
             {loading ? <Loader /> :
                 tripList.length ?
-                    <div className="flex flex-wrap gap-10">
+                    <div className="card-container">
                         {tripList.map((item, index) =>
                             <ListingCard
                                 key={index}

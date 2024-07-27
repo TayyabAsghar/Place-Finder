@@ -60,7 +60,9 @@ const Booking = (props: BookingProps) => {
 
     return (
         <div>
-            <h2 className="text-foreground">{props.booking ? "How long do you want to stay?" : "How long is the stay?"}</h2>
+            <h2 className="text-foreground">
+                {props.booking ? "How long do you want to stay?" : "How long is the stay?"}
+            </h2>
             <div className="flex flex-col gap-5 mt-7">
                 {props.booking ? <DateRange rangeColors={RangeColor} ranges={[dateRange]} onChange={handleSelect} minDate={new Date()} /> :
                     <DateRange rangeColors={RangeColor} ranges={[dateRange]} onChange={() => { }} minDate={new Date(props.startDate)}

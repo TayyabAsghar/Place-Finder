@@ -20,11 +20,11 @@
   }
   
   h1 {
-    @apply text-primary font-bold text-3xl;
+    @apply text-primary font-bold text-3xl max-ml:text-2xl;
   }
 
   h2 {
-    @apply text-secondary-400 font-bold text-2xl;
+    @apply text-secondary-400 font-bold text-2xl max-ml:text-xl max-ml:font-semibold;
   }
 }
 
@@ -43,7 +43,7 @@
 }
 
 .create-listing-heading {
-  @apply font-semibold text-xl mx-0 my-10 mb-5;
+  @apply font-semibold text-xl mx-0 mt-10 mb-5 max-ml:text-lg max-ml:mt-4 max-ml:mb-4 max-ml:font-medium;
 }
 
 .create-listing-categories {
@@ -51,15 +51,29 @@
 }
 
 .create-listing-types {
-  @apply flex justify-between items-center w-[600px] px-8 h-28 py-4 border rounded-md cursor-pointer transition duration-200 hover:border-foreground;
+  @apply flex justify-between items-center gap-6 max-w-[600px] w-full px-8 h-28 py-4 border rounded-md cursor-pointer transition 
+  duration-200 hover:border-foreground max-ml:px-6 max-ml:py-3 max-ml:h-32;
+}
+
+.card-list-page {
+  @apply flex grow flex-col gap-5 px-10 pt-8 pb-20 w-full max-tab:pt-6 max-ml:px-8 max-ml:pb-14;
+}
+
+.card-container {
+  @apply flex flex-wrap gap-10 mt-2 justify-center;
 }
 
 .counter-buttons {
-  @apply flex items-center gap-7 px-2 py-1 w-fit h-fit border rounded-md;
+  @apply flex items-center justify-between gap-7 px-2 py-1 max-w-60 w-full h-fit border rounded-md;
 }
 
 .create-listing-facilities {
-  @apply flex flex-col justify-center items-center w-48 h-24 border rounded-md cursor-pointer transition duration-200 hover:border-foreground;
+  @apply flex flex-col p-6 text-center justify-center items-center max-w-48 w-full h-24 border rounded-md cursor-pointer transition duration-200
+  hover:border-foreground max-tab:max-w-40 max-ml:max-w-32 max-ml:p-4;
+}
+
+.create-listing-steps {
+  @apply bg-secondary-100 bg-opacity-25 mt-10 rounded-2xl px-10 py-7 max-ml:mt-8 max-ml:px-8 max-ml:py-5;
 }
 
 .create-listing-selected {
@@ -68,4 +82,13 @@
 
 .error-message {
   @apply text-xs text-error mt-[3px] mx-3.5 leading-relaxed tracking-[0.03333em];
+}
+
+.footer {
+  @apply flex justify-between items-center gap-12 px-16 py-6 w-full bg-secondary-100 bg-opacity-25 max-ml:flex-col 
+  max-ml:items-start max-ml:px-10 max-ml:gap-10 max-mm:px-7 max-mm:gap-7;
+}
+
+.footer-link {
+  @apply cursor-pointer underline hover:text-accent-600 hover:decoration-accent-600;
 }

@@ -30,11 +30,11 @@ const SearchPage = () => {
     useEffect(() => { getSearchListings(); }, [searchQuery]);
 
     return (
-        <div className="flex grow flex-col gap-5 px-14 py-10 pb-20 w-full">
-            <h1 className="w-4/5 text-ellipsis overflow-hidden" >{searchQuery}</h1>
+        <div className="card-list-page">
+            <h1 className="w-4/5 text-ellipsis overflow-hidden whitespace-nowrap">{searchQuery}</h1>
             {loading ? <Loader /> :
                 listings.length ?
-                    <div className="flex flex-wrap gap-10">
+                    <div className="card-container">
                         {listings.map((item, index) =>
                             <ListingCard
                                 key={index}

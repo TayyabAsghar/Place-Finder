@@ -26,11 +26,11 @@ const PropertyListPage = () => {
     useEffect(() => { getPropertyList(); }, []);
 
     return (
-        <div className="flex grow flex-col gap-5 px-14 py-10 pb-20 w-full">
+        <div className="card-list-page">
             <h1>Your Property List</h1>
             {loading ? <Loader /> :
                 wishList.length ?
-                    <div className="flex flex-wrap gap-10">
+                    <div className="card-container">
                         {wishList.map((item, index) =>
                             <ListingCard
                                 key={index}

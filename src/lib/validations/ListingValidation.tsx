@@ -18,9 +18,9 @@ export const CreateListingValidations = z.object({
     listingPhotos: z.custom<File[]>()
         .refine(files => files?.length !== 0, "Image is required")
         .refine(files => Array.from(files || []).every(file => AcceptedImageTypes.includes(file.type), "Only .jpeg, .jpg and .png are accepted.")),
-    title: z.string().trim().min(1, { message: 'Listing Photos are required.' }),
+    title: z.string().trim().min(1, { message: 'Listing Photos are required.' }).max(30, { message: 'Maximum 30 characters.' }),
     description: z.string().trim().min(1, { message: 'Required field.' }),
-    highlight: z.string().trim().min(1, { message: 'Required field.' }),
+    highlight: z.string().trim().min(1, { message: 'Required field.' }).max(30, { message: 'Maximum 30 characters.' }),
     highlightDesc: z.string().trim().min(1, { message: 'Required field.' }),
     price: z.coerce.number().min(1, { message: 'Required field.' })
 });
