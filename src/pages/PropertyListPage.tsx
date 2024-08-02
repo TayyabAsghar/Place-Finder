@@ -1,15 +1,18 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
+import ReactError from "../lib/ReactError";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ListingDetailsType } from "../lib/types";
 import ListingCard from "../components/ListingCard";
 import DataNotFound from "../components/DataNotFound";
+import useNotification from "../hooks/useNotification";
 
 const PropertyListPage = () => {
     const navigate = useNavigate();
     const customAxios = useAxios();
     const [loading, setLoading] = useState(true);
+    const { setNotification } = useNotification();
     const [wishList, setPropertyList] = useState<ListingDetailsType[]>([]);
 
     const getPropertyList = async () => {
@@ -17,7 +20,8 @@ const PropertyListPage = () => {
             const response = await customAxios.get(`/user/properties`);
             setPropertyList(response.data);
         } catch (err) {
-            console.error("Fetch Trip List failed!", err);
+            if (err && err instanceof ReactError)
+                setNotification({ message: err.message, severity: "error" });
         } finally {
             setLoading(false);
         }

@@ -6,11 +6,13 @@ import useAxios from "../hooks/useAxios";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { toTitleCase } from "../lib/utils";
+import ReactError from "../lib/ReactError";
 import { IoIosImages } from "react-icons/io";
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AcceptedImageTypes } from "../lib/constants";
+import useNotification from "../hooks/useNotification";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { AllCategories, Types, Facilities } from "../data/categoriesData";
 import { RemoveCircleOutline, AddCircleOutline } from "@mui/icons-material";
@@ -19,6 +21,7 @@ import { CreateListingValidations } from "../lib/validations/ListingValidation";
 const CreateListing = () => {
     const customAxios = useAxios();
     const navigate = useNavigate();
+    const { setNotification } = useNotification();
     const [photos, setPhotos] = useState<File[]>([]);
     type CreateListingFormType = z.infer<typeof CreateListingValidations>;
     type CreateListingFormKeysType = keyof CreateListingFormType;
@@ -110,7 +113,8 @@ const CreateListing = () => {
             const response = await customAxios.post("/listing/create", listingForm, "form");
             navigate(`/listing/${response.data._id}`);
         } catch (err) {
-            console.error("Publish Listing failed", err);
+            if (err && err instanceof ReactError)
+                setNotification({ message: err.message, severity: "error" });
         }
     };
     return (

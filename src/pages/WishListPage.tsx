@@ -1,18 +1,21 @@
 import useAxios from "../hooks/useAxios";
 import { useDispatch } from "react-redux";
 import Loader from "../components/Loader";
+import ReactError from "../lib/ReactError";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setWishList } from "../lib/redux/state";
 import { ListingDetailsType } from "../lib/types";
 import ListingCard from "../components/ListingCard";
 import DataNotFound from "../components/DataNotFound";
+import useNotification from "../hooks/useNotification";
 
 const WishListPage = () => {
     const navigate = useNavigate();
     const customAxios = useAxios();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
+    const { setNotification } = useNotification();
     const [wishListData, setWishListData] = useState<ListingDetailsType[]>([]);
 
     const getWishList = async () => {
@@ -21,7 +24,8 @@ const WishListPage = () => {
             setWishListData(response.data.wishList);
             dispatch(setWishList(response.data.wishListIds));
         } catch (err) {
-            console.error("Fetch Wish List failed!", err);
+            if (err && err instanceof ReactError)
+                setNotification({ message: err.message, severity: "error" });
         } finally {
             setLoading(false);
         }

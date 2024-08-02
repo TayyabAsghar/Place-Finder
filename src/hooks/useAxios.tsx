@@ -48,18 +48,16 @@ const useAxios = (props?: AxiosProps) => {
             if (err.code === "ERR_CANCELED") return Promise.reject();
             if (err.code === "ERR_NETWORK" || err.code === "ERR_CONNECTION_REFUSED") {
                 setNotification({
-                    message: "Please check your internet connection.",
                     severity: "error",
-                    showNotification: true
+                    message: "Please check your internet connection."
                 });
                 return Promise.reject();
             }
 
             if (err.response?.status === 500) {
                 setNotification({
-                    message: "Something went wrong, Please refresh the page.",
                     severity: "error",
-                    showNotification: true
+                    message: "Something went wrong, Please refresh the page."
                 });
                 return Promise.reject();
             }
@@ -72,8 +70,7 @@ const useAxios = (props?: AxiosProps) => {
             } else if (err.response?.status === 401) {
                 setNotification({
                     severity: "error",
-                    showNotification: true,
-                    message: "Your session has expired. Please login to continue.",
+                    message: "Your session has expired. Please login to continue."
                 });
                 dispatch(setLogout());
                 navigate("/login");

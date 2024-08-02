@@ -1,15 +1,18 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
+import ReactError from "../lib/ReactError";
 import { useEffect, useState } from "react";
 import { TripListType } from "../lib/types";
 import { useNavigate } from "react-router-dom";
 import ListingCard from "../components/ListingCard";
 import DataNotFound from "../components/DataNotFound";
+import useNotification from "../hooks/useNotification";
 
 const ReservationListPage = () => {
     const navigate = useNavigate();
     const customAxios = useAxios();
     const [loading, setLoading] = useState(true);
+    const { setNotification } = useNotification();
     const [reservationList, setReservationList] = useState<TripListType[]>([]);
 
     const getReservationList = async () => {
@@ -17,7 +20,8 @@ const ReservationListPage = () => {
             const response = await customAxios.get(`/user/reservations`);
             setReservationList(response.data);
         } catch (err) {
-            console.error("Fetch Reservation List failed!", err);
+            if (err && err instanceof ReactError)
+                setNotification({ message: err.message, severity: "error" });
         } finally {
             setLoading(false);
         }

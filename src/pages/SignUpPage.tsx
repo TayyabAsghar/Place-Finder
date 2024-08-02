@@ -3,16 +3,19 @@ import useAxios from "../hooks/useAxios";
 import { LoadingButton } from "@mui/lab";
 import { SignUpForm } from "../lib/types";
 import { useForm } from "react-hook-form";
-import { toTitleCase } from "../lib/utils";
 import { TextField } from "@mui/material";
+import { toTitleCase } from "../lib/utils";
+import ReactError from "../lib/ReactError";
 import LogInSVG from "../components/LogInSVG";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useNotification from "../hooks/useNotification";
 import { SignUpValidations } from "../lib/validations/UserValidations";
 
 const SignUpPage = () => {
     const customAxios = useAxios();
     const navigate = useNavigate();
+    const { setNotification } = useNotification();
     type SignUpFormType = z.infer<typeof SignUpValidations>;
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignUpFormType>({
         resolver: zodResolver(SignUpValidations)
@@ -29,7 +32,8 @@ const SignUpPage = () => {
             await customAxios.post('/auth/signup', JSON.stringify(signUpForm), ["json", "skip-authorization"]);
             navigate("/login");
         } catch (err) {
-            console.error("Registration failed", err);
+            if (err && err instanceof ReactError)
+                setNotification({ message: err.message, severity: "error" });
         }
     };
 

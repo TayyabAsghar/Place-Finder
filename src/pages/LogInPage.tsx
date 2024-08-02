@@ -5,10 +5,12 @@ import useAxios from "../hooks/useAxios";
 import { LogInForm } from "../lib/types";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import ReactError from "../lib/ReactError";
 import { setLogin } from "../lib/redux/state";
 import LogInSVG from "../components/LogInSVG";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useNotification from "../hooks/useNotification";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LogInValidations } from "../lib/validations/UserValidations";
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
@@ -17,6 +19,7 @@ const LogInPage = () => {
     const customAxios = useAxios();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { setNotification } = useNotification();
     type LogInFormType = z.infer<typeof LogInValidations>;
     const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LogInFormType>({
@@ -41,7 +44,8 @@ const LogInPage = () => {
                 }));
             navigate("/");
         } catch (err) {
-            console.error("Login failed", err);
+            if (err && err instanceof ReactError)
+                setNotification({ message: err.message, severity: "error" });
         }
     };
 

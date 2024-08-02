@@ -1,15 +1,18 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
+import ReactError from "../lib/ReactError";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ListingDetailsType } from "../lib/types";
 import DataNotFound from "../components/DataNotFound";
+import useNotification from "../hooks/useNotification";
 import ListingDetails from "../components/ListingDetails";
 
 const PropertyDetailsPage = () => {
     const customAxios = useAxios();
     const { propId } = useParams();
     const [loading, setLoading] = useState(true);
+    const { setNotification } = useNotification();
     const [property, setProperty] = useState<ListingDetailsType | null>(null);
 
     const getListingDetails = async () => {
@@ -17,7 +20,8 @@ const PropertyDetailsPage = () => {
             const response = await customAxios.get(`/user/properties/${propId}`);
             setProperty(response.data);
         } catch (err) {
-            console.error("Fetch Listing Details Failed", err);
+            if (err && err instanceof ReactError)
+                setNotification({ message: err.message, severity: "error" });
         } finally {
             setLoading(false);
         }

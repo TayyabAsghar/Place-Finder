@@ -4,9 +4,11 @@ import { moveDays } from "../lib/utils";
 import useAxios from "../hooks/useAxios";
 import "react-date-range/dist/styles.css";
 import { useSelector } from "react-redux";
+import ReactError from "../lib/ReactError";
 import { differenceInDays } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import "react-date-range/dist/theme/default.css";
+import useNotification from "../hooks/useNotification";
 import { DateRange, RangeKeyDict, Range } from "react-date-range";
 import { BookingForm, BookingProps, UserState } from "../lib/types";
 
@@ -14,6 +16,7 @@ const Booking = (props: BookingProps) => {
     const navigate = useNavigate();
     const RangeColor = ["#6D9E8D"];
     const customAxios = useAxios();
+    const { setNotification } = useNotification();
     const isLoggedIn = useSelector((state: UserState) => state.isLoggedIn);
     const [dayCount, setDayCount] = useState(props.booking ? 1 : props.days);
     const customerId = useSelector((state: UserState) => state.user?._id || "");
@@ -49,7 +52,8 @@ const Booking = (props: BookingProps) => {
                     await customAxios.post("/trip/create", JSON.stringify(bookingForm), "json");
                     navigate('/user/trips');
                 } catch (err) {
-                    console.error("Submit Booking Failed.", err);
+                    if (err && err instanceof ReactError)
+                        setNotification({ message: err.message, severity: "error" });
                 }
             };
 

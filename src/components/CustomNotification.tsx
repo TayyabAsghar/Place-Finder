@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NotificationProps } from "../lib/types";
 import { Alert, AlertTitle, Snackbar, SnackbarOrigin } from "@mui/material";
 
-const CustomNotification = ({ message, severity, duration = 8000, showNotification }: NotificationProps) => {
+const CustomNotification = ({ message, severity, duration = 8000, showNotification = true }: NotificationProps) => {
     const fontWeight = 700;
     const [open, setOpen] = useState(true);
     const handleClose = () => setOpen(false);

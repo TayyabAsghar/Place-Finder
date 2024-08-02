@@ -26,7 +26,7 @@ const CategoryPage = () => {
             }
         } catch (err) {
             if (err && err instanceof ReactError)
-                setNotification({ message: err.message, severity: "error", showNotification: true });
+                setNotification({ message: err.message, severity: "error" });
         } finally {
             setLoading(false);
         }

@@ -2,12 +2,15 @@ import { useState } from "react";
 import useAxios from "../hooks/useAxios";
 import { useDispatch } from "react-redux";
 import { FiLogOut } from "react-icons/fi";
+import ReactError from "../lib/ReactError";
 import { setLogout } from "../lib/redux/state";
 import { useNavigate } from "react-router-dom";
+import useNotification from "../hooks/useNotification";
 
 const LogOut = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { setNotification } = useNotification();
     const [loading, setLoading] = useState(false);
     const customAxios = useAxios({ continueCallOnUnmount: true });
 
@@ -18,7 +21,8 @@ const LogOut = () => {
             dispatch(setLogout());
             navigate("/login");
         } catch (err) {
-            console.error(err);
+            if (err && err instanceof ReactError)
+                setNotification({ message: err.message, severity: "error" });
         } finally {
             setLoading(false);
         }

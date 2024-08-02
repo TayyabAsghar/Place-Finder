@@ -1,9 +1,11 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
+import ReactError from "../lib/ReactError";
 import { useEffect, useState } from "react";
 import { ListingDetailsType } from "../lib/types";
 import ListingCard from "../components/ListingCard";
 import DataNotFound from "../components/DataNotFound";
+import useNotification from "../hooks/useNotification";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const SearchPage = () => {
@@ -11,6 +13,7 @@ const SearchPage = () => {
     const customAxios = useAxios();
     const [URLSearchParams] = useSearchParams();
     const [loading, setLoading] = useState(true);
+    const { setNotification } = useNotification();
     const searchQuery = URLSearchParams.get('query');
     const [listings, setListings] = useState<ListingDetailsType[]>([]);
 
@@ -21,7 +24,8 @@ const SearchPage = () => {
                 setListings(response.data);
             } else setListings([]);
         } catch (err) {
-            console.error("Fetch Search List failed!", err);
+            if (err && err instanceof ReactError)
+                setNotification({ message: err.message, severity: "error" });
         } finally {
             setLoading(false);
         }
