@@ -9,6 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { persistor, store } from './lib/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import NotificationContextProvider from './contexts/NotificationContextProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,15 +17,17 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={ThemeMUI}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </PersistGate>
-      </Provider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider theme={ThemeMUI}>
+          <NotificationContextProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </NotificationContextProvider>
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );
 

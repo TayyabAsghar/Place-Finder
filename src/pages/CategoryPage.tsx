@@ -1,10 +1,12 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
 import { toTitleCase } from "../lib/utils";
+import ReactError from "../lib/ReactError";
 import { useEffect, useState } from "react";
 import { ListingDetailsType, } from "../lib/types";
 import ListingCard from "../components/ListingCard";
 import DataNotFound from "../components/DataNotFound";
+import useNotification from "../hooks/useNotification";
 import { useNavigate, useParams } from "react-router-dom";
 import { AllCategoriesNames } from "../data/categoriesData";
 
@@ -13,6 +15,7 @@ const CategoryPage = () => {
     const customAxios = useAxios();
     const { category } = useParams();
     const [loading, setLoading] = useState(true);
+    const { setNotification } = useNotification();
     const [categoryList, setCategoryList] = useState<ListingDetailsType[]>([]);
 
     const getCategoryList = async () => {
@@ -22,7 +25,8 @@ const CategoryPage = () => {
                 setCategoryList(response.data);
             }
         } catch (err) {
-            console.error("Fetch Trip List failed!", err);
+            if (err && err instanceof ReactError)
+                setNotification({ message: err.message, severity: "error", showNotification: true });
         } finally {
             setLoading(false);
         }

@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "react";
+import { Dispatch, MouseEventHandler, SetStateAction } from "react";
 
 type CreatorInfo = {
     _id: string,
@@ -156,9 +156,27 @@ export type LikeButtonProps = {
 
 export type UserState = {
     token?: string,
-    user?: User | null;
+    user?: User | null,
+    isLoggedIn?: boolean;
 };
 
 export type AxiosProps = {
     continueCallOnUnmount?: boolean;
+};
+
+export type NotificationProps = {
+    message: string,
+    duration?: number,
+    showNotification?: boolean,
+    severity: "error" | "info" | "success" | "warning";
+};
+
+export type NotificationContextType = {
+    notification: NotificationProps,
+    setNotification: Dispatch<SetStateAction<NotificationProps>>;
+};
+
+export type ErrorData = {
+    message: string,
+    success: boolean;
 };

@@ -1,7 +1,12 @@
+import { HideFooter } from "../lib/constants";
+import { Link, useLocation } from "react-router-dom";
 import { LocalPhone, Email, LocationCity } from "@mui/icons-material";
-import { Link } from "react-router-dom";
 
 const Footer = () => {
+    const location = useLocation();
+
+    if (HideFooter.includes(location.pathname)) return <></>;
+
     return (
         <div className="footer">
             <Link className="max-tab:hidden" to='/'>

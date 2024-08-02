@@ -10,7 +10,7 @@ module.exports = {
       mm: "400px",
       ml: "580px",
       tab: "780px",
-      lap: "1024px",
+      lap: "1023px",
       pc: "1440px"
     },
     extend: {

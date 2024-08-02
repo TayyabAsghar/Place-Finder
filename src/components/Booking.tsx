@@ -14,6 +14,7 @@ const Booking = (props: BookingProps) => {
     const navigate = useNavigate();
     const RangeColor = ["#6D9E8D"];
     const customAxios = useAxios();
+    const isLoggedIn = useSelector((state: UserState) => state.isLoggedIn);
     const [dayCount, setDayCount] = useState(props.booking ? 1 : props.days);
     const customerId = useSelector((state: UserState) => state.user?._id || "");
     const [dateRange, setDateRange] = useState<Range>({
@@ -32,6 +33,8 @@ const Booking = (props: BookingProps) => {
     const bookingButton = () => {
         if (props.booking) {
             const handleSubmit = async () => {
+                if (!isLoggedIn) navigate('/login');
+
                 try {
                     const bookingForm: BookingForm = {
                         days: dayCount,
