@@ -1,3 +1,4 @@
+import AuthPage from "./pages/AuthPage";
 import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
@@ -32,12 +33,14 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/404" element={<PageNotFond />} />
-          <Route path="/login" element={<LogInPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
           <Route path="*" element={<Navigate to="/404" />} />
           <Route path="/listing/search" element={<SearchPage />} />
           <Route path="/listing/:listingId" element={<ListingDetailsPage />} />
           <Route path="/listing/category/:category" element={<CategoryPage />} />
+          <Route element={<AuthPage />}>
+            <Route path="/login" element={<LogInPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+          </Route>
           <Route element={<ProtectedRoute />} >
             <Route path="/user/trips" element={<TripListPage />} />
             <Route path="/user/wishes" element={<WishListPage />} />
