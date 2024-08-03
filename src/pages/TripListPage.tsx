@@ -1,9 +1,9 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
-import ReactError from "../lib/ReactError";
-import { TripListType } from "../lib/types";
+import ReactError from "../lib/reactError";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import type { TripListType } from "../lib/types";
 import ListingCard from "../components/ListingCard";
 import DataNotFound from "../components/DataNotFound";
 import useNotification from "../hooks/useNotification";

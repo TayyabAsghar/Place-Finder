@@ -1,9 +1,9 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
-import { TripDetails } from "../lib/types";
-import ReactError from "../lib/ReactError";
+import ReactError from "../lib/reactError";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import type { TripDetails } from "../lib/types";
 import DataNotFound from "../components/DataNotFound";
 import useNotification from "../hooks/useNotification";
 import ListingDetails from "../components/ListingDetails";

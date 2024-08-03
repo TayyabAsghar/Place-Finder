@@ -4,13 +4,13 @@ import { moveDays } from "../lib/utils";
 import useAxios from "../hooks/useAxios";
 import "react-date-range/dist/styles.css";
 import { useSelector } from "react-redux";
-import ReactError from "../lib/ReactError";
+import ReactError from "../lib/reactError";
 import { differenceInDays } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import "react-date-range/dist/theme/default.css";
 import useNotification from "../hooks/useNotification";
-import { DateRange, RangeKeyDict, Range } from "react-date-range";
-import { BookingForm, BookingProps, UserState } from "../lib/types";
+import type { BookingForm, BookingProps, UserState } from "../lib/types";
+import { DateRange, type RangeKeyDict, type Range } from "react-date-range";
 
 const Booking = (props: BookingProps) => {
     const navigate = useNavigate();

@@ -2,7 +2,7 @@ import { useState } from "react";
 import useAxios from "../hooks/useAxios";
 import { useDispatch } from "react-redux";
 import { FiLogOut } from "react-icons/fi";
-import ReactError from "../lib/ReactError";
+import ReactError from "../lib/reactError";
 import { setLogout } from "../lib/redux/state";
 import { useNavigate } from "react-router-dom";
 import useNotification from "../hooks/useNotification";

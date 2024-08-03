@@ -1,7 +1,7 @@
 import LikeButton from "./LikeButton";
 import { parseDate } from "../lib/utils";
 import CustomCarousel from "./CustomCarousel";
-import { ListingCardProps } from "../lib/types";
+import type { ListingCardProps } from "../lib/types";
 
 const ListingCard = (props: ListingCardProps) => {
     const apiUrl = process.env.REACT_APP_API_URL;

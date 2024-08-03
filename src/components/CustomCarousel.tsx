@@ -1,5 +1,5 @@
 import Carousel from "react-material-ui-carousel";
-import { CarouselProps } from "react-material-ui-carousel/dist/components/types";
+import type { CarouselProps } from "react-material-ui-carousel/dist/components/types";
 
 const CustomCarousel = (props: CarouselProps) => {
     return (

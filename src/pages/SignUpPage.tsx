@@ -1,12 +1,12 @@
 import { z } from "zod";
 import useAxios from "../hooks/useAxios";
 import { LoadingButton } from "@mui/lab";
-import { SignUpForm } from "../lib/types";
 import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
 import { toTitleCase } from "../lib/utils";
-import ReactError from "../lib/ReactError";
+import ReactError from "../lib/reactError";
 import LogInSVG from "../components/LogInSVG";
+import type { SignUpForm } from "../lib/types";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useNotification from "../hooks/useNotification";

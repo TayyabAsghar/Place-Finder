@@ -3,8 +3,8 @@ import LikeButton from "./LikeButton";
 import { getInitials } from "../lib/utils";
 import CustomCarousel from "./CustomCarousel";
 import { useNavigate } from "react-router-dom";
-import { ListingDetailsProps } from "../lib/types";
 import { Facilities } from "../data/categoriesData";
+import type { ListingDetailsProps } from "../lib/types";
 import { Avatar, Button, Tooltip } from "@mui/material";
 
 const ListingDetails = (props: ListingDetailsProps) => {

@@ -1,11 +1,11 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
-import ReactError from "../lib/ReactError";
+import ReactError from "../lib/reactError";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ListingDetailsType } from "../lib/types";
 import ListingCard from "../components/ListingCard";
 import DataNotFound from "../components/DataNotFound";
+import type { ListingDetailsType } from "../lib/types";
 import useNotification from "../hooks/useNotification";
 
 const PropertyListPage = () => {

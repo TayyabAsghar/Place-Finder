@@ -1,14 +1,14 @@
 import useAxios from "../hooks/useAxios";
 import { useDispatch } from "react-redux";
 import Loader from "../components/Loader";
-import ReactError from "../lib/ReactError";
+import ReactError from "../lib/reactError";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setWishList } from "../lib/redux/state";
-import { ListingDetailsType } from "../lib/types";
 import ListingCard from "../components/ListingCard";
 import DataNotFound from "../components/DataNotFound";
 import useNotification from "../hooks/useNotification";
+import type { ListingDetailsType } from "../lib/types";
 
 const WishListPage = () => {
     const navigate = useNavigate();

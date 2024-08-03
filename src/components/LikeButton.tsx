@@ -1,12 +1,12 @@
 import useAxios from "../hooks/useAxios";
-import ReactError from "../lib/ReactError";
+import ReactError from "../lib/reactError";
 import { Favorite } from "@mui/icons-material";
 import { setWishList } from "../lib/redux/state";
 import { IconButton, Tooltip } from "@mui/material";
-import { MouseEvent as RME, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useNotification from "../hooks/useNotification";
-import { LikeButtonProps, UserState } from "../lib/types";
+import { type MouseEvent as RME, useState } from "react";
+import type { LikeButtonProps, UserState } from "../lib/types";
 
 const LikeButton = (props: LikeButtonProps) => {
     const customAxios = useAxios();

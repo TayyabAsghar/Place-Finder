@@ -1,4 +1,4 @@
-import { Dispatch, MouseEventHandler, SetStateAction } from "react";
+import type { Dispatch, MouseEventHandler, SetStateAction } from "react";
 
 type CreatorInfo = {
     _id: string,

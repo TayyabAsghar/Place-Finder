@@ -1,4 +1,4 @@
-import { UserState } from "../lib/types";
+import type { UserState } from "../lib/types";
 import { setLogout } from "../lib/redux/state";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";

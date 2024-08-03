@@ -1,10 +1,10 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
-import ReactError from "../lib/ReactError";
+import ReactError from "../lib/reactError";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ReservationDetails } from "../lib/types";
 import DataNotFound from "../components/DataNotFound";
+import type { ReservationDetails } from "../lib/types";
 import useNotification from "../hooks/useNotification";
 import ListingDetails from "../components/ListingDetails";
 

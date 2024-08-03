@@ -1,11 +1,11 @@
 import useAxios from "../hooks/useAxios";
 import Loader from "../components/Loader";
 import { toTitleCase } from "../lib/utils";
-import ReactError from "../lib/ReactError";
+import ReactError from "../lib/reactError";
 import { useEffect, useState } from "react";
-import { ListingDetailsType, } from "../lib/types";
 import ListingCard from "../components/ListingCard";
 import DataNotFound from "../components/DataNotFound";
+import type { ListingDetailsType } from "../lib/types";
 import useNotification from "../hooks/useNotification";
 import { useNavigate, useParams } from "react-router-dom";
 import { AllCategoriesNames } from "../data/categoriesData";

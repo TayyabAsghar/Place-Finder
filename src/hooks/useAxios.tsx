@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import axios, { AxiosError } from "axios";
-import ReactError from "../lib/ReactError";
+import ReactError from "../lib/reactError";
+import axios, { type AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { setLogout } from "../lib/redux/state";
 import useRefreshToken from "./useRefreshToken";
 import useNotification from "./useNotification";
 import { useDispatch, useSelector } from "react-redux";
-import { AxiosProps, ErrorData, HttpOptions, UserState } from "../lib/types";
+import type { AxiosProps, ErrorData, HttpOptions, UserState } from "../lib/types";
 
 const useAxios = (props?: AxiosProps) => {
     const navigate = useNavigate();
