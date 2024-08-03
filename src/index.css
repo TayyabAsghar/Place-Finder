@@ -34,7 +34,7 @@
 
 .parent:hover {
   .child {
-    @apply w-4/5 h-4/5;
+    @apply w-3/4 h-3/4 bg-opacity-50;
   }
 }
 

@@ -16,11 +16,11 @@ const AssetsPath = "assets/images/categories";
 export const AllCategories = [{
     label: "All",
     icon: <BiWorld />,
-    img: `${AssetsPath}/world.jpg`
+    img: `${AssetsPath}/world.webp`
 }, {
     label: "Beachfront",
     icon: <TbBeach />,
-    img: `${AssetsPath}/beach.jpg`,
+    img: `${AssetsPath}/beach.webp`,
     description: "This property is close to the beach!"
 }, {
     label: "Windmills",
@@ -40,7 +40,7 @@ export const AllCategories = [{
 }, {
     label: "Amazing Pools",
     icon: <TbPool />,
-    img: `${AssetsPath}/pool.jpg`,
+    img: `${AssetsPath}/pool.webp`,
     description: "This is property has a beautiful pool!"
 }, {
     label: "Islands",
@@ -55,7 +55,7 @@ export const AllCategories = [{
 }, {
     label: "Ski-in/out",
     icon: <FaSkiing />,
-    img: `${AssetsPath}/skiing.jpg`,
+    img: `${AssetsPath}/skiing.webp`,
     description: "This property has skiing activities!"
 }, {
     label: "Castles",
@@ -65,12 +65,12 @@ export const AllCategories = [{
 }, {
     label: "Caves",
     icon: <GiCaveEntrance />,
-    img: `${AssetsPath}/cave.jpg`,
+    img: `${AssetsPath}/cave.webp`,
     description: "This property is in a spooky cave!"
 }, {
     label: "Camping",
     icon: <GiForestCamp />,
-    img: `${AssetsPath}/camping.jpg`,
+    img: `${AssetsPath}/camping.webp`,
     description: "This property offers camping activities!"
 }, {
     label: "Arctic",
@@ -85,12 +85,12 @@ export const AllCategories = [{
 }, {
     label: "Barns",
     icon: <GiBarn />,
-    img: `${AssetsPath}/barn.jpg`,
+    img: `${AssetsPath}/barn.webp`,
     description: "This property is in a barn!"
 }, {
     label: "Luxury",
     icon: <IoDiamond />,
-    img: `${AssetsPath}/lux.jpg`,
+    img: `${AssetsPath}/lux.webp`,
     description: "This property is brand new and luxurious!"
 }];
 
