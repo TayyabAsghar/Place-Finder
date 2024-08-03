@@ -18,7 +18,7 @@ import { AllCategories, Types, Facilities } from "../data/categoriesData";
 import { RemoveCircleOutline, AddCircleOutline } from "@mui/icons-material";
 import { CreateListingValidations } from "../lib/validations/ListingValidation";
 
-const CreateListing = () => {
+const CreateListingPage = () => {
     const customAxios = useAxios();
     const navigate = useNavigate();
     const { setNotification } = useNotification();
@@ -389,4 +389,4 @@ const CreateListing = () => {
     );
 };
 
-export default CreateListing;
+export default CreateListingPage;
