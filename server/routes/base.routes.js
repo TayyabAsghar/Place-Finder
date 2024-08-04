@@ -4,6 +4,6 @@ import { handleRootRequest } from "../controllers/base.controller.js";
 const router = Router();
 
 router.get("", handleRootRequest);
-router.post("/heart", handleRootRequest);
+router.get("/heart", handleRootRequest);
 
 export default router;

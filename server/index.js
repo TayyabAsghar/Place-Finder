@@ -21,7 +21,7 @@ app.use(cors({
 }));
 
 /* Routes */
-app.get('/', baseRouter);
+app.use('/', baseRouter);
 app.use('/auth', authRouter);
 app.use('/trip', tripRouter);
 app.use('/user', userRouter);
