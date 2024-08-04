@@ -6,6 +6,7 @@ import connectDB from "./database/index.js";
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
 import tripRouter from "./routes/trip.routes.js";
+import baseRouter from "./routes/base.routes.js";
 import listingRouter from "./routes/listing.routes.js";
 
 config();
@@ -20,6 +21,7 @@ app.use(cors({
 }));
 
 /* Routes */
+app.get('/', baseRouter);
 app.use('/auth', authRouter);
 app.use('/trip', tripRouter);
 app.use('/user', userRouter);
