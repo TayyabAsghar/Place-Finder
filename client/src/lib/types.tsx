@@ -171,12 +171,12 @@ export type NotificationProps = {
     severity: "error" | "info" | "success" | "warning";
 };
 
-export type NotificationContextType = {
-    notification: NotificationProps,
-    setNotification: Dispatch<SetStateAction<NotificationProps>>;
-};
-
 export type ErrorData = {
     message: string,
     success: boolean;
+};
+
+export type NotificationContextType = {
+    notification: NotificationProps,
+    setNotification: Dispatch<SetStateAction<NotificationProps>>;
 };
