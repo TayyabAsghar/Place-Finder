@@ -4,7 +4,6 @@ import { FiLogIn } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { getInitials } from "../lib/utils";
 import type { UserState } from "../lib/types";
-import { HideNavBar } from "../lib/constants";
 import { BsFileEarmarkLock } from "react-icons/bs";
 import { RiPlayListAddFill } from "react-icons/ri";
 import { Link, useLocation } from "react-router-dom";
@@ -20,8 +19,6 @@ const NavBar = () => {
     const user = useSelector((state: UserState) => state.user);
     const [dropdownEl, setDropdownEl] = useState<EventTarget & HTMLButtonElement | null>(null);
     const menuOpen = Boolean(dropdownEl);
-
-    if (HideNavBar.includes(location.pathname)) return <></>;
 
     const handleClick = (e: RME<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
