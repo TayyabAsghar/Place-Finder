@@ -1,8 +1,6 @@
 import cors from "cors";
 import express from "express";
 import { config } from "dotenv";
-import { parse, join } from "path";
-import favicon from "serve-favicon";
 import cookieParser from "cookie-parser";
 import connectDB from "./database/index.js";
 import authRouter from "./routes/auth.routes.js";
@@ -13,15 +11,11 @@ import listingRouter from "./routes/listing.routes.js";
 
 config();
 const app = express();
-const __dirName = process.env.NODE_ENV === "PROD" ? parse(import.meta.url).dir : "";
 
 app.use(cookieParser());
 app.use(express.static("public"));
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }));
-app.use(favicon(join(__dirName, "public", "favicon.ico"), {
-    maxAge: process.env.JWT_REFRESH_TOKEN_EXPIRY
-}));
 app.use(cors({
     credentials: true,
     origin: process.env.CLIENT_BASE_URL
