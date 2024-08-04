@@ -1,5 +1,4 @@
 import LogOut from "./LogOut";
-import { useState } from "react";
 import SearchBar from "./SearchBar";
 import { FiLogIn } from "react-icons/fi";
 import { useSelector } from "react-redux";
@@ -9,6 +8,7 @@ import { HideNavBar } from "../lib/constants";
 import { BsFileEarmarkLock } from "react-icons/bs";
 import { RiPlayListAddFill } from "react-icons/ri";
 import { Link, useLocation } from "react-router-dom";
+import { type MouseEvent as RME, useState } from "react";
 import { Person, MenuOutlined } from "@mui/icons-material";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { PiBuildingOfficeBold, PiListHeartBold } from "react-icons/pi";
@@ -22,6 +22,11 @@ const NavBar = () => {
     const menuOpen = Boolean(dropdownEl);
 
     if (HideNavBar.includes(location.pathname)) return <></>;
+
+    const handleClick = (e: RME<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+        setDropdownEl(e.currentTarget);
+    };
 
     const DropDownMenu = () => {
         if (!dropdownEl) return <></>;
@@ -102,7 +107,7 @@ const NavBar = () => {
 
                 <Button className="gap-3 h-12 max-ml:!min-w-0 max-ml:!p-0.5 max-ml:h-auto" sx={{ borderRadius: 28 }} variant="contained"
                     id="basic-button" aria-haspopup="true" aria-controls={menuOpen ? 'basic-menu' : undefined}
-                    aria-expanded={menuOpen ? 'true' : undefined} onClick={e => setDropdownEl(e.currentTarget)}>
+                    aria-expanded={menuOpen ? 'true' : undefined} onClick={handleClick}>
                     <div className="max-ml:hidden" >
                         <MenuOutlined />
                     </div>

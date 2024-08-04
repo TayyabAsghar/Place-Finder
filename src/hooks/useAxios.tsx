@@ -63,18 +63,20 @@ const useAxios = (props?: AxiosProps) => {
             }
 
             if (err.response?.status === 401 && originalRequest && !originalRequest.headers['Retry']) {
-                originalRequest.headers['Retry'] = true;
-                await refresh();
-                originalRequest.headers["Authorization"] = `Bearer ${token}`;
-                return axiosInstance(originalRequest);
-            } else if (err.response?.status === 401) {
-                setNotification({
-                    severity: "error",
-                    message: "Your session has expired. Please login to continue."
-                });
-                dispatch(setLogout());
-                navigate("/login");
-                return Promise.reject();
+                try {
+                    originalRequest.headers['Retry'] = true;
+                    await refresh();
+                    originalRequest.headers["Authorization"] = `Bearer ${token}`;
+                    return axiosInstance(originalRequest);
+                } catch (err) {
+                    setNotification({
+                        severity: "error",
+                        message: "Your session has expired. Please login to continue."
+                    });
+                    dispatch(setLogout());
+                    navigate("/login");
+                    return Promise.reject();
+                }
             }
 
             return Promise.reject(new ReactError(err.response?.status || 500, (err.response?.data as ErrorData).message));
