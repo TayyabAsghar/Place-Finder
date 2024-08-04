@@ -24,7 +24,7 @@ const Footer = () => {
                 </ul>
             </div>
 
-            <div className="flex flex-col gap-4 max-mm:gap-3">
+            <div className="flex flex-col w-[297px] gap-4 max-mm:gap-3">
                 <h3 className="font-bold opacity-60">Contact</h3>
                 <div className="flex flex-col gap-3 max-mm:gap-2">
                     <div className="flex gap-5">
@@ -39,7 +39,9 @@ const Footer = () => {
                         <LocationCity />
                         <p>1234 Street Name City, AA 99999</p>
                     </div>
-                    <img src="/assets/images/payment.png" alt="Payment Methods" />
+                    <div className="h-8">
+                        <img className="h-full" src="/assets/images/payment.png" alt="Payment Methods" />
+                    </div>
                 </div>
             </div>
         </div>

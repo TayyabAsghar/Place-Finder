@@ -1,5 +1,6 @@
 import Booking from "./Booking";
 import LikeButton from "./LikeButton";
+import ImageLoader from "./ImageLoader";
 import { getInitials } from "../lib/utils";
 import CustomCarousel from "./CustomCarousel";
 import { useNavigate } from "react-router-dom";
@@ -21,13 +22,15 @@ const ListingDetails = (props: ListingDetailsProps) => {
                     <Button variant="contained" onClick={() => navigate(`/listing/${props._id}`)}>Open Original Listing</Button>
                 }
             </div>
-            <CustomCarousel>
-                {props.placeDetails.listingPhotoPaths.map((item, index) =>
-                    <div className="flex items-center justify-center h-[70vh]" key={index}>
-                        <img className="h-full w-full" src={`${apiUrl}${item.replace("public", "")}`} alt="Listing photo" />
-                    </div>
-                )}
-            </CustomCarousel>
+            <div className="flex items-center justify-center h-[70vh]">
+                <CustomCarousel className="!w-full">
+                    {props.placeDetails.listingPhotoPaths.map((photo, index) =>
+                        <div className="flex items-center justify-center w-full h-[70vh]" key={index}>
+                            <ImageLoader className="h-full w-full" src={`${apiUrl}${photo.replace("public", "")}`} alt="Property" />
+                        </div>
+                    )}
+                </CustomCarousel>
+            </div>
             <h2 className="my-6 text-foreground max-ml:my-3">
                 {props.type} in {props.placeDetails.city}, {props.placeDetails.province}, {props.placeDetails.country}
             </h2>

@@ -5,7 +5,7 @@ const CustomCarousel = (props: CarouselProps) => {
     return (
         <Carousel indicatorIconButtonProps={{ style: { color: "hsl(295, 22%, 90%)" } }}
             activeIndicatorIconButtonProps={{ style: { color: "#AC86AF" } }}
-            navButtonsProps={{ style: { backgroundColor: "hsl(297, 20%, 40%)" } }} {...props} >
+            navButtonsProps={{ style: { backgroundColor: "hsl(297, 20%, 40%)" } }} {...props}>
             {props.children}
         </Carousel>
     );

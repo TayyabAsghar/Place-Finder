@@ -1,4 +1,5 @@
 import LikeButton from "./LikeButton";
+import ImageLoader from "./ImageLoader";
 import { parseDate } from "../lib/utils";
 import CustomCarousel from "./CustomCarousel";
 import type { ListingCardProps } from "../lib/types";
@@ -9,13 +10,15 @@ const ListingCard = (props: ListingCardProps) => {
     return (
         <div className="flex flex-col cursor-pointer rounded-lg max-w-[326px] w-full relative bg-secondary-100 bg-opacity-50 hover:shadow-lg"
             onClick={props.onClick}>
-            <CustomCarousel indicators={false}>
-                {props.placeDetails.listingPhotoPaths?.map((photo, index) => (
-                    <div className="flex h-64 items-center justify-center max-ml:h-48" key={index}>
-                        <img className="h-full w-full rounded-t-lg" src={`${apiUrl}${photo.replace("public", "")}`} alt="Property" />
-                    </div>
-                ))}
-            </CustomCarousel>
+            <div className="flex h-64 items-center justify-center max-ml:h-48">
+                <CustomCarousel indicators={false} className="!w-full">
+                    {props.placeDetails.listingPhotoPaths?.map((photo, index) => (
+                        <div className="flex h-64 items-center justify-center max-ml:h-48" key={index}>
+                            <ImageLoader className="h-full w-full rounded-t-lg" src={`${apiUrl}${photo.replace("public", "")}`} alt="Property" />
+                        </div>
+                    ))}
+                </CustomCarousel>
+            </div>
             <div className="flex flex-col text-lg p-4 max-ml:text-base">
                 <div className="text-xl font-bold max-ml:text-lg">
                     {props.placeDetails.city}, {props.placeDetails.province}, {props.placeDetails.country}
