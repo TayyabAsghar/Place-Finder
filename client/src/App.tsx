@@ -32,9 +32,7 @@ const App = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {
-        HideNavBar.includes(location.pathname) && <NavBar />
-      }
+      {!HideNavBar.includes(location.pathname) && <NavBar />}
       <main className="flex flex-col grow justify-center items-center w-full">
         <CustomNotification {...notification} />
         <Suspense fallback={<Loader />}>
