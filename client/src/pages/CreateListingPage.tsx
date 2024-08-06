@@ -111,7 +111,9 @@ const CreateListingPage = () => {
             Array.from(formData.amenities).forEach(amenity => listingForm.append("amenities", amenity));
 
             const response = await customAxios.post("/listing/create", listingForm, "form");
-            navigate(`/listing/${response.data._id}`);
+            if (response.data.errorFiles.length)
+                setNotification({ message: "1 or more images faced some issues while uploading.", severity: "error" });
+            navigate(`/listing/${response.data.listing._id}`);
         } catch (err) {
             if (err && err instanceof ReactError)
                 setNotification({ message: err.message, severity: "error" });

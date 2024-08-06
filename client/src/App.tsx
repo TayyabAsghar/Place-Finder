@@ -2,11 +2,10 @@ import { lazy, Suspense } from "react";
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
 import Loader from "./components/Loader";
-import { HideNavBar } from "./lib/constants";
 import useNotification from "./hooks/useNotification";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { Routes, Route, Navigate } from "react-router-dom";
 import CustomNotification from "./components/CustomNotification";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AuthPage = lazy(() => import("./pages/AuthPage"));
@@ -27,12 +26,11 @@ const PropertyDetailsPage = lazy(() => import("./pages/PropertyDetailsPage"));
 const ReservationDetailsPage = lazy(() => import("./pages/ReservationDetailsPage"));
 
 const App = () => {
-  const location = useLocation();
   const { notification } = useNotification();
 
   return (
     <div className="flex flex-col min-h-screen">
-      {!HideNavBar.includes(location.pathname) && <NavBar />}
+      <NavBar />
       <main className="flex flex-col grow justify-center items-center w-full">
         <CustomNotification {...notification} />
         <Suspense fallback={<Loader />}>

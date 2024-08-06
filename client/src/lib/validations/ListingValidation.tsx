@@ -17,7 +17,17 @@ export const CreateListingValidations = z.object({
     amenities: z.string().array().nonempty('Select at least 1 option.'),
     listingPhotos: z.custom<File[]>()
         .refine(files => files?.length !== 0, "Image is required")
-        .refine(files => Array.from(files || []).every(file => AcceptedImageTypes.includes(file.type), "Only .jpeg, .jpg and .png are accepted.")),
+        .refine(files => Array.from(files || []).every(file => AcceptedImageTypes.includes(file.type), "Only .jpeg, .jpg, webp and .png are accepted."))
+        .refine(async files => {
+            const promises = Array.from(files || []).map(async file => {
+                const bitmap = await createImageBitmap(file);
+                const { width, height } = bitmap;
+                if (width < 400 || height < 400) return false;
+                return true;
+            });
+            const results = await Promise.all(promises);
+            return results.every(result => result);
+        }, 'All images should be more than 400 X 400 Dimensions.'),
     title: z.string().trim().min(1, { message: 'Listing Photos are required.' }).max(30, { message: 'Maximum 30 characters.' }),
     description: z.string().trim().min(1, { message: 'Required field.' }),
     highlight: z.string().trim().min(1, { message: 'Required field.' }).max(30, { message: 'Maximum 30 characters.' }),

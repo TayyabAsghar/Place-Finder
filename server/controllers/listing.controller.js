@@ -4,6 +4,7 @@ import User from "../models/user.model.js";
 import Listing from "../models/listing.model.js";
 import asyncHandler from "../libs/asyncHandler.js";
 import PlaceDetails from "../models/placeDetails.model.js";
+import { UploadMultipleImages } from "../libs/cloudinary.js";
 import { getListingDetailsByID } from "./listing-details.controller.js";
 
 export const getCategoryList = asyncHandler(async (req, res) => {
@@ -35,13 +36,14 @@ export const createList = asyncHandler(async (req, res) => {
     if (!amenities.length) throw new ApiError(400, "Some fields are missing.");
     if (!listingPhotos.length) throw new ApiError(400, "No files are uploaded.");
 
-    const listingPhotoPaths = listingPhotos.map(file => file.path);
-    const creator = new Types.ObjectId(String(creatorId));
+    const { cloudinaryUrls, failedFiles } = await UploadMultipleImages(listingPhotos, "PlaceFinder/listings");
+    if (!cloudinaryUrls.length) throw new ApiError(500, "Failed uploading images.");
+    const errorFilesName = failedFiles.map(file => file.originalname);
 
-    const placeDetails = await PlaceDetails.create({ category, city, province, country, listingPhotoPaths });
-
+    const placeDetails = await PlaceDetails.create({ category, city, province, country, cloudinaryUrls });
     if (!placeDetails) throw new ApiError(500, "Error while creating Listing Details.");
 
+    const creator = new Types.ObjectId(String(creatorId));
     const newListing = await Listing.create({
         creator, type, streetAddress, aptSuite, guestCount, bedroomCount, bedCount, bathroomCount, description,
         highlight, title, highlightDesc, price, amenities, placeDetails: placeDetails._id
@@ -49,7 +51,7 @@ export const createList = asyncHandler(async (req, res) => {
 
     if (!newListing) throw new ApiError(500, "Error while creating Listing.");
 
-    res.status(200).json(newListing);
+    res.status(200).json({ listing: newListing, errorFiles: errorFilesName });
 });
 
 export const getListingDetails = asyncHandler(async (req, res) => {

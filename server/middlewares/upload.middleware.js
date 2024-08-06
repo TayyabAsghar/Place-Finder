@@ -1,13 +1,16 @@
 import multer from "multer";
+import { AcceptedImageTypes } from "../libs/constants.js";
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, "public/listings/"),
-    filename: (req, file, cb) => {
-        const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
-        cb(null, `${file.fieldname}-${uniqueSuffix}.${file.mimetype.split("/")[1]}`);
-    }
+    destination: (req, file, cb) => cb(null, "public/"),
+    filename: (req, file, cb) => cb(null, file.originalname)
 });
 
-const upload = multer({ storage });
+const fileFilter = (req, file, cb) => {
+    if (AcceptedImageTypes.includes(file.mimetype)) cb(null, true);
+    else cb({ message: "Unsupported File Format." }, false);
+};
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 export default upload;
