@@ -7,7 +7,7 @@ const useNotification = () => {
     const notification = useContext(NotificationContext);
 
     if (!notification)
-        throw new Error('useNotification must be used with a NotificationContextProvider');
+        throw new Error('useNotification must be used with a NotificationProvider');
 
     return notification;
 };

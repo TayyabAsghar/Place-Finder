@@ -13,16 +13,18 @@ import { type ChangeEvent, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AcceptedImageTypes } from "../lib/constants";
 import useNotification from "../hooks/useNotification";
-import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { AllCategories, Types, Facilities } from "../data/categoriesData";
 import { RemoveCircleOutline, AddCircleOutline } from "@mui/icons-material";
 import { CreateListingValidations } from "../lib/validations/ListingValidation";
+import { IconButton, InputAdornment, TextField, useMediaQuery, useTheme } from "@mui/material";
 
 const CreateListingPage = () => {
+    const theme = useTheme();
     const customAxios = useAxios();
     const navigate = useNavigate();
     const { setNotification } = useNotification();
     const [photos, setPhotos] = useState<File[]>([]);
+    const isMobile = useMediaQuery(theme.breakpoints.down("ml"));
     type CreateListingFormType = z.infer<typeof CreateListingValidations>;
     type CreateListingFormKeysType = keyof CreateListingFormType;
     const creatorId = useSelector((state: UserState) => state.user?._id || '');
@@ -120,23 +122,22 @@ const CreateListingPage = () => {
         }
     };
     return (
-        <div className="px-14 pt-10 pb-20 max-ml:pt-8 max-ml:pb-16 max-mm:py-4 max-mm:px-4 max-ms:px-2">
+        <div className="px-14 pt-10 pb-20 max-ml:pt-6 max-ml:pb-12 max-mm:py-4 max-mm:px-4 max-ms:px-2">
             <h1>Publish Your Place</h1>
             <form className="flex flex-col items-center" onSubmit={handleSubmit(handleFormSubmit)}>
-                <div className="bg-secondary-100 bg-opacity-25 mt-10 rounded-2xl px-10 py-7 max-ml:mt-8 max-ml:px-6 max-ml:py-6 max-mm:px-2">
+                <div className="bg-secondary-100 bg-opacity-25 mt-10 rounded-2xl px-10 py-7 max-ml:mt-5 max-ml:px-6 max-ml:py-5">
                     <h2 className="text-accent">Step 1: Tell us about your place</h2>
-                    <hr className="mx-0 my-4" />
+                    <hr className="mx-0 my-4 max-ml:my-3" />
                     <h3 className="create-listing-heading">Which of one these categories best describes your place?</h3>
                     <div className="flex justify-center items-center flex-wrap gap-5 px-5 py-0" {...register("category")}>
                         {AllCategories?.slice(1).map((item, index) => (
                             <div className={`create-listing-categories ${getValues("category") === item.label ? "create-listing-selected" : ""}
                                 ${!!errors.category ? "!border-error" : ""}`} key={index} onClick={() => setControlValue("category", item.label)}>
-                                <div className="text-3xl">{item.icon}</div>
-                                <p className="font-semibold text-center">{item.label}</p>
+                                <div className="text-3xl max-ml:text-2xl">{item.icon}</div>
+                                <p className="font-semibold text-center max-ml:font-medium max-mm:text-sm">{item.label}</p>
                             </div>
                         ))}
                     </div>
-                    {!!errors.category && <div className="error-message">{errors.category?.message}</div>}
 
                     <h3 className="create-listing-heading">What type of place will guests have?</h3>
                     <div className="flex justify-around gap-y-5 flex-wrap" {...register("type")}>
@@ -144,19 +145,22 @@ const CreateListingPage = () => {
                             <div className={`create-listing-types ${getValues("type") === item.name ? "create-listing-selected" : ""}
                                 ${!!errors.type ? "!border-error" : ""}`}
                                 key={index} onClick={() => setControlValue("type", item.name)}>
-                                <div className="max-w-[400px] flex flex-col max-ml:h-full max-ml:justify-evenly">
-                                    <h4 className="mb-1 font-semibold text-lg">{item.name}</h4>
-                                    <p>{item.description}</p>
+                                <div className="max-w-[400px] flex flex-col max-ml:h-full max-ml:justify-evenly max-ml:w-full">
+                                    <div className="flex justify-between">
+                                        <h4 className="mb-1 font-semibold text-lg max-ml:text-base">{item.name}</h4>
+                                        <div className="text-3xl ml:hidden">{item.icon}</div>
+                                    </div>
+                                    <p className="max-ml:text-sm">{item.description}</p>
                                 </div>
-                                <div className="text-3xl">{item.icon}</div>
+                                <div className="text-3xl max-ml:hidden">{item.icon}</div>
                             </div>
                         ))}
                     </div>
-                    {!!errors.type && <div className="error-message">{errors.type?.message}</div>}
 
                     <h3 className="create-listing-heading !mb-0">Where's your place located?</h3>
                     <div className="max-w-[700px]">
                         <TextField
+                            size={`${isMobile ? "small" : "medium"}`}
                             className="w-full"
                             label="Street Address"
                             title="Street Address"
@@ -169,6 +173,7 @@ const CreateListingPage = () => {
                     </div>
                     <div className="max-w-[700px] flex gap-x-10 max-ml:flex-wrap">
                         <TextField
+                            size={`${isMobile ? "small" : "medium"}`}
                             className="w-full"
                             label="Apt, Suite, etc."
                             title="Apt, Suite, etc."
@@ -179,6 +184,7 @@ const CreateListingPage = () => {
                             helperText={errors.aptSuite?.message}
                         />
                         <TextField
+                            size={`${isMobile ? "small" : "medium"}`}
                             className="w-full"
                             label="City"
                             title="City"
@@ -191,6 +197,7 @@ const CreateListingPage = () => {
                     </div>
                     <div className="max-w-[700px] flex gap-x-10 max-ml:flex-wrap">
                         <TextField
+                            size={`${isMobile ? "small" : "medium"}`}
                             className="w-full"
                             label="Province"
                             title="Province"
@@ -201,6 +208,7 @@ const CreateListingPage = () => {
                             helperText={errors.province?.message}
                         />
                         <TextField
+                            size={`${isMobile ? "small" : "medium"}`}
                             className="w-full"
                             label="Country"
                             title="Country"
@@ -276,17 +284,17 @@ const CreateListingPage = () => {
                     </div>
                 </div>
 
-                <div className="bg-secondary-100 bg-opacity-25 mt-10 rounded-2xl px-10 py-7 max-ml:mt-8 max-ml:px-6 max-ml:py-6 max-mm:px-2">
+                <div className="bg-secondary-100 bg-opacity-25 mt-10 rounded-2xl px-10 py-7 max-ml:mt-5 max-ml:px-6 max-ml:py-5">
                     <h2>Step 2: Make your place stand out</h2>
-                    <hr className="mx-0 my-4" />
+                    <hr className="mx-0 my-4 max-ml:my-3" />
                     <h3 className="create-listing-heading">Tell guests what your place has to offer</h3>
                     <div className="flex justify-center flex-wrap gap-5">
                         {Facilities?.map((item, index) => (
                             <div className={`create-listing-facilities ${getValues("amenities")?.includes(item.name) ? "create-listing-selected" : ""}
                                 ${!!errors.amenities ? "!border-error" : ""}`}
                                 key={index} onClick={() => selectAmenities(item.name)}>
-                                <div className="text-3xl">{item.icon}</div>
-                                <p className="font-semibold max-ml:font-medium">{item.name}</p>
+                                <div className="text-3xl max-ml:text-2xl max-ms:text-xl">{item.icon}</div>
+                                <p className="font-semibold max-ml:font-normal max-mm:text-sm">{item.name}</p>
                             </div>
                         ))}
                     </div>
@@ -297,8 +305,8 @@ const CreateListingPage = () => {
                         {photos.length >= 1 &&
                             <div className="flex flex-wrap gap-4 max-ml:justify-center">
                                 {photos.map((photo, index) =>
-                                    <div className="max-w-64 max-h-44 relative" key={index}>
-                                        <img className="max-w-full max-h-full" alt="place"
+                                    <div className="max-w-64 max-h-44 max-ml:h-36 max-ml:w-60 relative" key={index}>
+                                        <img className="w-full h-full object-contain" alt="place"
                                             src={URL.createObjectURL(photo)} />
                                         <div className="absolute top-0 right-0 bg-accent-100">
                                             <IconButton className="!p-0 !text-primary hover:!text-error" type="button"
@@ -310,13 +318,13 @@ const CreateListingPage = () => {
                                 )}
                             </div>
                         }
-                        <div {...register("listingPhotos")}>
+                        <div className="flex-col items-center justify-center max-ml:flex" {...register("listingPhotos")}>
                             <input id="image" type="file" style={{ display: "none" }} onChange={handleUploadPhotos}
                                 accept={AcceptedImageTypes.join(",")} multiple />
-                            <label className={`flex flex-col gap-3 w-72 h-44 items-center px-12 py-8 rounded-md border border-dashed cursor-pointer hover:border-foreground
+                            <label className={`flex flex-col gap-3 w-72 h-44 items-center px-12 py-8 rounded-md border border-dashed cursor-pointer hover:border-foreground max-ml:h-36 max-ml:w-60
                                     ${!!errors.listingPhotos ? "border-error hover:border-error" : ""}`} htmlFor="image">
                                 <IoIosImages className="text-6xl" />
-                                <p className="font-semibold text-center">Upload from your device</p>
+                                <p className="font-semibold text-center max-ml:font-normal max-ml:text-sm">Upload from your device</p>
                             </label>
                             {!!errors.listingPhotos && <div className="error-message">{errors.listingPhotos?.message}</div>}
                         </div>
@@ -325,6 +333,7 @@ const CreateListingPage = () => {
                     <h3 className="create-listing-heading">What make your place attractive and exciting?</h3>
                     <div className="max-w-[700px]">
                         <TextField
+                            size={`${isMobile ? "small" : "medium"}`}
                             className="w-full"
                             label="Title"
                             title="Title"
@@ -335,6 +344,7 @@ const CreateListingPage = () => {
                             helperText={errors.title?.message}
                         />
                         <TextField
+                            size={`${isMobile ? "small" : "medium"}`}
                             className="w-full"
                             label='Description'
                             title='Description'
@@ -346,6 +356,7 @@ const CreateListingPage = () => {
                             helperText={errors.description?.message}
                         />
                         <TextField
+                            size={`${isMobile ? "small" : "medium"}`}
                             className="w-full"
                             label='Highlight'
                             title='Highlight'
@@ -355,6 +366,7 @@ const CreateListingPage = () => {
                             helperText={errors.highlight?.message}
                         />
                         <TextField
+                            size={`${isMobile ? "small" : "medium"}`}
                             className="w-full"
                             label='Highlight Details'
                             title='Highlight Details'
@@ -366,6 +378,7 @@ const CreateListingPage = () => {
                             helperText={errors.highlightDesc?.message}
                         />
                         <TextField
+                            size={`${isMobile ? "small" : "medium"}`}
                             className="w-1/2"
                             label='Price'
                             title='Price'

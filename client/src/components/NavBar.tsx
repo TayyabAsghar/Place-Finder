@@ -11,10 +11,9 @@ const NavBar = () => {
     if (HideNavBar.includes(location.pathname)) return <></>;
 
     return (
-        <nav className="flex justify-between items-center px-10 py-3 h-[72px] border-b sticky top-0 bg-background z-50 max-ml:px-8 max-mm:px-5">
+        <nav className="flex justify-between items-center px-10 py-3 h-[72px] border-b sticky top-0 bg-background z-50 max-ml:px-5 max-ml:h-12">
             <Link to="/" title="Place Finder">
-                <img className="w-16 h-16 max-ml:w-14 max-ml:h-14 max-mm:w-12 max-mm:h-12"
-                    src="/assets/images/logo/logo192.png" alt="Logo" />
+                <img className="size-16 max-ml:size-10 max-mm:size-9" src="/assets/images/logo/logo192.png" alt="Logo" />
             </Link>
             {location.pathname !== "/login" && location.pathname !== "/signup" &&
                 <SearchBar />

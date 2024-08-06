@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import type { NotificationProps } from "../lib/types";
 import { NotificationContext } from "../hooks/useNotification";
 
-const NotificationContextProvider = ({ children }: { children: ReactNode; }) => {
+const NotificationProvider = ({ children }: { children: ReactNode; }) => {
     const [notification, setNotification] = useState<NotificationProps>({
         message: "",
         severity: "error",
@@ -16,4 +16,4 @@ const NotificationContextProvider = ({ children }: { children: ReactNode; }) => 
     );
 };
 
-export default NotificationContextProvider;
+export default NotificationProvider;

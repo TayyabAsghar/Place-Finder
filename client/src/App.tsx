@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
 import Loader from "./components/Loader";
+import ScrollToTop from "./lib/scrollToTop";
 import useNotification from "./hooks/useNotification";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -33,6 +34,7 @@ const App = () => {
       <NavBar />
       <main className="flex flex-col grow justify-center items-center w-full">
         <CustomNotification {...notification} />
+        <ScrollToTop />
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<HomePage />} />

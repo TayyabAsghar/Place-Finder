@@ -13,18 +13,18 @@ const CustomNotification = ({ message, severity, duration = 8000, showNotificati
             <Snackbar anchorOrigin={origin} open={open} autoHideDuration={duration} onClose={handleClose}>
                 <Alert className="!w-96 max-ml:!w-64" severity={severity} onClose={handleClose}>
                     {severity === "error" &&
-                        <AlertTitle sx={{ fontWeight: fontWeight }}>Error</AlertTitle>
+                        <AlertTitle className="max-ml:!text-sm" sx={{ fontWeight: fontWeight }}>Error</AlertTitle>
                     }
                     {severity === "info" &&
-                        <AlertTitle sx={{ fontWeight: fontWeight }}>Info</AlertTitle>
+                        <AlertTitle className="max-ml:!text-sm" sx={{ fontWeight: fontWeight }}>Info</AlertTitle>
                     }
                     {severity === "success" &&
-                        <AlertTitle sx={{ fontWeight: fontWeight }}>Success</AlertTitle>
+                        <AlertTitle className="max-ml:!text-sm" sx={{ fontWeight: fontWeight }}>Success</AlertTitle>
                     }
                     {severity === "warning" &&
-                        <AlertTitle sx={{ fontWeight: fontWeight }}>Warning</AlertTitle>
+                        <AlertTitle className="max-ml:!text-sm" sx={{ fontWeight: fontWeight }}>Warning</AlertTitle>
                     }
-                    {message}
+                    <p className="max-ml:!text-sm">{message}</p>
                 </Alert>
             </Snackbar > :
             <></>

@@ -14,16 +14,11 @@ module.exports = {
       pc: "1440px"
     },
     extend: {
-      backgroundImage: {
-        'slide-image': "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/public/assets/images/slide.webp')"
-      },
-      backgroundPosition: {
-        'center-top': "center top"
-      },
       colors: {
         border: "rgba(0, 0, 0, 0.23)",
         background: "#F3F7F6",
         foreground: "#0C1210",
+        'black-light': "rgba(0, 0, 0, 0.5)",
         primary: {
           DEFAULT: "#6D9E8D",
           50: 'hsl(156, 20%, 95%)',

@@ -14,7 +14,7 @@ const app = express();
 
 app.use(cookieParser());
 app.use(express.static("public"));
-app.use(express.json({ limit: "5mb" }));
+app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     credentials: true,

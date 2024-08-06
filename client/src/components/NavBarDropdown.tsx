@@ -91,16 +91,16 @@ const NavBarDropdown = () => {
 
     return (
         <>
-            <Button className="gap-3 h-12 max-ml:!min-w-0 max-ml:!p-0.5 max-ml:h-auto" sx={{ borderRadius: 28 }} variant="contained"
+            <Button className="gap-3 h-12 max-ml:!min-w-9 max-ml:!w-9 max-ml:!h-9 max-ml:!p-0" sx={{ borderRadius: 28 }} variant="contained"
                 id="basic-button" aria-haspopup="true" aria-controls={menuOpen ? 'basic-menu' : undefined}
                 aria-expanded={menuOpen ? 'true' : undefined} onClick={handleClick}>
                 <div className="max-ml:hidden" >
                     <MenuOutlined />
                 </div>
                 {user ? user.avatar ?
-                    <Avatar src={`${apiUrl}${user.avatar.replace("public", "")}`} sx={{ bgcolor: 'primary.main' }}
+                    <Avatar className="max-ml:!size-8" src={`${apiUrl}${user.avatar.replace("public", "")}`} sx={{ bgcolor: 'primary.main' }}
                         alt="profile photo" /> :
-                    <Avatar sx={{ bgcolor: 'background.default', color: 'text.primary' }} >{getInitials(user.name)}</Avatar> :
+                    <Avatar className="max-ml:!size-8 max-ml:!text-base" sx={{ bgcolor: 'background.default', color: 'text.primary' }} >{getInitials(user.name)}</Avatar> :
                     <Person />
                 }
             </Button>

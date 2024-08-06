@@ -9,6 +9,22 @@ declare module '@mui/material/styles/createPalette' {
     }
 }
 
+declare module '@mui/material/styles' {
+    interface BreakpointOverrides {
+        xs: false, // removes the `xs` breakpoint
+        sm: false,
+        md: false,
+        lg: false,
+        xl: false,
+        ms: true,   // Add new breakpoints to match with tailwind
+        mm: true,
+        ml: true,
+        tab: true,
+        lap: true,
+        pc: true;
+    }
+}
+
 const ThemeMUI = createTheme({
     typography: {
         allVariants: {
@@ -31,6 +47,16 @@ const ThemeMUI = createTheme({
         },
         text: {
             primary: "#0C1210"
+        }
+    },
+    breakpoints: {
+        values: {
+            ms: 360,
+            mm: 400,
+            ml: 580,
+            tab: 780,
+            lap: 1023,
+            pc: 1440
         }
     },
     components: {

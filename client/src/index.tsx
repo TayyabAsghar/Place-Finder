@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { persistor, store } from './lib/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import NotificationContextProvider from './contexts/NotificationContextProvider';
+import NotificationProvider from './contexts/NotificationProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,11 +20,11 @@ root.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider theme={ThemeMUI}>
-          <NotificationContextProvider>
+          <NotificationProvider>
             <BrowserRouter>
               <App />
             </BrowserRouter>
-          </NotificationContextProvider>
+          </NotificationProvider>
         </ThemeProvider>
       </PersistGate>
     </Provider>
