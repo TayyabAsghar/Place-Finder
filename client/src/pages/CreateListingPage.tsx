@@ -69,22 +69,25 @@ const CreateListingPage = () => {
         trigger("amenities");
     };
 
+    const updateListingPhotos = (photosList: File[]) => {
+        setPhotos(photosList);
+        setValue("listingPhotos", photosList);
+        trigger("listingPhotos");
+    };
+
     const handleUploadPhotos = (e: ChangeEvent<HTMLInputElement>) => {
         const newPhotos = e.target.files;
 
         if (newPhotos) {
             const updatedFiles = [...photos, ...Array.from(newPhotos)];
-            setPhotos(updatedFiles);
-            setValue("listingPhotos", updatedFiles);
-            trigger("listingPhotos");
+            updateListingPhotos(updatedFiles);
         }
     };
 
     const handleRemovePhoto = (deletedIndex: number) => {
         if (photos) {
             const filteredPhotos = photos.filter((_, index) => index !== deletedIndex);
-            setPhotos(filteredPhotos);
-            setValue("listingPhotos", filteredPhotos);
+            updateListingPhotos(filteredPhotos);
         }
     };
 

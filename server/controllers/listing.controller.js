@@ -36,11 +36,11 @@ export const createList = asyncHandler(async (req, res) => {
     if (!amenities.length) throw new ApiError(400, "Some fields are missing.");
     if (!listingPhotos.length) throw new ApiError(400, "No files are uploaded.");
 
-    const { cloudinaryUrls, failedFiles } = await UploadMultipleImages(listingPhotos, "PlaceFinder/listings");
-    if (!cloudinaryUrls.length) throw new ApiError(500, "Failed uploading images.");
+    const { cloudinaryIds, failedFiles } = await UploadMultipleImages(listingPhotos);
+    if (!cloudinaryIds.length) throw new ApiError(500, "Failed uploading images.");
     const errorFilesName = failedFiles.map(file => file.originalname);
 
-    const placeDetails = await PlaceDetails.create({ category, city, province, country, cloudinaryUrls });
+    const placeDetails = await PlaceDetails.create({ category, city, province, country, cloudinaryIds });
     if (!placeDetails) throw new ApiError(500, "Error while creating Listing Details.");
 
     const creator = new Types.ObjectId(String(creatorId));

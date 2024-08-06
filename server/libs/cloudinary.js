@@ -19,15 +19,15 @@ const deleteLocalImage = (localImagePath) => {
     }
 };
 
-export const UploadSingleImage = async (localImage, folder) => {
+export const UploadSingleImage = async (localImage) => {
     if (!localImage) return;
 
     try {
         const uploadedImage = await cloudinary.uploader.upload(localImage.path, {
             resource_type: "auto",
-            folder: folder ? folder : undefined
+            upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET
         });
-        return uploadedImage.secure_url;
+        return uploadedImage.secure_url.split("/image/upload/")[1] ?? `v${uploadedImage.version}/${uploadedImage.public_id}`;
     } catch (err) {
         console.error(err);
         throw new ApiError(500, err.message, "", localImage.originalname);
@@ -36,17 +36,17 @@ export const UploadSingleImage = async (localImage, folder) => {
     }
 };
 
-export const UploadMultipleImages = async (localImages, folder) => {
+export const UploadMultipleImages = async (localImages) => {
     if (!localImages.length) return;
 
     try {
         const limit = pLimit(localImages.length < 10 ? localImages.length : 10);
-        const imagesToUpload = localImages.map(image => limit(async () => await UploadSingleImage(image, folder)));
+        const imagesToUpload = localImages.map(image => limit(async () => await UploadSingleImage(image)));
         const settledPromises = await Promise.allSettled(imagesToUpload);
-        const cloudinaryUrls = settledPromises.filter(result => result.status === "fulfilled").map(result => result.value);
+        const cloudinaryIds = settledPromises.filter(result => result.status === "fulfilled").map(result => result.value);
         const failedFiles = settledPromises.filter(result => result.status === "rejected")
             .map(result => { return { fileName: result.reason.error, message: result.reason.message }; });
-        return { cloudinaryUrls, failedFiles };
+        return { cloudinaryIds, failedFiles };
     } catch (err) {
         console.error(err);
     }
