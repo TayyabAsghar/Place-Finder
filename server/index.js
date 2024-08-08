@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import { config } from "dotenv";
+import { parse, join } from "path";
 import cookieParser from "cookie-parser";
 import connectDB from "./database/index.js";
 import authRouter from "./routes/auth.routes.js";
@@ -11,9 +12,10 @@ import listingRouter from "./routes/listing.routes.js";
 
 config();
 const app = express();
+const __dirname = parse(import.meta.dirname).dir;
 
 app.use(cookieParser());
-app.use(express.static("public"));
+app.use(express.static(join(__dirname, "public")));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
