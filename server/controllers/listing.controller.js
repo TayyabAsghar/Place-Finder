@@ -40,7 +40,7 @@ export const createList = asyncHandler(async (req, res) => {
     if (!cloudinaryIds.length) throw new ApiError(500, "Failed uploading images.");
     const errorFilesName = failedFiles.map(file => file.originalname);
 
-    const placeDetails = await PlaceDetails.create({ category, city, province, country, cloudinaryIds });
+    const placeDetails = await PlaceDetails.create({ category, city, province, country, listingPhotoPaths: cloudinaryIds });
     if (!placeDetails) throw new ApiError(500, "Error while creating Listing Details.");
 
     const creator = new Types.ObjectId(String(creatorId));

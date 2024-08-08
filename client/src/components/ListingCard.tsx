@@ -5,8 +5,6 @@ import CustomCarousel from "./CustomCarousel";
 import type { ListingCardProps } from "../lib/types";
 
 const ListingCard = (props: ListingCardProps) => {
-    const apiUrl = process.env.REACT_APP_API_URL;
-
     return (
         <div className="flex flex-col cursor-pointer rounded-lg max-w-[326px] w-full relative bg-secondary-100 bg-opacity-50 hover:shadow-lg"
             onClick={props.onClick}>
@@ -14,7 +12,7 @@ const ListingCard = (props: ListingCardProps) => {
                 <CustomCarousel indicators={false} className="!w-full">
                     {props.placeDetails.listingPhotoPaths?.map((photo, index) => (
                         <div className="flex h-64 items-center justify-center max-ml:h-48" key={index}>
-                            <ImageLoader className="h-full w-full rounded-t-lg" src={`${apiUrl}${photo.replace("public", "")}`} alt="Property" />
+                            <ImageLoader className="h-full w-full rounded-t-lg" height={250} width={350} src={photo} alt="Property" />
                         </div>
                     ))}
                 </CustomCarousel>

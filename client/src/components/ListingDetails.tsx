@@ -22,11 +22,11 @@ const ListingDetails = (props: ListingDetailsProps) => {
                     <Button variant="contained" onClick={() => navigate(`/listing/${props._id}`)}>Open Original Listing</Button>
                 }
             </div>
-            <div className="flex items-center justify-center h-[70vh]">
+            <div className="flex items-center justify-center h-[70vh] max-ml:h-[50vh]">
                 <CustomCarousel className="!w-full">
                     {props.placeDetails.listingPhotoPaths.map((photo, index) =>
-                        <div className="flex items-center justify-center w-full h-[70vh]" key={index}>
-                            <ImageLoader className="h-full w-full" src={`${apiUrl}${photo.replace("public", "")}`} alt="Property" />
+                        <div className="flex items-center justify-center h-[70vh] max-ml:h-[50vh]" key={index}>
+                            <ImageLoader className="h-full" src={photo} alt="Property" />
                         </div>
                     )}
                 </CustomCarousel>

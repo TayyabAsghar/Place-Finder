@@ -3,9 +3,11 @@
         "Autosize",
         "cloudinary",
         "hookform",
+        "lazyload",
         "persistor",
         "reduxjs",
         "tailwindcss",
+        "vectorize",
         "webp"
     ]
 }

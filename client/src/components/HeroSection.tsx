@@ -1,7 +1,9 @@
+import ImageLoader from "./ImageLoader";
+
 const HeroSection = () => {
     return (
         <div className="h-[85vh] relative text-center w-full">
-            <img className="h-full w-full object-cover" src="assets/images/slide.webp" />
+            <ImageLoader className="h-full w-full object-cover" alt="Hero Image" src="slide_s4v9gx.webp" />
             <div className="absolute h-full w-full top-0 bg-gradient-to-r from-black-light to-black-light" />
             <h1 className="absolute top-10 px-5 text-center w-full text-background text-4xl max-ml:text-2xl max-ms:text-xl">
                 <p>Welcome Home!</p>

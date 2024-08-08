@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { AcceptedImageTypes } from "../constants";
+import { AcceptedImageTypes, UploadImagesSizeLimit } from "../constants";
 
 export const CreateListingValidations = z.object({
     creatorId: z.string().trim().min(1, { message: 'Required field.' }),
@@ -17,20 +17,21 @@ export const CreateListingValidations = z.object({
     amenities: z.string().array().nonempty('Select at least 1 option.'),
     listingPhotos: z.custom<File[]>()
         .refine(files => files?.length !== 0, "Image is required")
-        .refine(files => Array.from(files || []).every(file => AcceptedImageTypes.includes(file.type), "Only .jpeg, .jpg, webp and .png are accepted."))
+        .refine(files => Array.from(files || []).every(file => AcceptedImageTypes.includes(file.type)), "Only .jpeg, .jpg, webp and .png are accepted.")
+        .refine(files => Array.from(files || []).reduce((totalSize, file) => totalSize + file.size, 0) < UploadImagesSizeLimit, `Image/s total size should be smaller than ${UploadImagesSizeLimit / (2 ** 20)} Mb's.`)
         .refine(async files => {
-            const promises = Array.from(files || []).map(async file => {
+            const promises = Array.from(files || [])?.map(async file => {
                 const bitmap = await createImageBitmap(file);
                 const { width, height } = bitmap;
                 if (width < 400 || height < 400) return false;
                 return true;
             });
             const results = await Promise.all(promises);
-            return results.every(result => result);
+            return results?.every(result => result);
         }, 'All images should be more than 400 X 400 Dimensions.'),
     title: z.string().trim().min(1, { message: 'Listing Photos are required.' }).max(30, { message: 'Maximum 30 characters.' }),
-    description: z.string().trim().min(1, { message: 'Required field.' }),
+    description: z.string().trim().min(1, { message: 'Required field.' }).max(400, { message: 'Maximum 400 characters.' }),
     highlight: z.string().trim().min(1, { message: 'Required field.' }).max(50, { message: 'Maximum 50 characters.' }),
-    highlightDesc: z.string().trim().min(1, { message: 'Required field.' }),
+    highlightDesc: z.string().trim().min(1, { message: 'Required field.' }).max(400, { message: 'Maximum 400 characters.' }),
     price: z.coerce.number().min(1, { message: 'Required field.' })
 });

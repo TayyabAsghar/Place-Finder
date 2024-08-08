@@ -46,7 +46,7 @@ const useAxios = (props?: AxiosProps) => {
             const originalRequest = err.config;
 
             if (err.code === "ERR_CANCELED") return Promise.reject();
-            if (err.code === "ERR_NETWORK" || err.code === "ERR_CONNECTION_REFUSED") {
+            if (err.code === "ERR_NETWORK" || err.code === "ERR_CONNECTION_REFUSED" || err.code === "ERR_CONNECTION_RESET") {
                 setNotification({
                     severity: "error",
                     message: "Please check your internet connection."

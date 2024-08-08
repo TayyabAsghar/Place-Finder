@@ -27,7 +27,7 @@ export const UploadSingleImage = async (localImage) => {
             resource_type: "auto",
             upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET
         });
-        return uploadedImage.secure_url.split("/image/upload/")[1] ?? `v${uploadedImage.version}/${uploadedImage.public_id}`;
+        return uploadedImage.public_id;
     } catch (err) {
         console.error(err);
         throw new ApiError(500, err.message, "", localImage.originalname);

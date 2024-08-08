@@ -1,28 +1,18 @@
-import Loader from "./Loader";
-import { CiImageOff } from "react-icons/ci";
-import { ImgHTMLAttributes, useState } from "react";
+import { ImgHTMLAttributes } from "react";
+import CloudinaryCloud from "../lib/cloudinaryCloud";
+import { AdvancedImage, placeholder, } from "@cloudinary/react";
+import { fit } from "@cloudinary/url-gen/actions/resize";
 
 const ImageLoader = (props?: ImgHTMLAttributes<HTMLImageElement>) => {
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(true);
+    let image = CloudinaryCloud.image(props?.src);
 
-    const stopLoading = () => setLoading(false);
-    const onError = () => {
-        setError(true);
-        setLoading(false);
-    };
+    if (props?.height) image = image.resize(fit().height(props?.height));
+    if (props?.width) image = image.resize(fit().height(props?.width));
 
     return (
-        <div className="flex justify-center items-center w-full h-full">
-            {error ? <div className="flex flex-col gap-1 items-center">
-                <CiImageOff />
-                <p>{props?.alt}</p>
-            </div> :
-                <img src={props?.src} className={`${loading ? "hidden" : "block"} w-full h-full ${props?.className}`} onLoad={stopLoading}
-                    onError={onError} alt={props?.alt} />
-            }
-            {!!loading && <Loader />}
-        </div>
+        <AdvancedImage className={props?.className} cldImg={image} alt={props?.alt}
+            plugins={[placeholder({ mode: "blur" })]}>
+        </AdvancedImage>
     );
 };
 
