@@ -1,3 +1,4 @@
+import JWT from "jsonwebtoken";
 import User from "../models/user.model.js";
 import ApiError from "../libs/apiError.js";
 import { options } from "../libs/constants.js";

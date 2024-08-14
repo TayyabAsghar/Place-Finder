@@ -22,6 +22,7 @@ app.use(cors({
     credentials: true,
     origin: process.env.CLIENT_BASE_URL
 }));
+app.set('trust proxy', 1);
 
 /* Routes */
 app.use('/', baseRouter);

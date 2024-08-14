@@ -18,8 +18,7 @@ const useAxios = (props?: AxiosProps) => {
     const axiosInstance = axios.create({
         cancelToken: source.token,
         baseURL: process.env.REACT_APP_API_URL,
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true
+        headers: { Authorization: `Bearer ${token}` }
     });
 
     const setDefaultHeaders = (option: HttpOptions) => {

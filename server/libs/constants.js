@@ -4,10 +4,10 @@ config();
 export const options = {
     path: "/",
     httpOnly: true,
-    sameSite: "lax",
     maxAge: 1000 * 60 * 60 * 24 * 365,  // 1 year
-    domain: process.env.CLIENT_BASE_URL,
-    secure: process.env.NODE_ENV === "PROD"
+    secure: process.env.NODE_ENV === "PROD",
+    sameSite: process.env.NODE_ENV === "PROD" ? "none" : "lax",
+    domain: process.env.NODE_ENV === "PROD" ? process.env.CLIENT_BASE_URL.split("://")[1] : "localhost"
 };
 
 export const AcceptedImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
