@@ -6,6 +6,7 @@
         "lazyload",
         "persistor",
         "reduxjs",
+        "streamifier",
         "tailwindcss",
         "vectorize",
         "webp"

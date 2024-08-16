@@ -1,13 +1,13 @@
 import { ImgHTMLAttributes } from "react";
-import CloudinaryCloud from "../lib/cloudinaryCloud";
-import { AdvancedImage, placeholder, } from "@cloudinary/react";
+import CloudinaryGen from "../lib/cloudinaryGen";
 import { fit } from "@cloudinary/url-gen/actions/resize";
+import { AdvancedImage, placeholder, } from "@cloudinary/react";
 
 const ImageLoader = (props?: ImgHTMLAttributes<HTMLImageElement>) => {
-    let image = CloudinaryCloud.image(props?.src);
+    let image = CloudinaryGen.image(props?.src);
 
-    if (props?.height) image = image.resize(fit().height(props?.height));
     if (props?.width) image = image.resize(fit().height(props?.width));
+    if (props?.height) image = image.resize(fit().height(props?.height));
 
     return (
         <AdvancedImage className={props?.className} cldImg={image} alt={props?.alt}

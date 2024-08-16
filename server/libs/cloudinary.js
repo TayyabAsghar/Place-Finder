@@ -1,6 +1,7 @@
 import pLimit from 'p-limit';
 import { config } from "dotenv";
 import { unlinkSync } from "fs";
+import streamifier from 'streamifier';
 import ApiError from "../libs/apiError.js";
 import { v2 as cloudinary } from 'cloudinary';
 
@@ -19,14 +20,26 @@ const deleteLocalImage = (localImagePath) => {
     }
 };
 
+const uploadImageStream = (localImage) => {
+    return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream({
+            resource_type: "auto",
+            upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET
+        },
+            (error, result) => {
+                if (result) resolve(result);
+                else reject(error);
+            }
+        );
+        streamifier.createReadStream(localImage.buffer).pipe(uploadStream);
+    });
+};
+
 export const UploadSingleImage = async (localImage) => {
     if (!localImage) return;
 
     try {
-        const uploadedImage = await cloudinary.uploader.upload(localImage.path, {
-            resource_type: "auto",
-            upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET
-        });
+        const uploadedImage = await uploadImageStream(localImage);
         return uploadedImage.public_id;
     } catch (err) {
         console.error(err);
