@@ -1,20 +1,10 @@
 {
   "name": "place-finder",
-  "private": true,
+  "version": "1.0.0",
   "scripts": {
-    "build": ""
+    "start": "cd server && npm start",
+    "build": "npm install --prefix server && npm install --prefix client && npm run build --prefix client"
   },
-  "devDependencies": {
-    "prettier": "^3.2.5",
-    "turbo": "^2.0.14",
-    "typescript": "^5.4.5"
-  },
-  "engines": {
-    "node": ">=20"
-  },
-  "packageManager": "npm@10.5.2",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "author": "Muhammad Tayyab Asghar",
+  "license": "ISC"
 }

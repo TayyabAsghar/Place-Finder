@@ -2,7 +2,7 @@ import pLimit from 'p-limit';
 import { config } from "dotenv";
 import { unlinkSync } from "fs";
 import streamifier from 'streamifier';
-import ApiError from "../libs/apiError.js";
+import ApiError from "./apiError.js";
 import { v2 as cloudinary } from 'cloudinary';
 
 config();
