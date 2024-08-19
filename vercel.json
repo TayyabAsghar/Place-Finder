@@ -3,15 +3,15 @@
     "name": "place-finder",
     "builds": [
         {
-            "src": "package.json",
-            "use": "@vercel/static-build"
+            "src": "apps/client/build/**",
+            "use": "@vercel/static"
         },
         {
-            "src": "server/index.js",
+            "src": "apps/server/index.js",
             "use": "@vercel/node"
         },
         {
-            "src": "server/public/**",
+            "src": "apps/server/public/**",
             "use": "@vercel/static"
         }
     ],

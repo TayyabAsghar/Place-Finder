@@ -2,7 +2,7 @@
   "name": "place-finder",
   "private": true,
   "scripts": {
-    "build": "cd apps/client && npm run build"
+    "build": ""
   },
   "devDependencies": {
     "prettier": "^3.2.5",

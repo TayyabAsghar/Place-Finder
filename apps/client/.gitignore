@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+# /build   # Comment the build to generate it locally to push code as single project on vercel.
 
 # misc
 .DS_Store
