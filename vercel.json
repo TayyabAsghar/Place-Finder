@@ -1,0 +1,32 @@
+{
+    "version": 2,
+    "name": "place-finder",
+    "builds": [
+        {
+            "src": "package.json",
+            "use": "@vercel/static-build"
+        },
+        {
+            "src": "apps/server/index.js",
+            "use": "@vercel/node"
+        },
+        {
+            "src": "apps/server/public/**",
+            "use": "@vercel/static"
+        }
+    ],
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "client/$1"
+        },
+        {
+            "source": "api/(.*)",
+            "destination": "server/index.js"
+        },
+        {
+            "source": "api/(.*)",
+            "destination": "server/public/$1"
+        }
+    ]
+}
