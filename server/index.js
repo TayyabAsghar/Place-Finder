@@ -1,7 +1,8 @@
 import cors from "cors";
 import express from "express";
 import { config } from "dotenv";
-import { parse, join } from "path";
+import { fileURLToPath } from 'url';
+import { dirname, join } from "path";
 import cookieParser from "cookie-parser";
 import ApiError from "./libs/apiError.js";
 import connectDB from "./database/index.js";
@@ -14,7 +15,8 @@ import listingRouter from "./routes/listing.routes.js";
 
 config();
 const app = express();
-const __dirname = parse(import.meta.dirname).dir;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));
