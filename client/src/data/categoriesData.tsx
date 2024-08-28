@@ -53,7 +53,7 @@ export const AllCategories = [{
     img: `${AssetsPath}/lake.webp`,
     description: "This property is near a lake!"
 }, {
-    label: "Ski-in/out",
+    label: "Ski",
     icon: <FaSkiing />,
     img: `${AssetsPath}/skiing.webp`,
     description: "This property has skiing activities!"
