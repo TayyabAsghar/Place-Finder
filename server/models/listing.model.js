@@ -35,6 +35,10 @@ const ListingSchema = new Schema({
         type: Number,
         required: true
     },
+    category: {
+        type: String,
+        required: true
+    },
     bedCount: {
         type: Number,
         required: true

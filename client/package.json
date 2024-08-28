@@ -37,7 +37,7 @@
     "zod": "^3.23.8"
   },
   "scripts": {
-    "dev": "react-scripts start",
+    "start": "react-scripts start",
     "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
     "build-max": "cross-env GENERATE_SOURCEMAP=false react-scripts --max_old_space_size=4096 build",
     "test": "react-scripts test",

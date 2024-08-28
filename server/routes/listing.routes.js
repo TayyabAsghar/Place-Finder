@@ -6,8 +6,8 @@ import { getCategoryList, getListingDetails, getListingBySearch, createList } fr
 const router = Router();
 
 router.get("/", getCategoryList);
+router.get("/search", getListingBySearch);
 router.get("/:listingId", getListingDetails);
-router.get("/search/:search", getListingBySearch);
 router.post("/create", verifyJWT, upload.array("listingPhotos"), createList);
 
 export default router;

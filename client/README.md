@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Set Up Environment Variables
 
-Create a new file named `.env` in the root of your project and add the following content:
+Create a new file named `.env.local` in the root of your project and add the following content:
 
 ```env
 GENERATE_SOURCEMAP=false                    # Disable source map
@@ -17,7 +17,7 @@ REACT_APP_CLOUDINARY_CLOUD_NAME=cloudinary  # Cloudinary Cloud name.
 
 In the project directory, you can run:
 
-### `npm dev`
+### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.

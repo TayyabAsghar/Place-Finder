@@ -20,7 +20,7 @@ const SearchPage = () => {
     const getSearchListings = async () => {
         try {
             if (searchQuery) {
-                const response = await customAxios.get(`/listing/search/${searchQuery.toLowerCase()}`, "skip-authorization");
+                const response = await customAxios.get(`/listing/search?q=${searchQuery.toLowerCase()}`, "skip-authorization");
                 setListings(response.data);
             } else setListings([]);
         } catch (err) {

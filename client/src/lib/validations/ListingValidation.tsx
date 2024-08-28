@@ -30,8 +30,8 @@ export const CreateListingValidations = z.object({
             return results?.every(result => result);
         }, 'All images should be more than 400 X 400 Dimensions.'),
     title: z.string().trim().min(1, { message: 'Listing Photos are required.' }).max(30, { message: 'Maximum 30 characters.' }),
-    description: z.string().trim().min(1, { message: 'Required field.' }).max(400, { message: 'Maximum 400 characters.' }),
+    description: z.string().trim().min(1, { message: 'Required field.' }).max(800, { message: 'Maximum 800 characters.' }),
     highlight: z.string().trim().min(1, { message: 'Required field.' }).max(50, { message: 'Maximum 50 characters.' }),
-    highlightDesc: z.string().trim().min(1, { message: 'Required field.' }).max(400, { message: 'Maximum 400 characters.' }),
+    highlightDesc: z.string().trim().min(1, { message: 'Required field.' }).max(800, { message: 'Maximum 800 characters.' }),
     price: z.coerce.number().min(1, { message: 'Required field.' })
 });

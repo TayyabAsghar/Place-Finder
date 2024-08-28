@@ -18,6 +18,10 @@
     </div>
 </div>
 
+> [!NOTE]
+>
+> On free account on Render, it takes down the instance in every 15 minutes of inactivity so you may face very high initial load time or api delays as mentioned [here](https://community.render.com/t/website-takes-ages-to-load/11242).
+
 ## <a name="table">📋 Table of Contents</a>
 
 1. 👋 [Introduction](#introduction)

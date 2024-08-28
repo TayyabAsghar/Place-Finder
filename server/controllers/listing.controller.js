@@ -45,7 +45,7 @@ export const createList = asyncHandler(async (req, res) => {
 
     const creator = new Types.ObjectId(String(creatorId));
     const newListing = await Listing.create({
-        creator, type, streetAddress, aptSuite, guestCount, bedroomCount, bedCount, bathroomCount, description,
+        creator, type, streetAddress, aptSuite, guestCount, bedroomCount, bedCount, bathroomCount, description, category,
         highlight, title, highlightDesc, price, amenities, placeDetails: placeDetails._id
     });
 
@@ -67,7 +67,10 @@ export const getListingDetails = asyncHandler(async (req, res) => {
 });
 
 export const getListingBySearch = asyncHandler(async (req, res) => {
-    const { search } = req.params;
+    const search = req.query.q;
+
+    if (!search) throw new ApiError(400, "No search param is selected.");
+
     const listings = await Listing.find({
         $or: [
             { category: { $regex: search, $options: "i" } },

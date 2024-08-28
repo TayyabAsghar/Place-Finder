@@ -8,17 +8,21 @@ const SearchBar = () => {
     const navigate = useNavigate();
     const [search, setSearch] = useState('');
 
-    const navigateToPage = (key: string) => {
-        if (key === 'Enter') navigate(`/listing/search?query=${search}`);
+    const onKeyEnter = (key: string) => {
+        if (key === 'Enter') navigateToPage();
         setSearch("");
     };
 
+    const navigateToPage = () => {
+        if (search.trim()) navigate(`/listing/search?query=${search}`);
+    };
+
     return (
-        <OutlinedInput className="max-ml:max-w-48 max-ml:max-h-8 max-ml:!pr-0 max-ml:!text-sm max-ms:max-w-36 min-w-0" onKeyDown={e => navigateToPage(e.key)}
+        <OutlinedInput className="max-ml:max-w-48 max-ml:max-h-8 max-ml:!pr-0 max-ml:!text-sm max-ms:max-w-36 min-w-0" onKeyDown={e => onKeyEnter(e.key)}
             onInput={e => setSearch((e.target as HTMLInputElement).value)} placeholder="Search..." size="small" title="Search"
             endAdornment={
                 <IconButton type="submit" disabled={!search} color="primary"
-                    onClick={() => navigate(`/listing/search?query=${search}`)}>
+                    onClick={navigateToPage}>
                     <SearchIcon />
                 </IconButton>
             }
