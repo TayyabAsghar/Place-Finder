@@ -29,9 +29,9 @@ export const CreateListingValidations = z.object({
             const results = await Promise.all(promises);
             return results?.every(result => result);
         }, 'All images should be more than 400 X 400 Dimensions.'),
-    title: z.string().trim().min(1, { message: 'Listing Photos are required.' }).max(30, { message: 'Maximum 30 characters.' }),
-    description: z.string().trim().min(1, { message: 'Required field.' }).max(800, { message: 'Maximum 800 characters.' }),
+    title: z.string().trim().min(1, { message: 'Listing Photos are required.' }).max(50, { message: 'Maximum 50 characters.' }),
+    description: z.string().trim().min(1, { message: 'Required field.' }).max(3000, { message: 'Maximum 3000 characters.' }),
     highlight: z.string().trim().min(1, { message: 'Required field.' }).max(50, { message: 'Maximum 50 characters.' }),
-    highlightDesc: z.string().trim().min(1, { message: 'Required field.' }).max(800, { message: 'Maximum 800 characters.' }),
+    highlightDesc: z.string().trim().min(1, { message: 'Required field.' }).max(3000, { message: 'Maximum 3000 characters.' }),
     price: z.coerce.number().min(1, { message: 'Required field.' })
 });
